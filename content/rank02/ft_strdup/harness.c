@@ -26,7 +26,8 @@ static void	show(char *src, int check)
 		src[0] = '#';
 		printf("%s\n", copy);
 	}
-	free(copy);
+	if (copy != src)
+		free(copy);
 }
 
 /* Deixa lixo num bloco do tamanho certo e o libera, para o malloc reusá-lo. */

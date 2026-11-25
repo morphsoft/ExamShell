@@ -133,8 +133,8 @@
       "Leia o sinal antes dos dígitos e guarde o efeito dele separado, para aplicar no final. Não deixe o sinal entrar na conta dos dígitos."
     ],
     "espacos-iniciais": [
-      "O que o atoi faz com espaços antes do número?",
-      "Como no atoi original, os espaços em branco do começo são ignorados. Isso inclui o espaço, o tab e a quebra de linha, e não só o espaço comum.",
+      "O que o atoi faz com o que vem antes dos dígitos: os espaços e o sinal?",
+      "Como no atoi original, os espaços em branco do começo são ignorados, e só depois deles vem o sinal opcional. Isso inclui o espaço, o tab e a quebra de linha, e não só o espaço comum. O sinal continua valendo depois dos espaços, como em \"  -15abc\".",
       "Pule todos os caracteres de espaço em branco do começo antes de olhar o sinal. Eles são: espaço, '\\t', '\\n', '\\v', '\\f' e '\\r'."
     ],
     "lixo-no-fim": [
@@ -153,13 +153,13 @@
       "Toda leitura de caractere precisa respeitar o '\\0'. Não leia nenhuma posição depois dele."
     ],
     "limites": [
-      "A função funciona com os extremos do int?",
-      "O maior int é 2147483647 e o menor é -2147483648. O valor absoluto do menor é maior do que o maior int, então inverter o sinal depois de juntar os dígitos pode não caber num int.",
-      "Se o seu acumulador for int, evite inverter o sinal no final. Use um tipo maior para acumular, como long, ou acumule já com o sinal aplicado."
+      "A função funciona com os extremos do int, 2147483647 e -2147483648?",
+      "O menor int, -2147483648, tem valor absoluto maior do que o maior int. Se o seu código limita o número a 2147483647 antes de aplicar o sinal, ou recusa o que passa disso, o menor int sai errado.",
+      "Não limite nem compare o número com o INT_MAX antes de aplicar o sinal. Se quiser se proteger, acumule num tipo maior, como long, e só converta para int no final."
     ],
     "sinal-duplo": [
       "O que acontece quando há mais de um sinal seguido?",
-      "Só um sinal é aceito, e logo depois dele precisa vir um dígito. Com dois sinais seguidos, a leitura termina sem achar dígito, e o resultado é 0.",
+      "Só um sinal é aceito, e logo depois dele precisa vir um dígito. Com dois sinais seguidos, a leitura termina sem achar dígito, e o resultado é 0. Isso é diferente do ft_atoi da Piscine, que aceita vários sinais: o enunciado da prova segue o atoi padrão.",
       "Depois de ler um sinal, não leia outro. Se o próximo caractere não for um dígito, o resultado fica 0."
     ],
     "zeros-a-esquerda": [

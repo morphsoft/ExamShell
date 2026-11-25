@@ -159,8 +159,8 @@
       "Confira que o seu programa trata o caractere '%' como uma das operações possíveis, e use o operador '%' do C. Você não precisa escrever o caractere '%' na saída."
     ],
     "limites": [
-      "O programa lida bem com os valores extremos do int?",
-      "O INT_MAX tem 10 dígitos e o INT_MIN também começa com um sinal de menos. Se você converte os dígitos na mão, a conta pode estourar o int no meio do caminho.",
+      "O programa mostra certo os valores extremos do int?",
+      "O maior int é 2147483647 e o menor é -2147483648, e o valor absoluto do menor é maior do que o maior int. Uma conversão feita à mão que limita o número a 2147483647 antes de aplicar o sinal erra o menor int.",
       "Use a função de conversão que o enunciado permite, em vez de converter na mão, e mostre o resultado com %d."
     ]
   }
