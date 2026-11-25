@@ -46,7 +46,7 @@ O catálogo (`src/content/rank02Catalog.ts`) já lista os 57 exercícios do Rank
 
 ### Headers que a prova fornece (`provided`)
 
-Quando o enunciado real entrega um header pronto (ex.: o `list.h` de `sort_list` e de `ft_list_remove_if`), ele vai em `provided` no `exercise.json`, de nome do arquivo para conteúdo:
+Quando o enunciado real entrega um header pronto (ex.: o `list.h` de `sort_list` e o `ft_list.h` de `ft_list_remove_if`), ele vai em `provided` no `exercise.json`, de nome do arquivo para conteúdo:
 
 ```json
 "provided": { "list.h": "typedef struct s_list t_list;\n..." }
