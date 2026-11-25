@@ -128,6 +128,7 @@ export function createBrowserEngine(opts: {
     undefinedSymbols: (objects) => call('undefinedSymbols', [objects]),
     definedSymbols: (objects) => call('definedSymbols', [objects]),
     link: (objects, extraSources, headers) => call('link', [objects, extraSources, headers]),
+    addr2line: (wasm, moduleOffset) => call('addr2line', [wasm, moduleOffset]),
     openRunSession,
     ready: () => readyPromise,
     status: () => current,

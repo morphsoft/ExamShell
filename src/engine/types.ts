@@ -43,6 +43,11 @@ export type CompileOutcome =
 export type LinkOutcome =
   | { ok: true; wasm: Uint8Array; stderr: string }
   | { ok: false; stderr: string };
+/** Uma linha de um arquivo-fonte, como o cadete vê no editor. */
+export interface SourceLine {
+  file: string;
+  line: number;
+}
 export interface RunSession {
   run(test: Pick<TestCase, 'args' | 'stdin'>, timeoutMs: number): Promise<RunResult>;
   dispose(): void;
@@ -53,6 +58,8 @@ export interface Engine {
   definedSymbols(objects: Record<string, Uint8Array>): Promise<string[]>;
   link(objects: Record<string, Uint8Array>, extraSources: SourceFiles, headers: SourceFiles): Promise<LinkOutcome>;
   openRunSession(wasm: Uint8Array, programName: string): RunSession;
+  /** Linha (DWARF) de um offset do módulo, como aparece na pilha do trap; null se não souber. */
+  addr2line?(wasm: Uint8Array, moduleOffset: number): Promise<SourceLine | null>;
 }
 
 export type Failure =
@@ -60,6 +67,6 @@ export type Failure =
   | { kind: 'forbidden'; functions: string[] }
   | { kind: 'link'; reason: 'duplicate-main' | 'missing-symbol' | 'other'; symbol?: string; stderr: string }
   | { kind: 'wrong-output'; test: TestCase; index: number; expected: string; actual: string; diffIndex: number; truncated: boolean }
-  | { kind: 'crash'; test: TestCase; index: number; trapMessage: string; line?: { file: string; line: number } }
+  | { kind: 'crash'; test: TestCase; index: number; trapMessage: string; line?: SourceLine }
   | { kind: 'timeout'; test: TestCase; index: number };
 export interface GradeResult { passed: number; total: number; failure: Failure | null }

@@ -53,6 +53,22 @@ const FIRST_WORD_LOOP = String.raw`int	main(void)
 }
 `;
 
+/** Escreve em NULL na linha 10. */
+const FIRST_WORD_NULL = String.raw`#include <unistd.h>
+
+int	main(int argc, char **argv)
+{
+    char	*p;
+
+    p = 0;
+    if (argc == 2)
+        write(1, argv[1], 1);
+    p[0] = 'x';
+    write(1, "\n", 1);
+    return (0);
+}
+`;
+
 const FT_STRLEN = String.raw`int	ft_strlen(char *str)
 {
     int i = 0;
@@ -270,6 +286,20 @@ test('laço infinito dá tempo esgotado', async ({ page }) => {
   const result = await grademe(page);
   await expect(result).toContainText('✗ teste 1/8');
   await expect(result).toContainText('tempo esgotado');
+});
+
+test('travamento mostra a linha do código, no grademe e no rodar', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, FIRST_WORD_NULL);
+  const result = await grademe(page);
+  await expect(result).toContainText('✗ teste 1/8');
+  await expect(result).toContainText('o programa travou (segfault) na linha 10 de first_word.c');
+
+  await page.getByTestId('run-args').fill('abc');
+  await page.getByTestId('run').click();
+  const out = page.getByTestId('run-result').last();
+  await expect(out).toHaveAttribute('data-state', 'done', { timeout: 60000 });
+  await expect(out).toContainText('o programa travou (segfault) na linha 10 de first_word.c');
 });
 
 test('grademe que termina depois de sair da tela não conta tentativa', async ({ page }) => {

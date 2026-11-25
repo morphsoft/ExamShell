@@ -1,5 +1,6 @@
-import type { Engine, Failure, GradeResult, LoadedExercise, RunResult, SourceFiles } from './types';
+import type { Engine, Failure, GradeResult, LoadedExercise, RunResult, SourceFiles, SourceLine } from './types';
 import { firstDiffIndex } from './compare';
+import { locateCrash } from './crashLine';
 import { definesMain, findForbidden } from './forbidden';
 import { classifyLinkError } from './clangErrors';
 
@@ -16,6 +17,11 @@ function splitSources(ex: LoadedExercise, userFiles: SourceFiles): { sources: So
   // O exame usa os próprios headers: o fornecido vence um header do cadete com o mesmo nome.
   Object.assign(headers, ex.provided);
   return { sources, headers };
+}
+
+/** Arquivos que o cadete escreveu (os do exame, como o header fornecido, ficam de fora). */
+function cadetFiles(ex: LoadedExercise, extra: SourceFiles = {}): string[] {
+  return [...ex.expectedFiles.filter((name) => !(ex.provided && name in ex.provided)), ...Object.keys(extra)];
 }
 
 type PrepFailure = Extract<Failure, { kind: 'compile' | 'link' | 'forbidden' }>;
@@ -74,7 +80,10 @@ export async function grade(
       const r = await session.run({ args: test.args, stdin: test.stdin }, timeoutMs);
       if (r.outcome === 'timeout') return { passed, total, failure: { kind: 'timeout', test, index } };
       if (r.outcome === 'crash') {
-        return { passed, total, failure: { kind: 'crash', test, index, trapMessage: r.trapMessage ?? '' } };
+        const failure: Extract<Failure, { kind: 'crash' }> = { kind: 'crash', test, index, trapMessage: r.trapMessage ?? '' };
+        const line = await locateCrash(engine, built.wasm, r.trapStack, cadetFiles(ex));
+        if (line) failure.line = line;
+        return { passed, total, failure };
       }
       const expected = ex.expected[test.id]?.stdout ?? '';
       const diffIndex = firstDiffIndex(expected, r.stdout);
@@ -107,14 +116,17 @@ export async function runOnce(
   userFiles: SourceFiles,
   scratch: { mainC?: string; args: string[]; stdin?: string },
   engine: Engine,
-): Promise<{ failure: Extract<Failure, { kind: 'compile' | 'link' }> | null; run?: RunResult }> {
+): Promise<{ failure: Extract<Failure, { kind: 'compile' | 'link' }> | null; run?: RunResult; line?: SourceLine }> {
   const extra: SourceFiles = ex.kind === 'function' && scratch.mainC !== undefined ? { 'main.c': scratch.mainC } : {};
   const built = await build(ex, userFiles, extra, engine, false);
   if ('failure' in built) return { failure: built.failure as Extract<Failure, { kind: 'compile' | 'link' }> };
   const session = engine.openRunSession(built.wasm, './' + ex.id);
   try {
     const run = await session.run({ args: scratch.args, stdin: scratch.stdin }, TIMEOUT_MS);
-    return { failure: null, run };
+    if (run.outcome !== 'crash') return { failure: null, run };
+    // o main.c do rascunho também é do cadete
+    const line = await locateCrash(engine, built.wasm, run.trapStack, cadetFiles(ex, extra));
+    return line ? { failure: null, run, line } : { failure: null, run };
   } finally {
     session.dispose();
   }

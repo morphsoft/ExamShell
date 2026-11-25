@@ -155,6 +155,68 @@ describe('runOnce', () => {
   });
 });
 
+describe('linha do travamento', () => {
+  const STACK = 'RuntimeError: unreachable\n    at a.out.main (wasm://wasm/x:wasm-function[6]:0x1b2)';
+  const crash: RunResult = { stdout: '', outcome: 'crash', trapMessage: 'unreachable', trapStack: STACK };
+  const at = (file: string, line: number) => vi.fn(async () => ({ file, line }));
+
+  it('grade: arquivo do cadete vira failure.line', async () => {
+    const addr2line = at('first_word.c', 7);
+    const { engine } = fake([ok('a\n'), crash], { addr2line });
+    const r = await grade(makeEx(), files, engine);
+    expect(r.failure).toEqual({
+      kind: 'crash',
+      test: makeEx().tests[1],
+      index: 1,
+      trapMessage: 'unreachable',
+      line: { file: 'first_word.c', line: 7 },
+    });
+    expect(addr2line).toHaveBeenCalledTimes(1);
+    expect(addr2line).toHaveBeenCalledWith(expect.any(Uint8Array), 0x1b2);
+  });
+
+  it('grade: o harness não é do cadete', async () => {
+    const ex = makeEx({ kind: 'function', expectedFiles: ['ft_strlen.c'], harness: 'H' });
+    const { engine } = fake([crash], { definedSymbols: async () => ['ft_strlen'], addr2line: at('__harness.c', 5) });
+    const r = await grade(ex, { 'ft_strlen.c': 'int x;' }, engine);
+    expect(r.failure).toMatchObject({ kind: 'crash', index: 0 });
+    expect(r.failure).not.toHaveProperty('line');
+  });
+
+  it('grade: header fornecido pelo exame não é do cadete', async () => {
+    const ex = makeEx({ expectedFiles: ['a.c', 'list.h'], provided: { 'list.h': 'X' } });
+    const { engine } = fake([crash], { addr2line: at('list.h', 3) });
+    const r = await grade(ex, { 'a.c': 'A', 'list.h': 'CADETE' }, engine);
+    expect(r.failure).not.toHaveProperty('line');
+  });
+
+  it('grade: sem travamento não chama addr2line', async () => {
+    const addr2line = at('first_word.c', 7);
+    const { engine } = fake([ok('a\n'), ok('x\n')], { addr2line });
+    await grade(makeEx(), files, engine);
+    expect(addr2line).not.toHaveBeenCalled();
+  });
+
+  it('runOnce: o main.c do rascunho é do cadete nos exercícios de função', async () => {
+    const ex = makeEx({ kind: 'function', expectedFiles: ['ft_strlen.c'], harness: 'H' });
+    const { engine } = fake([crash], { definedSymbols: async () => ['ft_strlen'], addr2line: at('main.c', 6) });
+    const r = await runOnce(ex, { 'ft_strlen.c': 'int x;' }, { mainC: 'MAIN', args: [] }, engine);
+    expect(r).toEqual({ failure: null, run: crash, line: { file: 'main.c', line: 6 } });
+  });
+
+  it('runOnce: num programa, main.c não é arquivo do cadete', async () => {
+    const { engine } = fake([crash], { addr2line: at('main.c', 6) });
+    const r = await runOnce(makeEx(), files, { args: [] }, engine);
+    expect(r).toEqual({ failure: null, run: crash });
+  });
+
+  it('runOnce: arquivo do cadete', async () => {
+    const { engine } = fake([crash], { addr2line: at('first_word.c', 9) });
+    const r = await runOnce(makeEx(), files, { args: [] }, engine);
+    expect(r.line).toEqual({ file: 'first_word.c', line: 9 });
+  });
+});
+
 describe('main definido pelo cadete em exercício de função', () => {
   const fnEx = () =>
     makeEx({ kind: 'function', expectedFiles: ['ft_strlen.c'], harness: 'int main(int c,char**v){return 0;}' });

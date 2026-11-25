@@ -1,7 +1,8 @@
 import type { Command, Tree } from '@yowasp/clang';
+import { codeSectionStart, parseAddr2line } from './crashLine';
 import { parseNmDefined, parseNmUndefined } from './forbidden';
 import { PRELUDE, PRELUDE_HEADER, restoreLongInDiagnostics, rewriteLong } from './rewriteLong';
-import type { CompileOutcome, Engine, LinkOutcome, SourceFiles } from './types';
+import type { CompileOutcome, Engine, LinkOutcome, SourceFiles, SourceLine } from './types';
 
 export interface ClangModule {
   runClang: Command;
@@ -58,7 +59,9 @@ function onlyRewriteFormatErrors(stderr: string): boolean {
   return errors.length > 0 && errors.every((l) => REWRITE_FORMAT_ERROR.test(l));
 }
 
-export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects' | 'undefinedSymbols' | 'definedSymbols' | 'link'> {
+export function createCompiler(
+  clang: ClangModule,
+): Required<Pick<Engine, 'compileObjects' | 'undefinedSymbols' | 'definedSymbols' | 'link' | 'addr2line'>> {
   const quiet = { fetchProgress: () => {} };
 
   async function runClang(args: string[], tree: Tree): Promise<{ out: Tree | undefined; stderr: string }> {
@@ -140,5 +143,20 @@ export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects
     return { ok: true, wasm, stderr };
   }
 
-  return { compileObjects, undefinedSymbols, definedSymbols, link };
+  /** Linha de um offset do módulo (o da pilha do trap), pelo DWARF que o `-g` gera. */
+  async function addr2line(wasm: Uint8Array, moduleOffset: number): Promise<SourceLine | null> {
+    const start = codeSectionStart(wasm);
+    if (start === null || moduleOffset < start) return null;
+    const address = '0x' + (moduleOffset - start).toString(16);
+    const out = collector();
+    try {
+      await clang.runLLVM(['addr2line', '-i', '-e', 'a.out', address], { 'a.out': wasm }, { ...quiet, stdout: out.callback });
+    } catch (e) {
+      if (!isExit(e)) throw e;
+      return null;
+    }
+    return parseAddr2line(out.text);
+  }
+
+  return { compileObjects, undefinedSymbols, definedSymbols, link, addr2line };
 }

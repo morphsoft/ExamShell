@@ -3,7 +3,7 @@ import { catE } from '../../engine/compare';
 import { explainClangError } from '../../engine/clangErrors';
 import { TIMEOUT_MS, type runOnce } from '../../engine/grade';
 import { formatArgs } from '../../engine/parseArgs';
-import type { Failure, GradeResult, LoadedExercise, RunResult, TestCase } from '../../engine/types';
+import type { Failure, GradeResult, LoadedExercise, RunResult, SourceLine, TestCase } from '../../engine/types';
 import { hintsFor } from '../../hints/hintsFor';
 import { SCRATCH_TAB } from './EditorTabs';
 import { HintBlock } from './HintBlock';
@@ -26,6 +26,10 @@ export type LogEntry =
 
 const TIMEOUT_TEXT = `tempo esgotado (${TIMEOUT_MS / 1000} s)`;
 const TRUNCATED_TEXT = '(saída cortada em 64 KB)';
+
+/** A linha só aparece quando o motor a acha num arquivo do cadete; senão fica o aviso de sempre. */
+const crashText = (line?: SourceLine) =>
+  'o programa travou (segfault)' + (line ? ` na linha ${line.line} de ${line.file}` : '');
 
 /** O comando do teste, pronto para colar no "rodar"; nos exercícios de função, a chamada (`display`). */
 function testCommand(ex: LoadedExercise, test: TestCase): string {
@@ -123,9 +127,7 @@ function FailureView({ ex, failure, total }: { ex: LoadedExercise; failure: Fail
       return (
         <>
           <TestHead ex={ex} test={failure.test} index={failure.index} total={total} />
-          <p className="fail-text">
-            o programa travou (segfault){failure.line ? ` na linha ${failure.line.line}` : ''}
-          </p>
+          <p className="fail-text">{crashText(failure.line)}</p>
         </>
       );
     case 'timeout':
@@ -184,7 +186,7 @@ function FailureView({ ex, failure, total }: { ex: LoadedExercise; failure: Fail
   }
 }
 
-function RunOutput({ run }: { run: RunResult }) {
+function RunOutput({ run, line }: { run: RunResult; line?: SourceLine }) {
   const empty = run.stdout === '';
   return (
     <>
@@ -192,7 +194,7 @@ function RunOutput({ run }: { run: RunResult }) {
         <pre className="out">{empty ? <span className="muted">(nenhuma saída)</span> : catE(run.stdout)}</pre>
       )}
       {run.truncated && <p className="muted">{TRUNCATED_TEXT}</p>}
-      {run.outcome === 'crash' && <p className="fail-text">o programa travou (segfault)</p>}
+      {run.outcome === 'crash' && <p className="fail-text">{crashText(line)}</p>}
       {run.outcome === 'timeout' && <p className="fail-text">{TIMEOUT_TEXT}</p>}
       {run.outcome === 'exit' && run.exitCode !== undefined && run.exitCode !== 0 && (
         <p className="muted">(código de saída {run.exitCode})</p>
@@ -274,7 +276,7 @@ export function LogPane({
                 <FailureView ex={exercise} failure={e.outcome.failure} total={0} />
               </div>
             )}
-            {e.outcome?.run && <RunOutput run={e.outcome.run} />}
+            {e.outcome?.run && <RunOutput run={e.outcome.run} line={e.outcome.line} />}
           </div>
         ) : (
           <div key={e.id} className="entry">
