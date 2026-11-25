@@ -17,6 +17,9 @@ static void	run(int *values, unsigned int total, unsigned int size)
 	unsigned int	k;
 
 	k = 0;
+	while (k < 64)
+		tab[k++] = INT_MAX;
+	k = 0;
 	while (k < total)
 	{
 		tab[k] = values[k];

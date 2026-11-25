@@ -6,7 +6,7 @@
     "stdout": "AAAAB\nACCBB\nACDDB\nACCDB\nAAAAB\n\nAAAAB\nAFFBB\nAFDDB\nAFFDB\nAAAAB\n"
   },
   "t03": {
-    "stdout": "0111\n1011\n1101\n1110\n\nF111\n1011\n1101\n1110\n"
+    "stdout": "00100\n00100\n11111\n00100\n\nFF100\nFF100\n11111\n00100\n"
   },
   "t04": {
     "stdout": "00000\n11110\n00000\n01111\n00000\n\nFFFFF\n1111F\nFFFFF\nF1111\nFFFFF\n"
@@ -15,7 +15,7 @@
     "stdout": "00000\n11110\n00000\n01111\n00000\n\nFFFFF\n1111F\nFFFFF\nF1111\nFFFFF\n"
   },
   "t06": {
-    "stdout": "00100\n00100\n11111\n00100\n\nFF100\nFF100\n11111\n00100\n"
+    "stdout": "0111\n1011\n1101\n1110\n\nF111\n1011\n1101\n1110\n"
   },
   "t07": {
     "stdout": "11111111\n10001001\n10010001\n10110001\n11100001\n\nFFFFFFFF\nF000F00F\nF00F000F\nF0FF000F\nFFF0000F\n"

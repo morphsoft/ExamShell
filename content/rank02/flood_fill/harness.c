@@ -61,8 +61,8 @@ int	main(int argc, char **argv)
 				(t_point){5, 5}, (t_point){1, 3});
 			break ;
 		case 2: /* t03 */
-			run((char *[]){"0111", "1011", "1101", "1110"},
-				(t_point){4, 4}, (t_point){0, 0});
+			run((char *[]){"00100", "00100", "11111", "00100"},
+				(t_point){5, 4}, (t_point){0, 0});
 			break ;
 		case 3: /* t04 */
 			run((char *[]){"00000", "11110", "00000", "01111", "00000"},
@@ -73,8 +73,8 @@ int	main(int argc, char **argv)
 				(t_point){5, 5}, (t_point){4, 4});
 			break ;
 		case 5: /* t06 */
-			run((char *[]){"00100", "00100", "11111", "00100"},
-				(t_point){5, 4}, (t_point){0, 0});
+			run((char *[]){"0111", "1011", "1101", "1110"},
+				(t_point){4, 4}, (t_point){0, 0});
 			break ;
 		case 6: /* t07 */
 			run((char *[]){"11111111", "10001001", "10010001", "10110001",

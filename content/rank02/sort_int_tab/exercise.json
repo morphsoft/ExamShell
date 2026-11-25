@@ -1,7 +1,7 @@
 {
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "sort_int_tab({3, 1, 2}, 3)" },
-    { "id": "t02", "args": ["1"], "category": "duplicatas", "display": "sort_int_tab({4, 1, 4, 1}, 4)" },
+    { "id": "t02", "args": ["1"], "category": "basico", "display": "sort_int_tab({4, 1, 4, 1}, 4)" },
     { "id": "t03", "args": ["2"], "category": "basico", "display": "sort_int_tab({7}, 1)" },
     { "id": "t04", "args": ["3"], "category": "ordem-inversa", "display": "sort_int_tab({9, 8, 7, 6, 5, 4, 3, 2, 1}, 9)" },
     { "id": "t05", "args": ["4"], "category": "negativos", "display": "sort_int_tab({-3, 5, -10, 0, 2, -1}, 6)" },
@@ -12,13 +12,8 @@
   "hints": {
     "basico": [
       "Depois da sua função, cada elemento do vetor é menor ou igual ao seguinte?",
-      "Ordenar no próprio vetor é comparar elementos e trocar de lugar os que estão fora de ordem, repetindo isso até nenhum par ficar invertido. Uma única passada pelo vetor quase nunca basta.",
-      "A ideia decisiva: uma troca só vale a pena entre dois elementos vizinhos que estão na ordem errada, e é preciso repetir a verificação até que não sobre nenhum par assim."
-    ],
-    "duplicatas": [
-      "Os valores repetidos continuam no vetor depois da ordenação?",
-      "O enunciado diz que os valores repetidos devem ser preservados. Ordenar só reorganiza os elementos: nenhum valor some e nenhum aparece a mais.",
-      "Se você copia um valor por cima de outro sem guardá-lo antes, um deles se perde. Para trocar dois elementos, guarde um deles numa variável temporária."
+      "Ordenar no próprio vetor é colocar os elementos em ordem crescente, mexendo só nos seus lugares: nenhum valor some e nenhum aparece a mais, e os valores repetidos continuam todos lá.",
+      "A ideia decisiva: uma única passada pelo vetor quase nunca basta. Continue trabalhando até que nenhum par de elementos esteja fora de ordem. Para trocar dois elementos, guarde um deles antes numa variável temporária."
     ],
     "ordem-inversa": [
       "A sua função ordena corretamente um vetor que está do maior para o menor?",

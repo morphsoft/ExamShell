@@ -9,8 +9,8 @@
     { "id": "t07", "args": [], "category": "argumentos" },
     { "id": "t08", "args": ["42", "21"], "category": "argumentos" },
     { "id": "t09", "args": ["2"], "category": "primo" },
-    { "id": "t10", "args": ["1024"], "category": "fatores-repetidos" },
-    { "id": "t11", "args": ["49"], "category": "quadrado-de-primo" }
+    { "id": "t10", "args": ["49"], "category": "quadrado-de-primo" },
+    { "id": "t11", "args": ["1024"], "category": "fatores-repetidos" }
   ],
   "hints": {
     "basico": [
@@ -20,7 +20,7 @@
     ],
     "primo": [
       "O que o seu programa exibe quando o número já é primo?",
-      "Um número primo não tem divisor além dele mesmo, então o único fator é o próprio número, sem nenhum '*' na saída.",
+      "Um número primo não tem divisor além de 1 e dele mesmo, então o único fator é o próprio número, sem nenhum '*' na saída.",
       "Se os candidatos a divisor terminam sem nenhuma divisão exata, o que sobrou ainda precisa ser exibido. Garanta que o número sozinho apareça nesse caso."
     ],
     "um": [

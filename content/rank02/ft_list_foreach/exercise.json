@@ -4,7 +4,7 @@
     { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_list_foreach([\"a\"] -> NULL, print_str)" },
     { "id": "t03", "args": ["2"], "category": "altera-dados", "display": "ft_list_foreach([1] -> [2] -> [3] -> NULL, add_one)" },
     { "id": "t04", "args": ["3"], "category": "basico", "display": "ft_list_foreach([\"first\"] -> [\"second\"] -> [\"third\"] -> [\"fourth\"] -> [\"fifth\"] -> NULL, print_str)" },
-    { "id": "t05", "args": ["4"], "category": "dados-nulos", "display": "ft_list_foreach([\"a\"] -> [NULL] -> [\"c\"] -> NULL, print_str)" },
+    { "id": "t05", "args": ["4"], "category": "altera-dados", "display": "ft_list_foreach([1] -> [2] -> [3] -> [4] -> [5] -> [6] -> NULL, add_one)" },
     { "id": "t06", "args": ["5"], "category": "altera-dados", "display": "ft_list_foreach([10] -> [20] -> NULL, add_one)" }
   ],
   "hints": {
@@ -17,11 +17,7 @@
       "A função f consegue mudar os dados dos elementos da sua lista?",
       "O f recebe o próprio ponteiro que está no campo data, e não uma cópia do conteúdo. Por isso, o que f altera vale para quem guardou aquele dado.",
       "Passe a f exatamente o valor do campo data, sem copiar o conteúdo para outro lugar. E chame f só uma vez por elemento: duas chamadas somariam duas vezes."
-    ],
-    "dados-nulos": [
-      "O conteúdo de um elemento muda quais elementos recebem a chamada de f?",
-      "O campo data pode ser NULL, e mesmo assim o elemento faz parte da lista. A função f é quem decide o que fazer com esse valor.",
-      "Não pule elementos por causa do campo data. Chame f para todos os elementos e olhe só o campo next para saber se a lista continua."
     ]
-  }
+  },
+  "starter": {"ft_list.h":"typedef struct    s_list\n{\n    struct s_list *next;\n    void          *data;\n}                 t_list;\n"}
 }

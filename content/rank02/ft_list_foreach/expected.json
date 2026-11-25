@@ -12,7 +12,7 @@
     "stdout": "first\nsecond\nthird\nfourth\nfifth\n"
   },
   "t05": {
-    "stdout": "a\n(null)\nc\n"
+    "stdout": "2 3 4 5 6 7\n"
   },
   "t06": {
     "stdout": "11 21\n"

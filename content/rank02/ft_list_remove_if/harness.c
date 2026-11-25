@@ -3,7 +3,7 @@
 ** Monta a lista do caso de número argv[1] (cada elemento é alocado com malloc,
 ** com data apontando para uma string), chama a sua função com uma cópia da
 ** string de referência e a função de comparação cmp_str, imprime os elementos
-** que sobraram e libera só esses (os removidos são responsabilidade sua).
+** que sobraram (os removidos devem ser liberados por você).
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,7 +40,6 @@ static t_list	*make_list(int n, char **data)
 static void	run(int n, char **data, char *ref_text)
 {
 	t_list	*list;
-	t_list	*next;
 	char	ref[16];
 
 	strcpy(ref, ref_text);
@@ -49,9 +48,7 @@ static void	run(int n, char **data, char *ref_text)
 	while (list)
 	{
 		printf("[%s] -> ", (char *)list->data);
-		next = list->next;
-		free(list);
-		list = next;
+		list = list->next;
 	}
 	printf("NULL\n");
 }

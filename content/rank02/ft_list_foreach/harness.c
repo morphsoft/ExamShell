@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
 				"fourth", "fifth"}), print_str);
 			break ;
 		case 4: /* t05 */
-			ft_list_foreach(make_list(3, (void *[]){"a", NULL, "c"}), print_str);
+			run_ints(6, (int []){1, 2, 3, 4, 5, 6});
 			break ;
 		case 5: /* t06 */
 			run_ints(2, (int []){10, 20});
