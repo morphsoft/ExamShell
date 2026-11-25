@@ -32,6 +32,26 @@ function initSession(pool: Pool, seed: number | undefined): RandomSession {
   return startSession(pool, seed ?? Date.now(), Date.now());
 }
 
+/**
+ * "Passou" do nível anterior, no topo do novo. Ganha o foco ao aparecer: o grademe que tinha o foco sumiu
+ * com a tela antiga, e no celular (onde a página rola) é isso que traz o aviso para a vista.
+ */
+function LevelPassedNotice({ exerciseId, level, onClose }: { exerciseId: string; level: Level; onClose(): void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => ref.current?.focus(), []);
+  return (
+    <div ref={ref} tabIndex={-1} className="level-passed" data-testid="level-passed" role="status">
+      <span>
+        <span aria-hidden="true">✓ </span>
+        <b>{exerciseId}</b> passou — agora o nível {level}. Mandou bem!
+      </span>
+      <button type="button" className="chip" aria-label="fechar aviso" onClick={onClose}>
+        ×
+      </button>
+    </div>
+  );
+}
+
 export function RandomScreen({ seed }: { seed?: number }) {
   const [pool] = useState(buildPool);
   const [session, setSession] = useState(() => initSession(pool, seed));
@@ -109,15 +129,12 @@ export function RandomScreen({ seed }: { seed?: number }) {
       onHintUsed={() => act({ type: 'hint' })}
       notice={
         passedId !== null && (
-          <div className="level-passed" data-testid="level-passed" role="status">
-            <span>
-              <span aria-hidden="true">✓ </span>
-              <b>{passedId}</b> passou — agora o nível {session.currentLevel}. Mandou bem!
-            </span>
-            <button type="button" className="chip" aria-label="fechar aviso" onClick={() => setPassedId(null)}>
-              ×
-            </button>
-          </div>
+          <LevelPassedNotice
+            key={passedId}
+            exerciseId={passedId}
+            level={session.currentLevel}
+            onClose={() => setPassedId(null)}
+          />
         )
       }
       statusItems={[

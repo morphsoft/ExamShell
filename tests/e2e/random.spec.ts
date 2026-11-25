@@ -65,6 +65,7 @@ test('modo aleatório: passar um nível avisa e sobe para o próximo', async ({ 
   const banner = page.getByTestId('level-passed');
   await expect(banner).toContainText(`✓ ${id} passou`, { timeout: 60000 });
   await expect(banner).toContainText('agora o nível 2');
+  await expect(banner).toBeFocused(); // o grademe sumiu com a tela antiga; no celular, traz o aviso à vista
   await expect(page.locator('.topbar')).toContainText('nível 2/4');
   expect(idsOfLevel(2)).toContain(await currentId(page));
 

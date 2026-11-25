@@ -255,6 +255,7 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
   color: var(--cyan); font-size: 13px; font-weight: 600; overflow-wrap: anywhere;
 }
 .level-passed b { font-weight: 800; }
+.level-passed:focus-visible { outline-offset: -2px; }
 .level-passed .chip { flex: none; color: var(--cyan); border-color: rgba(0, 186, 188, 0.4); }
 .level-passed .chip:hover { border-color: var(--cyan); }
 
