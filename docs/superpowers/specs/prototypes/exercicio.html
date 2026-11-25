@@ -1,0 +1,315 @@
+<title>ExamShell Tela do Exercício Nova</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: desktop em duas colunas (enunciado | código + terminal), barra de sessão opcional no simulado; celular com três abas (enunciado · código · resultado), barra de símbolos sobre o teclado e ações fixas embaixo. Mesma linguagem do novo início, claro e escuro. */
+:root {
+  --bg: #f4f6f9; --surface: #ffffff; --raise: #f8fafc; --line: #e1e7ef; --line-2: #cfd8e3;
+  --ink: #152230; --muted: #5c6e82; --soft: #8c9bad;
+  --accent: #00999b; --accent-ink: #006f71; --accent-soft: #dff5f5; --on-accent: #ffffff;
+  --l1: #00999b; --l1s: #dff5f5;
+  --ok: #0e9f6e; --ok-soft: #e3f6ee; --bad: #d6336c; --bad-soft: #fdebf1; --warn: #b9770e; --warn-soft: #fdf3df;
+  --code-bg: #fbfcfe; --code-ln: #a7b4c3; --kw: #5b5bd6; --str: #b9770e; --num: #d6336c; --com: #8c9bad;
+  --term-bg: #f1f4f8; --shadow: 0 1px 2px rgba(21, 34, 48, .06), 0 6px 18px rgba(21, 34, 48, .06);
+  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1722; --surface: #162130; --raise: #1a2738; --line: #233246; --line-2: #2e405a;
+  --ink: #e4ebf3; --muted: #93a5b9; --soft: #6f8298;
+  --accent: #1cc4c6; --accent-ink: #5fdcdd; --accent-soft: #123a40; --on-accent: #08262a;
+  --l1: #1cc4c6; --l1s: #123a40;
+  --ok: #34c793; --ok-soft: #12322a; --bad: #f06595; --bad-soft: #3a1a29; --warn: #f0a43a; --warn-soft: #3a2c14;
+  --code-bg: #121c29; --code-ln: #4a5d73; --kw: #8b8cf0; --str: #f0a43a; --num: #f06595; --com: #6f8298;
+  --term-bg: #0d151f; --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0f1722; --surface: #162130; --raise: #1a2738; --line: #233246; --line-2: #2e405a;
+  --ink: #e4ebf3; --muted: #93a5b9; --soft: #6f8298;
+  --accent: #1cc4c6; --accent-ink: #5fdcdd; --accent-soft: #123a40; --on-accent: #08262a;
+  --l1: #1cc4c6; --l1s: #123a40;
+  --ok: #34c793; --ok-soft: #12322a; --bad: #f06595; --bad-soft: #3a1a29; --warn: #f0a43a; --warn-soft: #3a2c14;
+  --code-bg: #121c29; --code-ln: #4a5d73; --kw: #8b8cf0; --str: #f0a43a; --num: #f06595; --com: #6f8298;
+  --term-bg: #0d151f; --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--bg); color: var(--ink); }
+body { font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+.code, .examples, .terminal, .runbar input, .gutter, .result .body, .crumb h1 { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 60%, transparent); outline-offset: 2px; }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+.proto { background: #0b1118; color: #b7c4d2; font: 600 13px var(--sans); }
+.proto .in { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding-block: 9px; }
+.proto .seg2 { display: inline-flex; border: 1px solid #3a4a5c; border-radius: 999px; overflow: hidden; }
+.proto .seg2 button { border: 0; background: transparent; color: #b7c4d2; padding: 4px 12px; font-weight: 700; font-size: 12.5px; }
+.proto .seg2 button[aria-pressed="true"] { background: #e2eaf2; color: #0b1118; }
+.proto .note { color: #f5c46b; }
+.proto .rate { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.proto .rate button { border: 1px solid #3a4a5c; background: transparent; color: #e2eaf2; border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: 12.5px; }
+.proto .rate button[aria-pressed="true"] { background: #f5c46b; border-color: #f5c46b; color: #0b1118; }
+.proto #saved { font-size: 12px; color: #8ea0b3; }
+
+/* topo */
+.top { background: var(--surface); border-bottom: 1px solid var(--line); }
+.top .in { display: flex; align-items: center; gap: 12px 16px; padding-block: 9px; }
+.back { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--muted); text-decoration: none; font-size: 14px; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); color: var(--on-accent); display: inline-grid; place-items: center; font: 700 12px var(--mono); }
+.crumb { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.crumb .lv { font-weight: 800; font-size: 13px; color: var(--l1); background: var(--l1s); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+.crumb h1 { margin: 0; font: 700 19px var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.crumb .kind { color: var(--muted); font-weight: 700; font-size: 13px; white-space: nowrap; }
+.top .right { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.iconbtn { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; color: var(--muted); }
+.iconbtn svg { width: 18px; height: 18px; }
+.status { font-weight: 700; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.status b { color: var(--warn); }
+
+/* barra da sessão (simulado) */
+.session { background: var(--raise); border-bottom: 1px solid var(--line); }
+.session .in { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding-block: 8px; }
+.steps { display: flex; gap: 6px; align-items: center; }
+.steps span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 13px; border: 2px solid var(--line-2); color: var(--muted); }
+.steps span.cur { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.steps i { width: 14px; height: 2px; background: var(--line-2); }
+.clock { font: 700 22px var(--mono); letter-spacing: .02em; }
+.clock small { font: 700 12px var(--sans); color: var(--muted); margin-left: 6px; letter-spacing: 0; }
+.session .acts { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { border: 1px solid var(--line-2); background: var(--surface); border-radius: 10px; padding: 8px 14px; font-weight: 800; font-size: 14px; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.quiet { border-color: transparent; background: transparent; color: var(--muted); }
+.btn kbd { font: 600 11px var(--mono); opacity: .75; }
+
+/* área principal desktop */
+.work { display: grid; grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.25fr); gap: 0; height: calc(100vh - 140px); min-height: 560px; }
+.pane { min-width: 0; min-height: 0; display: grid; }
+.subject { overflow: auto; padding: 22px 24px 28px; border-right: 1px solid var(--line); background: var(--surface); display: grid; gap: 16px; align-content: start; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.facts span { border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-weight: 700; font-size: 13px; color: var(--muted); }
+.facts span b { color: var(--ink); font-family: var(--mono); font-weight: 600; }
+.langs { display: inline-flex; background: var(--raise); border: 1px solid var(--line); border-radius: 9px; padding: 2px; margin-left: auto; }
+.langs button { border: 0; background: transparent; border-radius: 7px; padding: 3px 10px; font-weight: 800; font-size: 12.5px; color: var(--muted); }
+.langs button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.subject p { margin: 0; font-size: 16px; font-weight: 500; max-width: 62ch; }
+.subject h2 { margin: 6px 0 0; font-size: 13px; font-weight: 800; color: var(--muted); }
+.examples { background: var(--term-bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font: 13.5px/1.6 var(--mono); overflow-x: auto; white-space: pre; }
+.examples .cmd { color: var(--ink); } .examples .pr { color: var(--accent-ink); font-weight: 700; } .examples .out { color: var(--muted); }
+
+.right-pane { display: grid; grid-template-rows: auto minmax(0, 1fr) auto minmax(220px, 1fr); min-height: 0; }
+.tabs-ed { display: flex; align-items: center; gap: 2px; padding: 6px 10px 0; background: var(--raise); border-bottom: 1px solid var(--line); }
+.tabs-ed button { border: 1px solid transparent; border-bottom: 0; background: transparent; border-radius: 9px 9px 0 0; padding: 7px 12px; font: 600 13px var(--mono); color: var(--muted); }
+.tabs-ed button[aria-selected="true"] { background: var(--code-bg); border-color: var(--line); color: var(--ink); margin-bottom: -1px; }
+.tabs-ed .sp { margin-left: auto; display: flex; gap: 4px; padding-bottom: 6px; }
+.tabs-ed .sp button { border: 1px solid var(--line); border-radius: 8px; padding: 3px 9px; font: 700 12px var(--sans); }
+.editor { position: relative; background: var(--code-bg); min-height: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr); overflow: hidden; }
+.gutter { padding: 12px 8px 12px 0; text-align: right; font: 14px/1.6 var(--mono); color: var(--code-ln); user-select: none; overflow: hidden; white-space: pre; }
+.code { margin: 0; padding: 12px 14px; border: 0; outline: none; resize: none; background: transparent; color: var(--ink); font: 14px/1.6 var(--mono); tab-size: 4; white-space: pre; overflow: auto; width: 100%; height: 100%; }
+.runbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 12px; background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.runbar .pr { font: 700 13.5px var(--mono); color: var(--accent-ink); white-space: nowrap; }
+.runbar input { flex: 1 1 180px; min-width: 0; border: 1px solid var(--line-2); border-radius: 9px; padding: 7px 10px; background: var(--raise); color: var(--ink); font: 13.5px var(--mono); }
+.runbar .help { flex-basis: 100%; font-size: 13px; font-weight: 600; color: var(--muted); }
+.terminal { background: var(--term-bg); overflow: auto; padding: 12px 14px 18px; display: grid; gap: 10px; align-content: start; font: 13.5px/1.55 var(--mono); }
+.terminal .line { color: var(--muted); }
+.terminal .line b { color: var(--accent-ink); font-weight: 700; }
+.result { border-radius: 12px; border: 1px solid var(--line); background: var(--surface); overflow: hidden; font-family: var(--sans); }
+.result .head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 12px; }
+.result .title { font-weight: 800; font-size: 15px; }
+.result.fail { border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
+.result.fail .title { color: var(--bad); }
+.result.pass { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); background: var(--ok-soft); }
+.result.pass .title { color: var(--ok); }
+.dots { display: flex; gap: 4px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-2); }
+.dots i.ok { background: var(--ok); } .dots i.bad { background: var(--bad); }
+.result .body { padding: 0 12px 12px; display: grid; gap: 6px; font: 13.5px/1.55 var(--mono); }
+.result .cmd { color: var(--ink); }
+.result .row { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 8px; }
+.result .row span:first-child { color: var(--muted); font-family: var(--sans); font-weight: 700; font-size: 13px; }
+.result mark { background: var(--bad-soft); color: var(--bad); border-radius: 3px; padding: 0 1px; outline: 1px solid color-mix(in srgb, var(--bad) 40%, transparent); }
+.hint { display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; padding: 10px 12px; background: var(--warn-soft); border-top: 1px solid color-mix(in srgb, var(--warn) 30%, var(--line)); font-family: var(--sans); }
+.hint p { margin: 0; flex: 1 1 240px; font-weight: 600; }
+.hint p b { color: var(--warn); }
+.hint .btn { padding: 6px 12px; font-size: 13px; }
+.old { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--muted); border: 1px dashed var(--line-2); border-radius: 10px; padding: 6px 10px; background: transparent; text-align: left; }
+.next { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 12px 12px; }
+
+/* celular */
+.mtabs, .mkeys, .mbar, .mfoot { display: none; }
+@media (max-width: 820px) {
+  .crumb .kind, .status { display: none; }
+  .work { display: block; height: auto; min-height: 0; }
+  .subject { border-right: 0; padding: 18px 16px 24px; }
+  .right-pane { display: grid; grid-template-rows: auto auto auto; }
+  .editor { height: 52vh; }
+  .terminal { min-height: 52vh; }
+  .runbar { border-bottom: 0; }
+  .runbar .run-desk { display: none; }
+  .mtabs { display: flex; position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .mtabs button { flex: 1; border: 0; background: transparent; padding: 11px 0 9px; font-weight: 800; font-size: 14px; color: var(--muted); border-bottom: 3px solid transparent; }
+  .mtabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .mtabs .badge { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--bad); margin-left: 6px; vertical-align: 2px; }
+  .mkeys { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; padding: 7px 8px; background: var(--raise); border-top: 1px solid var(--line); }
+  .mkeys button { border: 1px solid var(--line-2); background: var(--surface); border-radius: 8px; padding: 8px 0; font: 700 15px var(--mono); color: var(--ink); }
+  .mkeys button.w2 { grid-column: span 2; font: 800 12.5px var(--sans); color: var(--muted); }
+  .mfoot { display: block; position: sticky; bottom: 0; z-index: 6; }
+  .mfoot[data-mtab="enunciado"] .mkeys, .mfoot[data-mtab="resultado"] .mkeys { display: none; }
+  .mbar { display: flex; gap: 8px; background: var(--surface); border-top: 1px solid var(--line); padding: 8px max(12px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+  .mbar .btn { flex: 1; justify-content: center; padding: 11px 0; }
+  .work[data-mtab="enunciado"] .right-pane, .work[data-mtab="codigo"] .subject, .work[data-mtab="codigo"] .terminal, .work[data-mtab="resultado"] .subject, .work[data-mtab="resultado"] .editor, .work[data-mtab="resultado"] .tabs-ed, .work[data-mtab="resultado"] .mkeys, .mfoot[data-mtab="enunciado"] .run-m { display: none; }
+  .work[data-mtab="resultado"] .runbar { display: none; }
+  .session .clock { font-size: 18px; }
+  .session .acts .btn { padding: 6px 10px; font-size: 13px; }
+}
+.fb { padding-block: 24px 120px; display: grid; gap: 8px; max-width: 1120px; margin: 0 auto; }
+.fb label { font-weight: 800; }
+.fb textarea { width: 100%; min-height: 90px; resize: vertical; background: var(--surface); color: var(--ink); border: 1px solid var(--line-2); border-radius: 12px; padding: 12px; font: 600 15px var(--sans); }
+.fb .notice { color: var(--warn); font-weight: 700; font-size: 14px; } .fb .notice:empty { display: none; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 019.5 4.5a8 8 0 1010 10z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="proto gut"><div class="in">
+  <span>protótipo</span>
+  <span class="seg2" role="group" aria-label="Modo"><button type="button" data-mode="treino" aria-pressed="true">treino</button><button type="button" data-mode="simulado" aria-pressed="false">simulado</button></span>
+  <span class="seg2" role="group" aria-label="Estado"><button type="button" data-state="inicio" aria-pressed="false">antes</button><button type="button" data-state="falha" aria-pressed="true">falhou</button><button type="button" data-state="passou" aria-pressed="false">passou</button></span>
+  <span class="note">abra no celular para ver as abas e a barra de símbolos</span>
+  <span class="rate" role="group" aria-label="O que achou"><button type="button" data-v="curti">curti</button><button type="button" data-v="quase">quase lá</button><button type="button" data-v="nao">não é isso</button><span id="saved" aria-live="polite"></span></span>
+</div></div>
+
+<header class="top gut"><div class="in">
+  <a class="back" href="#" aria-label="Voltar ao início"><svg width="18" height="18"><use href="#i-back"/></svg><span class="brand"><span class="mark">&gt;_</span></span></a>
+  <div class="crumb"><span class="lv">nível 1</span><h1>first_word</h1><span class="kind">programa</span></div>
+  <div class="right"><span class="status" id="status">ainda não passou · <b>tentativa 2</b></span><button type="button" class="iconbtn" id="theme" aria-label="Trocar entre tema claro e escuro"><svg><use href="#i-moon"/></svg></button></div>
+</div></header>
+
+<div class="session gut" id="session" hidden><div class="in">
+  <span class="steps" aria-label="Níveis da prova: você está no 1"><span class="cur">1</span><i></i><span>2</span><i></i><span>3</span><i></i><span>4</span></span>
+  <span class="clock">2:41:07<small>restantes</small></span>
+  <span class="acts"><button type="button" class="btn">Sortear outro</button><button type="button" class="btn">Pular nível</button><button type="button" class="btn quiet">Encerrar</button></span>
+</div></div>
+
+<div class="work" id="work" data-mtab="codigo">
+  <div class="mtabs" role="tablist" aria-label="Partes do exercício"><button type="button" role="tab" data-mt="enunciado" aria-selected="false">Enunciado</button><button type="button" role="tab" data-mt="codigo" aria-selected="true">Código</button><button type="button" role="tab" data-mt="resultado" aria-selected="false" id="mt-res">Resultado</button></div>
+
+  <section class="pane subject" aria-label="Enunciado">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <div class="facts"><span>arquivo <b>first_word.c</b></span><span>permitidas <b>write</b></span><span>8 testes</span></div>
+      <span class="langs" role="group" aria-label="Idioma"><button type="button" aria-pressed="false">EN</button><button type="button" aria-pressed="true">PT</button></span>
+    </div>
+    <p>Escreva um programa que recebe uma string e exibe a primeira palavra dela, seguida de uma quebra de linha.</p>
+    <p>Uma palavra é um trecho da string delimitado por espaços/tabs, ou pelo início/fim da string.</p>
+    <p>Se o número de parâmetros não for 1, ou se a string não tiver nenhuma palavra, exiba apenas uma quebra de linha.</p>
+    <h2>Exemplos</h2>
+<div class="examples"><span class="pr">$&gt;</span> <span class="cmd">./first_word "FOR PONY" | cat -e</span>
+<span class="out">FOR$</span>
+<span class="pr">$&gt;</span> <span class="cmd">./first_word "   " | cat -e</span>
+<span class="out">$</span>
+<span class="pr">$&gt;</span> <span class="cmd">./first_word "a" "b" | cat -e</span>
+<span class="out">$</span>
+<span class="pr">$&gt;</span> <span class="cmd">./first_word "  lorem,ipsum  " | cat -e</span>
+<span class="out">lorem,ipsum$</span></div>
+  </section>
+
+  <section class="pane right-pane" aria-label="Código e resultado">
+    <div class="tabs-ed" role="tablist" aria-label="Arquivos"><button type="button" role="tab" aria-selected="true">first_word.c</button><span class="sp"><button type="button" title="Recomeçar o arquivo">recomeçar</button><button type="button" title="Ativar modo vim">vim</button></span></div>
+    <div class="editor"><div class="gutter" id="gutter" aria-hidden="true"></div><textarea class="code" id="code" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Código de first_word.c"></textarea></div>
+    <div class="runbar"><span class="pr">$&gt; ./first_word</span><input id="args" value='"  hello world"' aria-label="Argumentos para rodar" spellcheck="false"><span class="run-desk" style="display:flex;gap:8px"><button type="button" class="btn" data-act="rodar">Rodar <kbd>⌃⇧↵</kbd></button><button type="button" class="btn primary" data-act="grademe">Grademe <kbd>⌃↵</kbd></button></span></div>
+    <div class="terminal" id="term" aria-live="polite"></div>
+  </section>
+</div>
+<div class="mfoot" id="mfoot" data-mtab="codigo"><div class="mkeys" aria-label="Símbolos"><button type="button" data-k="{">{</button><button type="button" data-k="}">}</button><button type="button" data-k="(">(</button><button type="button" data-k=")">)</button><button type="button" data-k="[">[</button><button type="button" data-k="]">]</button><button type="button" data-k=";">;</button><button type="button" data-k="*">*</button><button type="button" data-k="&amp;">&amp;</button><button type="button" data-k="'">'</button><button type="button" data-k='"'>"</button><button type="button" data-k="\">\</button><button type="button" data-k="|">|</button><button type="button" data-k="&lt;">&lt;</button><button type="button" data-k="&#9;" class="w2">tab ⇥</button></div><div class="mbar"><button type="button" class="btn run-m" data-act="rodar">Rodar</button><button type="button" class="btn primary" data-act="grademe">Grademe</button></div></div>
+
+<div class="gut"><div class="fb"><label for="comentario">O que achou? O que mudaria?</label><textarea id="comentario" placeholder="Fica salvo nesta página; eu leio direto daqui."></textarea><span class="notice" id="notice"></span></div></div>
+
+<script>
+var CODE = "#include <unistd.h>\n\nint\tmain(int argc, char **argv)\n{\n\t/* seu código aqui (texto de exemplo do protótipo, sem solução) */\n\twrite(1, \"\\n\", 1);\n\treturn (0);\n}\n";
+var code = document.getElementById("code"), gutter = document.getElementById("gutter"), term = document.getElementById("term");
+code.value = CODE;
+function lines() { var n = code.value.split("\n").length; var s = ""; for (var i = 1; i <= n; i++) s += i + "\n"; gutter.textContent = s; }
+code.addEventListener("input", lines); code.addEventListener("scroll", function () { gutter.scrollTop = code.scrollTop; }); lines();
+code.addEventListener("keydown", function (e) { if (e.key === "Tab") { e.preventDefault(); insert("\t"); } if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); act(e.shiftKey ? "rodar" : "grademe"); } });
+function insert(t) { var s = code.selectionStart, en = code.selectionEnd; code.setRangeText(t, s, en, "end"); code.focus(); lines(); }
+document.querySelectorAll(".mkeys button").forEach(function (b) { b.addEventListener("pointerdown", function (e) { e.preventDefault(); }); b.addEventListener("click", function () { insert(b.dataset.k); }); });
+
+var hintsShown = 0, state = "falha", mode = "treino";
+var HINTS = ["E se a string já começar com espaços?", "Antes de imprimir, o seu laço precisa passar por cima dos separadores do começo.", "Pule espaços e tabs até achar o primeiro caractere visível; só então comece a imprimir, e pare no próximo separador."];
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function renderTerm() {
+  var h = '<div class="line"><b>$&gt;</b> ./first_word "  hello world"</div><div class="line" style="color:var(--ink)">$</div>';
+  if (state === "inicio") { term.innerHTML = '<div class="line">Escreva o código e clique em <b>Rodar</b> para testar com seus argumentos, ou em <b>Grademe</b> para corrigir com os testes da prova.</div>'; markRes(false); return; }
+  h = '<button type="button" class="old">▸ grademe anterior: erro de compilação (variável x não usada)</button>' + h;
+  if (state === "falha") {
+    h += '<div class="line"><b>$&gt;</b> grademe</div><div class="result fail"><div class="head"><span class="title">✗ Falhou no teste 5 de 8</span><span class="dots" aria-label="4 testes passaram, o 5º falhou"><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="bad"></i><i></i><i></i><i></i></span></div>' +
+      '<div class="body"><span class="cmd">./first_word "  lorem,ipsum  "</span><span class="row"><span>esperado</span><span><mark>l</mark>orem,ipsum$</span></span><span class="row"><span>recebido</span><span><mark>$</mark></span></span></div>' +
+      '<div class="hint">' + (hintsShown ? '<p><b>Dica ' + hintsShown + ' de 3 ·</b> ' + esc(HINTS[hintsShown - 1]) + '</p>' : '<p style="color:var(--muted)">Travou? As dicas ajudam sem entregar a resposta.</p>') +
+      (hintsShown < 3 ? '<button type="button" class="btn" id="morehint">' + (hintsShown ? 'Próxima dica (' + (hintsShown + 1) + '/3)' : 'Pedir dica') + '</button>' : '') + '</div></div>';
+    markRes(true);
+  } else {
+    h += '<div class="line"><b>$&gt;</b> grademe</div><div class="result pass"><div class="head"><span class="title">✓ Passou nos 8 testes</span><span class="dots" aria-hidden="true"><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i></span></div>' +
+      '<div class="body" style="font-family:var(--sans);font-weight:600;font-size:14.5px">Mandou bem! Nível 1 agora está em 6 de 12. Na prova, este exercício estaria validado.</div>' +
+      '<div class="next">' + (mode === "simulado" ? '<button type="button" class="btn primary">Ir para o nível 2</button>' : '<button type="button" class="btn primary">Sortear outro do nível 1</button><button type="button" class="btn">Voltar ao início</button>') + '</div></div>';
+    markRes(true);
+  }
+  term.innerHTML = h;
+  term.scrollTop = term.scrollHeight;
+  var mh = document.getElementById("morehint"); if (mh) mh.addEventListener("click", function () { hintsShown++; renderTerm(); var n = document.getElementById("morehint"); if (n) n.focus(); });
+  document.getElementById("status").innerHTML = state === "passou" ? '<b style="color:var(--ok)">passou ✓</b>' : 'ainda não passou · <b>tentativa 2</b>';
+}
+function markRes(on) { var t = document.getElementById("mt-res"); t.innerHTML = "Resultado" + (on && document.getElementById("work").dataset.mtab !== "resultado" ? '<span class="badge" aria-label="novo"></span>' : ""); }
+function act(a) {
+  if (a === "grademe") { state = state === "inicio" ? "falha" : state; hintsShown = 0; setState(state); setTab("resultado"); }
+  else { setTab("resultado"); }
+}
+function setTab(t) { var w = document.getElementById("work"); w.dataset.mtab = t; document.getElementById("mfoot").dataset.mtab = t; document.querySelectorAll(".mtabs button").forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.mt === t)); }); renderTerm(); }
+function setState(s) { state = s; hintsShown = s === "falha" ? 1 : 0; document.querySelectorAll("[data-state]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.state === s)); }); renderTerm(); }
+document.querySelectorAll(".mtabs button").forEach(function (b) { b.addEventListener("click", function () { setTab(b.dataset.mt); }); });
+document.querySelectorAll("[data-act]").forEach(function (b) { b.addEventListener("click", function () { act(b.dataset.act); }); });
+document.querySelectorAll("[data-state]").forEach(function (b) { b.addEventListener("click", function () { setState(b.dataset.state); }); });
+document.querySelectorAll("[data-mode]").forEach(function (b) { b.addEventListener("click", function () { mode = b.dataset.mode; document.querySelectorAll("[data-mode]").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); }); document.getElementById("session").hidden = mode !== "simulado"; document.querySelector(".crumb .lv").textContent = mode === "simulado" ? "nível 1 de 4" : "nível 1"; renderTerm(); }); });
+(function () {
+  var root = document.documentElement, btn = document.getElementById("theme");
+  function isDark() { var t = root.getAttribute("data-theme"); return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; }
+  function paint() { btn.innerHTML = '<svg><use href="#' + (isDark() ? "i-sun" : "i-moon") + '"/></svg>'; }
+  btn.addEventListener("click", function () { root.setAttribute("data-theme", isDark() ? "light" : "dark"); paint(); });
+  paint();
+})();
+setState("falha");
+
+(function () {
+  var notice = document.getElementById("notice"), ta = document.getElementById("comentario"), saved = document.getElementById("saved");
+  var st = { nota: "", comentario: "" }, ref = null, writing = false, again = false, timer = null;
+  function paint() { document.querySelectorAll(".rate button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.v === st.nota)); }); if (document.activeElement !== ta && ta.value !== st.comentario) ta.value = st.comentario; }
+  async function save() {
+    if (!ref) return; if (writing) { again = true; return; } writing = true; saved.textContent = "salvando…";
+    try { await ref.set({ nota: st.nota, comentario: st.comentario, tema: document.documentElement.getAttribute("data-theme") || "sistema", updatedAt: Date.now() }); saved.textContent = "salvo"; notice.textContent = ""; }
+    catch (e) { saved.textContent = ""; notice.textContent = "Não consegui salvar (" + ((e && e.code) || "erro") + "). Tente de novo em instantes."; }
+    writing = false; if (again) { again = false; save(); }
+  }
+  document.querySelectorAll(".rate button").forEach(function (b) { b.addEventListener("click", function () { st.nota = st.nota === b.dataset.v ? "" : b.dataset.v; paint(); save(); }); });
+  ta.addEventListener("input", function () { st.comentario = ta.value; clearTimeout(timer); timer = setTimeout(save, 900); });
+  ta.addEventListener("blur", function () { clearTimeout(timer); save(); });
+  paint();
+  (async function () {
+    var db = null; try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+    if (!db) { notice.textContent = "Esta visualização não salva a opinião. Abra no claude.ai, logado, para registrar."; return; }
+    ref = db.doc("opiniao/atual");
+    var slow = setTimeout(function () { notice.textContent = "Ainda carregando a opinião salva…"; }, 10000);
+    ref.onSnapshot(function (snap) {
+      if (!snap.metadata.fromCache) { clearTimeout(slow); if (notice.textContent.indexOf("carregando") >= 0) notice.textContent = ""; }
+      if (writing || !snap.exists) return; var d = snap.data() || {};
+      st.nota = typeof d.nota === "string" ? d.nota : ""; st.comentario = typeof d.comentario === "string" ? d.comentario : ""; paint();
+    }, function (e) { clearTimeout(slow); notice.textContent = "Não consegui carregar a opinião salva (" + ((e && e.code) || "erro") + ")."; });
+  })();
+})();
+</script>
