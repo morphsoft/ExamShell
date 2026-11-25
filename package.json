@@ -14,7 +14,8 @@
     "test:content": "vitest run --project content",
     "gen:expected": "python3 scripts/gen_expected.py",
     "gen:expected:wsl": "wsl python3 scripts/gen_expected.py",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "check:dist": "node scripts/check-no-reference.mjs"
   },
   "dependencies": {
     "@bjorn3/browser_wasi_shim": "^0.4.2",
