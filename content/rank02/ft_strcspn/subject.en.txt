@@ -1,0 +1,15 @@
+Assignment name  : ft_strcspn
+Expected files   : ft_strcspn.c
+Allowed functions:
+--------------------------------------------------------------------------------
+Reproduce exactly the behavior of the function strcspn (man strcspn).
+
+The function should be prototyped as follows:
+
+size_t	ft_strcspn(const char *s, const char *reject);
+
+Examples:
+
+ft_strcspn("abcdef", "dx") returns 3.
+ft_strcspn("abcdef", "xyz") returns 6.
+ft_strcspn("abc", "a") returns 0.

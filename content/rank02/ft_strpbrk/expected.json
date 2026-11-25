@@ -1,0 +1,32 @@
+{
+  "t01": {
+    "stdout": "o, World (indice 4)\n"
+  },
+  "t02": {
+    "stdout": "(null)\n"
+  },
+  "t03": {
+    "stdout": "abcdef (indice 0)\n"
+  },
+  "t04": {
+    "stdout": "(null)\n"
+  },
+  "t05": {
+    "stdout": "(null)\n"
+  },
+  "t06": {
+    "stdout": "o world (indice 4)\n"
+  },
+  "t07": {
+    "stdout": "bcabc (indice 1)\n"
+  },
+  "t08": {
+    "stdout": "(null)\n"
+  },
+  "t09": {
+    "stdout": "c (indice 2)\n"
+  },
+  "t10": {
+    "stdout": " b (indice 1)\n"
+  }
+}

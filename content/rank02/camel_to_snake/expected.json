@@ -1,0 +1,23 @@
+{
+  "t01": {
+    "stdout": "here_is_a_camel_case_word\n"
+  },
+  "t02": {
+    "stdout": "hello_world\n"
+  },
+  "t03": {
+    "stdout": "\n"
+  },
+  "t04": {
+    "stdout": "hello\n"
+  },
+  "t05": {
+    "stdout": "a_b\n"
+  },
+  "t06": {
+    "stdout": "x\n"
+  },
+  "t07": {
+    "stdout": "one_two_three_four_five_six_seven_eight_nine_ten\n"
+  }
+}

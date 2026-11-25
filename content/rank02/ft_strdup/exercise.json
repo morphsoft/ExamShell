@@ -1,0 +1,95 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_strdup(\"Hello\")"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strdup(\"\")"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "basico",
+      "display": "ft_strdup(\"The quick brown fox\")"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "basico",
+      "display": "ft_strdup(\"x\")"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "copia-independente",
+      "display": "ft_strdup(src) /* src = \"Hello\"; depois src[0] = '#' */"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "terminador-nulo",
+      "display": "ft_strdup(\"ab\") /* o heap acabou de ser sujo */"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "basico",
+      "display": "ft_strdup(\"  \\t  \")"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "string-longa",
+      "display": "ft_strdup(\"aaaa…aaaa\") /* 200 caracteres */"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A função devolve uma cópia da string, em um espaço que ela mesma reservou?",
+      "O strdup não copia para um lugar que já existe: ele reserva memória nova, com o tamanho certo, e copia a string para lá. O endereço devolvido é desse espaço novo.",
+      "A ideia decisiva é o tamanho: conte os caracteres de src e reserve uma posição a mais do que isso. Como só o malloc é permitido, a contagem é feita por você."
+    ],
+    "string-vazia": [
+      "O que a função devolve para uma string vazia?",
+      "A string vazia ainda precisa de um bloco de 1 posição, onde fica o '\\0'. O resultado não é NULL.",
+      "O tamanho a reservar é o comprimento mais um, que para a string vazia dá 1. Escreva o '\\0' nessa posição, mesmo sem nenhum caractere para copiar."
+    ],
+    "copia-independente": [
+      "A cópia continua igual quando a string original muda?",
+      "Se você devolver o mesmo ponteiro que recebeu, não há cópia nenhuma: alterar src altera o resultado. O strdup devolve um bloco novo, diferente de src.",
+      "Devolva o ponteiro que veio do malloc, e nunca o src. Os caracteres precisam ser copiados para o bloco novo."
+    ],
+    "terminador-nulo": [
+      "A cópia termina com o '\\0'?",
+      "A string copiada precisa do próprio '\\0' no final. O malloc não zera nada: o que sobra na memória é lixo, e sem o '\\0' a string cresce para além da cópia.",
+      "Reserve uma posição a mais para o '\\0' e escreva-o logo depois do último caractere copiado."
+    ],
+    "string-longa": [
+      "A sua função copia strings grandes sem cortar nada?",
+      "O tamanho do bloco e a cópia dependem do tamanho de src. Qualquer valor fixo no seu código corta as strings que forem maiores.",
+      "Não use números fixos para o tamanho. Conte os caracteres de src, seja qual for o tamanho dela."
+    ]
+  }
+}

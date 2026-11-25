@@ -1,0 +1,137 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_strcspn(\"abcdef\", \"dx\")"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "nenhum-rejeitado",
+      "display": "ft_strcspn(\"abcdef\", \"xyz\")"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "primeiro-caractere",
+      "display": "ft_strcspn(\"abc\", \"a\")"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "basico",
+      "display": "ft_strcspn(\"Hello, World\", \"o,\")"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strcspn(\"\", \"abc\")"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "reject-vazio",
+      "display": "ft_strcspn(\"abc\", \"\")"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "ordem-do-reject",
+      "display": "ft_strcspn(\"hello world\", \"wo\")"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "ordem-do-reject",
+      "display": "ft_strcspn(\"abcabc\", \"cb\")"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "basico",
+      "display": "ft_strcspn(\"aaaaab\", \"b\")"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "primeiro-caractere",
+      "display": "ft_strcspn(\"abc\", \"abc\")"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "10"
+      ],
+      "category": "maiusculas-minusculas",
+      "display": "ft_strcspn(\"Hello\", \"h\")"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "11"
+      ],
+      "category": "basico",
+      "display": "ft_strcspn(\"one two\", \" \")"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A função conta quantos caracteres do começo de s não estão em reject?",
+      "O resultado é a posição do primeiro caractere de s que também aparece em reject. Tudo o que vem antes dele, e só isso, entra na contagem.",
+      "A ideia decisiva é que, para cada caractere de s, é preciso procurá-lo dentro de reject inteira. O primeiro que for achado lá encerra a contagem."
+    ],
+    "nenhum-rejeitado": [
+      "E se nenhum caractere de s estiver em reject?",
+      "Então a contagem vai até o fim de s, e o resultado é o comprimento inteiro dela. É isso que o strcspn devolve.",
+      "O '\\0' de s não é um caractere a procurar em reject. Quando s acabar sem nenhum achado, o resultado é a posição onde ela acabou."
+    ],
+    "primeiro-caractere": [
+      "E se o primeiro caractere de s já estiver em reject?",
+      "Então nenhum caractere entra na contagem, e o resultado é 0.",
+      "A conferência de cada caractere acontece antes de ele ser contado. Assim, quando o primeiro já está em reject, o resultado é 0, sem nenhum caso especial."
+    ],
+    "string-vazia": [
+      "O que sai quando s é uma string vazia?",
+      "Sem nenhum caractere em s, não há o que contar: o resultado é 0, seja qual for reject.",
+      "A leitura de s testa o '\\0' dela antes de qualquer outra coisa. Com s vazia, não há nenhum caractere para olhar."
+    ],
+    "reject-vazio": [
+      "E se reject for uma string vazia?",
+      "Nenhum caractere de s pode estar numa string vazia, então a contagem vai até o fim de s. O resultado é o comprimento inteiro dela.",
+      "A busca em reject termina no '\\0' dela. Com reject vazia, a busca termina logo na primeira posição, sem achar nada."
+    ],
+    "ordem-do-reject": [
+      "A ordem dos caracteres em reject muda o resultado?",
+      "Não. Reject funciona como um conjunto, e vale o primeiro caractere de s que aparece em qualquer posição dele.",
+      "Não ande em s e em reject ao mesmo tempo. Para cada posição de s, procure o caractere em reject inteira."
+    ],
+    "maiusculas-minusculas": [
+      "'H' e 'h' são o mesmo caractere para o strcspn?",
+      "Não. A comparação é exata, e a caixa importa.",
+      "Compare os caracteres diretamente, sem mudar a caixa de nenhum deles."
+    ]
+  }
+}

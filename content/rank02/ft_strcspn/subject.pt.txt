@@ -1,0 +1,15 @@
+Nome do exercício  : ft_strcspn
+Arquivos esperados : ft_strcspn.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+Reproduza exatamente o comportamento da função strcspn (man strcspn).
+
+A função deve ser declarada assim:
+
+size_t	ft_strcspn(const char *s, const char *reject);
+
+Exemplos:
+
+ft_strcspn("abcdef", "dx") devolve 3.
+ft_strcspn("abcdef", "xyz") devolve 6.
+ft_strcspn("abc", "a") devolve 0.

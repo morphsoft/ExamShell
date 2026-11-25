@@ -1,0 +1,167 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "123",
+        "*",
+        "456"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "9828",
+        "/",
+        "234"
+      ],
+      "category": "divisao"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "1",
+        "+",
+        "-43"
+      ],
+      "category": "negativos"
+    },
+    {
+      "id": "t04",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "10",
+        "-",
+        "3"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "3",
+        "-",
+        "10"
+      ],
+      "category": "negativos"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "10",
+        "%",
+        "3"
+      ],
+      "category": "modulo"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "-7",
+        "%",
+        "3"
+      ],
+      "category": "modulo"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "-9",
+        "/",
+        "2"
+      ],
+      "category": "divisao"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "7",
+        "/",
+        "2"
+      ],
+      "category": "divisao"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "0",
+        "*",
+        "5"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "2147483647",
+        "+",
+        "0"
+      ],
+      "category": "limites"
+    },
+    {
+      "id": "t13",
+      "args": [
+        "-2147483648",
+        "+",
+        "0"
+      ],
+      "category": "limites"
+    },
+    {
+      "id": "t14",
+      "args": [
+        "1",
+        "+"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t15",
+      "args": [
+        "1",
+        "+",
+        "2",
+        "3"
+      ],
+      "category": "argumentos"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O resultado da operação pedida é mostrado, com a quebra de linha no final?",
+      "Os números chegam como strings e precisam virar int antes da conta. O operador também chega como string: o primeiro caractere dela diz qual conta fazer.",
+      "A escolha da operação é feita pelo caractere do operador, o argv[2][0], e não pelo endereço da string. Compare esse caractere com cada operador possível."
+    ],
+    "argumentos": [
+      "O que o programa faz quando o número de argumentos não é o pedido?",
+      "O enunciado pede exatamente três parâmetros: dois números e um operador. Em qualquer outro caso, o programa só escreve a quebra de linha. O argc inclui o nome do programa.",
+      "Confira se o argc vale 4 antes de ler o argv[1], o argv[2] ou o argv[3]. Em qualquer outro caso, mostre só a quebra de linha."
+    ],
+    "negativos": [
+      "Os números negativos, na entrada ou no resultado, saem certos?",
+      "Os números podem chegar com um '-' na frente, e o resultado pode ser negativo mesmo quando a conta começa com números positivos, como em 3 - 10. A função de conversão aceita o sinal, e o printf mostra o sinal do resultado.",
+      "Não trate o sinal de menos você mesmo. Faça todas as contas com int e deixe a conversão e o printf cuidarem do '-'. Lembre que o '-' do operador está no argv[2], que não é um número."
+    ],
+    "divisao": [
+      "A divisão entre inteiros sai como o C faz, sem casas decimais?",
+      "A divisão de dois int dá um int: a parte decimal é cortada, e nos negativos o corte vai em direção ao zero. Por exemplo, -9 dividido por 2 dá -4.",
+      "Faça a conta com int e mostre o resultado com %d. Não use ponto flutuante e não arredonde por conta própria."
+    ],
+    "modulo": [
+      "O resto da divisão sai certo, inclusive quando o primeiro número é negativo?",
+      "O operador '%' dá o resto da divisão inteira, e o resultado tem o sinal do primeiro número: -7 % 3 dá -1.",
+      "Confira que o seu programa trata o caractere '%' como uma das operações possíveis, e use o operador '%' do C. Você não precisa escrever o caractere '%' na saída."
+    ],
+    "limites": [
+      "O programa lida bem com os valores extremos do int?",
+      "O INT_MAX tem 10 dígitos e o INT_MIN também começa com um sinal de menos. Se você converte os dígitos na mão, a conta pode estourar o int no meio do caminho.",
+      "Use a função de conversão que o enunciado permite, em vez de converter na mão, e mostre o resultado com %d."
+    ]
+  }
+}

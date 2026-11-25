@@ -1,0 +1,15 @@
+Nome do exercício  : ft_strpbrk
+Arquivos esperados : ft_strpbrk.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+Reproduza exatamente o comportamento da função strpbrk (man strpbrk).
+
+A função deve ser declarada assim:
+
+char	*ft_strpbrk(const char *s1, const char *s2);
+
+Exemplos:
+
+ft_strpbrk("Hello, World", "o,") devolve um ponteiro para a parte "o, World"
+de s1.
+ft_strpbrk("abcdef", "xyz") devolve NULL.

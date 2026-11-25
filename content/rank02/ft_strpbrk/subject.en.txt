@@ -1,0 +1,15 @@
+Assignment name  : ft_strpbrk
+Expected files   : ft_strpbrk.c
+Allowed functions:
+--------------------------------------------------------------------------------
+Reproduce exactly the behavior of the function strpbrk (man strpbrk).
+
+The function should be prototyped as follows:
+
+char	*ft_strpbrk(const char *s1, const char *s2);
+
+Examples:
+
+ft_strpbrk("Hello, World", "o,") returns a pointer to the "o, World" part
+of s1.
+ft_strpbrk("abcdef", "xyz") returns NULL.

@@ -1,0 +1,68 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "hereIsACamelCaseWord"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "helloWorld"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "hello"
+      ],
+      "category": "sem-maiusculas"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "aB"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "x"
+      ],
+      "category": "sem-maiusculas"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "oneTwoThreeFourFiveSixSevenEightNineTen"
+      ],
+      "category": "basico"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada palavra da saída está em minúsculas e separada das outras por um '_'?",
+      "Uma maiúscula no meio da string marca onde uma palavra nova começa. Na versão snake_case, esse limite é marcado por um '_', e todas as letras ficam minúsculas. O '_' vem antes da palavra nova, não depois.",
+      "Você não pode usar nenhuma função pronta para mudar a caixa. Mas a diferença entre uma maiúscula e a minúscula correspondente na tabela ASCII é sempre a mesma, e é essa diferença que faz a conversão."
+    ],
+    "argumentos": [
+      "O que o programa mostra quando não recebe nenhum argumento?",
+      "Sem argumento, não há string para converter. O enunciado mostra que, nesse caso, só a quebra de linha sai.",
+      "Confira o argc antes de ler o argv[1]. Sem o argumento, escreva só a quebra de linha."
+    ],
+    "sem-maiusculas": [
+      "E se a string já não tiver nenhuma maiúscula?",
+      "Sem maiúsculas, não há limites entre palavras: a string sai igual, com a quebra de linha, e sem nenhum '_'.",
+      "Só escreva o '_' quando achar uma maiúscula. Nunca escreva '_' no começo nem no fim da string por padrão."
+    ]
+  }
+}

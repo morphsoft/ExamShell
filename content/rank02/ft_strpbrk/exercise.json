@@ -1,0 +1,126 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_strpbrk(\"Hello, World\", \"o,\")"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "nao-encontrado",
+      "display": "ft_strpbrk(\"abcdef\", \"xyz\")"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "primeiro-caractere",
+      "display": "ft_strpbrk(\"abcdef\", \"a\")"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strpbrk(\"\", \"abc\")"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "s2-vazia",
+      "display": "ft_strpbrk(\"abc\", \"\")"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "ordem-de-s2",
+      "display": "ft_strpbrk(\"hello world\", \"wo\")"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "ordem-de-s2",
+      "display": "ft_strpbrk(\"abcabc\", \"cb\")"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "maiusculas-minusculas",
+      "display": "ft_strpbrk(\"Hello\", \"h\")"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "ultimo-caractere",
+      "display": "ft_strpbrk(\"abc\", \"c\")"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "basico",
+      "display": "ft_strpbrk(\"a b\", \" \")"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O ponteiro que a função devolve aponta para dentro de s1, no primeiro caractere que também está em s2?",
+      "O strpbrk procura em s1 o primeiro caractere que aparece em s2 e devolve o endereço dele dentro de s1, não uma cópia. Quem usa a função vê o resto de s1 a partir dali.",
+      "Para cada posição de s1, procure o caractere dentro de s2 inteira. Quando achar, devolva o endereço daquela posição de s1, e não o de s2."
+    ],
+    "nao-encontrado": [
+      "O que a função devolve quando nenhum caractere de s2 aparece em s1?",
+      "Devolve NULL, que o teste mostra como (null). Não é uma string vazia, nem o fim de s1.",
+      "O '\\0' de s1 não é um caractere a procurar, então ele nunca deve ser devolvido. Se s1 acabar sem nenhum achado, devolva NULL."
+    ],
+    "primeiro-caractere": [
+      "E se o primeiro caractere de s1 já estiver em s2?",
+      "Então o resultado é o próprio s1, o mesmo endereço, na posição 0.",
+      "A conferência vale para todas as posições de s1, desde a primeira. Não comece a procurar a partir da segunda."
+    ],
+    "string-vazia": [
+      "O que sai quando s1 é vazia?",
+      "Sem nenhum caractere em s1, nada pode ser encontrado: o resultado é NULL.",
+      "A leitura de s1 testa o '\\0' antes de qualquer outra coisa. Com s1 vazia, não há nenhum caractere para olhar."
+    ],
+    "s2-vazia": [
+      "E se s2 for uma string vazia?",
+      "Nenhum caractere de s1 pode estar numa string vazia, então o resultado é NULL, mesmo com s1 cheia.",
+      "A busca em s2 termina no '\\0' dela. Com s2 vazia, a busca termina na primeira posição, sem achar nada."
+    ],
+    "ordem-de-s2": [
+      "A ordem dos caracteres em s2 muda o resultado?",
+      "Não. S2 funciona como um conjunto, e vale o primeiro caractere de s1 que aparece em qualquer posição dele.",
+      "Não ande em s1 e em s2 ao mesmo tempo. Para cada posição de s1, procure o caractere em s2 inteira."
+    ],
+    "maiusculas-minusculas": [
+      "'H' e 'h' são o mesmo caractere para o strpbrk?",
+      "Não. A comparação é exata, e a caixa importa.",
+      "Compare os caracteres diretamente, sem mudar a caixa de nenhum deles."
+    ],
+    "ultimo-caractere": [
+      "O último caractere de s1 também é conferido?",
+      "Sim. A busca vai até o último caractere antes do fim de s1, e o resultado pode ser só ele.",
+      "Pare a busca no '\\0' de s1, e não antes. A última posição precisa entrar na conferência."
+    ]
+  }
+}

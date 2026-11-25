@@ -1,0 +1,105 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_strrev(str) /* str = \"Hello\" */"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "comprimento-par",
+      "display": "ft_strrev(str) /* str = \"abcd\" */"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strrev(str) /* str = \"\" */"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "um-caractere",
+      "display": "ft_strrev(str) /* str = \"x\" */"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "retorno",
+      "display": "ft_strrev(str) == str ? /* str = \"Hello\" */"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "espacos",
+      "display": "ft_strrev(str) /* str = \"a b\\tc\" */"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "string-longa",
+      "display": "ft_strrev(str) /* str = \"abcdefghijklmnopqrstuvwxyzabc…\", 100 caracteres */"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "comprimento-par",
+      "display": "ft_strrev(str) /* str = \"ab\" */"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Depois da chamada, a string original está na ordem inversa?",
+      "Inverter no lugar significa trocar caracteres de posição, sem criar string nova. O caractere da frente e o de trás são parceiros: eles trocam entre si.",
+      "Os parceiros se encontram no meio da string. Se o seu laço passar do meio, ele desfaz o que já fez."
+    ],
+    "comprimento-par": [
+      "E se a string tiver um número par de caracteres?",
+      "Sem caractere do meio, todos os caracteres têm um parceiro. Se o seu laço para um passo antes ou depois do certo, é aqui que o erro aparece.",
+      "Pense na string \"abcd\" à mão: depois de trocar o 'a' com o 'd' e o 'b' com o 'c', não sobra nada a trocar."
+    ],
+    "string-vazia": [
+      "E a string vazia?",
+      "Com a string vazia, o comprimento é 0. O último índice seria -1, uma posição antes do começo da string, e ler ou escrever ali é um erro.",
+      "Calcule o último índice só depois de garantir que o comprimento não é 0, ou escreva o laço de modo que ele nem chegue a ler essa posição."
+    ],
+    "um-caractere": [
+      "O que acontece com uma string de um caractere só?",
+      "Com um caractere só, o primeiro e o último são a mesma posição. A string sai igual, e nada pode ser corrompido pela troca.",
+      "Confira a condição de parada do laço pensando nesse caso: o laço não precisa trocar nada quando só há uma posição."
+    ],
+    "retorno": [
+      "A função devolve o ponteiro certo?",
+      "Como o enunciado pede, a função devolve o próprio parâmetro, o início da string. Não é o final dela, nem uma cópia.",
+      "Se você andar com o próprio ponteiro str durante o trabalho, ele deixa de apontar para o começo. Use um índice, ou guarde o início antes de mexer, e devolva o início."
+    ],
+    "espacos": [
+      "Espaços e tabs são trocados de lugar como qualquer outro caractere?",
+      "Sim. O espaço é só um caractere. A string inteira é invertida, e as palavras não são tratadas à parte.",
+      "Não separe palavras e não pule espaços. A inversão vale para todos os caracteres até o '\\0'."
+    ],
+    "string-longa": [
+      "A sua função inverte strings grandes sem erro?",
+      "O trabalho depende do tamanho da string. Qualquer limite fixo no código quebra com strings maiores.",
+      "Não use números fixos de tamanho. Conte os caracteres até o '\\0' e trabalhe a partir desse comprimento."
+    ]
+  }
+}

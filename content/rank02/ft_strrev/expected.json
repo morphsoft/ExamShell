@@ -1,0 +1,26 @@
+{
+  "t01": {
+    "stdout": "olleH\n"
+  },
+  "t02": {
+    "stdout": "dcba\n"
+  },
+  "t03": {
+    "stdout": "\n"
+  },
+  "t04": {
+    "stdout": "x\n"
+  },
+  "t05": {
+    "stdout": "olleH\ndevolveu str: sim\n"
+  },
+  "t06": {
+    "stdout": "c\tb a\n"
+  },
+  "t07": {
+    "stdout": "vutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\n"
+  },
+  "t08": {
+    "stdout": "ba\n"
+  }
+}

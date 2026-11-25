@@ -1,0 +1,19 @@
+Nome do exercício  : ft_atoi
+Arquivos esperados : ft_atoi.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+Escreva uma função que converte a string recebida em str para um inteiro
+(tipo int) e o devolve.
+
+Ela funciona de forma parecida com a função padrão atoi(const char *), veja
+o man.
+
+A sua função deve ser declarada assim:
+
+int	ft_atoi(const char *str);
+
+Exemplos:
+
+ft_atoi("42") devolve 42.
+ft_atoi("  -15abc") devolve -15.
+ft_atoi("abc") devolve 0.

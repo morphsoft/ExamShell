@@ -1,0 +1,14 @@
+Nome do exercício  : ft_strdup
+Arquivos esperados : ft_strdup.c
+Funções permitidas : malloc
+--------------------------------------------------------------------------------
+Reproduza o comportamento da função strdup (man strdup).
+
+A sua função deve ser declarada assim:
+
+char	*ft_strdup(char *src);
+
+Exemplos:
+
+ft_strdup("Hello") devolve uma cópia de "Hello" em memória recém-alocada.
+ft_strdup("") devolve uma string vazia em memória recém-alocada.

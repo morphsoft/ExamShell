@@ -1,0 +1,121 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_strspn(\"129th\", \"0123456789\")"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "nenhum-aceito",
+      "display": "ft_strspn(\"abc\", \"xyz\")"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "tudo-aceito",
+      "display": "ft_strspn(\"abcabc\", \"abc\")"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "ordem-do-accept",
+      "display": "ft_strspn(\"hello\", \"leh\")"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strspn(\"\", \"abc\")"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "accept-vazio",
+      "display": "ft_strspn(\"abc\", \"\")"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "basico",
+      "display": "ft_strspn(\"aabbcc\", \"ab\")"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "maiusculas-minusculas",
+      "display": "ft_strspn(\"Hello\", \"h\")"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "tudo-aceito",
+      "display": "ft_strspn(\"ababab\", \"ba\")"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "basico",
+      "display": "ft_strspn(\"   x\", \" \")"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A função conta quantos caracteres do começo de s estão em accept?",
+      "O resultado é a quantidade de caracteres do começo de s que aparecem em accept, sem interrupção. A contagem para no primeiro caractere de s que não está lá.",
+      "A ideia decisiva é que, para cada caractere de s, é preciso procurá-lo dentro de accept inteira. O primeiro que não for achado lá encerra a contagem."
+    ],
+    "nenhum-aceito": [
+      "E se o primeiro caractere de s não estiver em accept?",
+      "Então a contagem acaba antes de começar, e o resultado é 0, mesmo que outros caracteres de s estejam em accept.",
+      "Não procure em s o próximo caractere aceito. A contagem só vale para o trecho do começo, sem nenhuma interrupção."
+    ],
+    "tudo-aceito": [
+      "E se todos os caracteres de s estiverem em accept?",
+      "Então a contagem vai até o fim de s, e o resultado é o comprimento inteiro dela.",
+      "O '\\0' de s não é um caractere a procurar em accept. Quando s acabar sem nenhuma falha, o resultado é a posição onde ela acabou."
+    ],
+    "ordem-do-accept": [
+      "A ordem dos caracteres em accept muda o resultado?",
+      "Não. Accept funciona como um conjunto: vale se o caractere de s aparece em qualquer posição dele.",
+      "Não ande em s e em accept ao mesmo tempo. Para cada posição de s, procure o caractere em accept inteira."
+    ],
+    "string-vazia": [
+      "O que sai quando s é uma string vazia?",
+      "Sem nenhum caractere em s, não há o que contar: o resultado é 0, seja qual for accept.",
+      "A leitura de s testa o '\\0' dela antes de qualquer outra coisa. Com s vazia, não há nenhum caractere para olhar."
+    ],
+    "accept-vazio": [
+      "E se accept for uma string vazia?",
+      "Nenhum caractere de s pode estar numa string vazia, então a contagem para logo no primeiro. O resultado é 0.",
+      "A busca em accept termina no '\\0' dela. Com accept vazia, a busca termina na primeira posição sem achar nada, e o caractere de s não é aceito."
+    ],
+    "maiusculas-minusculas": [
+      "'H' e 'h' são o mesmo caractere para o strspn?",
+      "Não. A comparação é exata, e a caixa importa.",
+      "Compare os caracteres diretamente, sem mudar a caixa de nenhum deles."
+    ]
+  }
+}

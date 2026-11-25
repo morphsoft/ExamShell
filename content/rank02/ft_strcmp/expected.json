@@ -1,0 +1,35 @@
+{
+  "t01": {
+    "stdout": "zero\n"
+  },
+  "t02": {
+    "stdout": "negativo\n"
+  },
+  "t03": {
+    "stdout": "positivo\n"
+  },
+  "t04": {
+    "stdout": "zero\n"
+  },
+  "t05": {
+    "stdout": "negativo\n"
+  },
+  "t06": {
+    "stdout": "positivo\n"
+  },
+  "t07": {
+    "stdout": "negativo\n"
+  },
+  "t08": {
+    "stdout": "positivo\n"
+  },
+  "t09": {
+    "stdout": "negativo\n"
+  },
+  "t10": {
+    "stdout": "positivo\n"
+  },
+  "t11": {
+    "stdout": "zero\n"
+  }
+}

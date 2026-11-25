@@ -1,0 +1,35 @@
+{
+  "t01": {
+    "stdout": "zyx\n"
+  },
+  "t02": {
+    "stdout": "Nb slihv rh Znzarmt.\n"
+  },
+  "t03": {
+    "stdout": "\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "Svool, Dliow! 42\n"
+  },
+  "t07": {
+    "stdout": "ZAza\n"
+  },
+  "t08": {
+    "stdout": "zyxwvutsrqponmlkjihgfedcba\n"
+  },
+  "t09": {
+    "stdout": "ZYXWVUTSRQPONMLKJIHGFEDCBA\n"
+  },
+  "t10": {
+    "stdout": "z y\tx\n"
+  },
+  "t11": {
+    "stdout": "@[`{\n"
+  }
+}

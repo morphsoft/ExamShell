@@ -1,0 +1,26 @@
+{
+  "t01": {
+    "stdout": "Hello\n"
+  },
+  "t02": {
+    "stdout": "\n"
+  },
+  "t03": {
+    "stdout": "The quick brown fox\n"
+  },
+  "t04": {
+    "stdout": "x\n"
+  },
+  "t05": {
+    "stdout": "Hello\nnovo bloco: sim\nHello\n"
+  },
+  "t06": {
+    "stdout": "ab\n"
+  },
+  "t07": {
+    "stdout": "  \t  \n"
+  },
+  "t08": {
+    "stdout": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+  }
+}

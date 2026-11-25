@@ -1,0 +1,15 @@
+Nome do exercício  : ft_strcmp
+Arquivos esperados : ft_strcmp.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+Reproduza o comportamento da função strcmp (man strcmp).
+
+A sua função deve ser declarada assim:
+
+int	ft_strcmp(char *s1, char *s2);
+
+Exemplos:
+
+ft_strcmp("abc", "abc") devolve 0.
+ft_strcmp("abc", "abd") devolve um valor negativo.
+ft_strcmp("abd", "abc") devolve um valor positivo.

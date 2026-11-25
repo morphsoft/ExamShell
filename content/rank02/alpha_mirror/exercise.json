@@ -1,0 +1,112 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "abc"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "My horse is Amazing."
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "abc",
+        "def"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "Hello, World! 42"
+      ],
+      "category": "nao-letras"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "AZaz"
+      ],
+      "category": "extremos"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "abcdefghijklmnopqrstuvwxyz"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      ],
+      "category": "maiusculas-minusculas"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "a b\tc"
+      ],
+      "category": "nao-letras"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "@[`{"
+      ],
+      "category": "nao-letras"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada letra vira exatamente a letra oposta do alfabeto, e a string sai com a quebra de linha no final?",
+      "O espelho do alfabeto liga a primeira letra à última, a segunda à penúltima, e assim por diante. Cada letra tem uma imagem fixa, e a imagem da imagem é a própria letra.",
+      "Pense na distância da letra até o começo do alfabeto: a imagem dela fica a essa mesma distância do fim. É essa conta, feita com os valores da tabela ASCII, que dá a letra oposta."
+    ],
+    "argumentos": [
+      "O que o programa mostra quando não recebe exatamente um argumento?",
+      "O enunciado pede só a quebra de linha quando o número de argumentos não é 1. O argc conta o nome do programa, então ele vale 2 quando há um argumento.",
+      "Confira o argc antes de ler o argv[1]. Se o número não for o esperado, escreva só a quebra de linha e termine."
+    ],
+    "string-vazia": [
+      "E se o argumento for uma string vazia?",
+      "Uma string vazia não tem nenhuma letra para espelhar. A saída é só a quebra de linha, que sempre é escrita no final.",
+      "Faça o laço testar o '\\0' antes de escrever qualquer coisa, e escreva a quebra de linha depois dele, fora do laço."
+    ],
+    "nao-letras": [
+      "O que acontece com espaços, números e pontuação?",
+      "Só as letras são espelhadas. Todo outro caractere sai exatamente como entrou, na mesma posição. Cuidado com os caracteres vizinhos das letras na tabela ASCII, como o '@', o '[' e o acento grave.",
+      "Antes de espelhar, confirme que o caractere é uma letra, maiúscula ou minúscula. Se não for, escreva o caractere sem mudar nada."
+    ],
+    "maiusculas-minusculas": [
+      "A caixa da letra é preservada?",
+      "A maiúscula vira a maiúscula oposta, e a minúscula vira a minúscula oposta: 'a' vira 'z' e 'A' vira 'Z'. A caixa nunca muda.",
+      "As maiúsculas e as minúsculas ficam em faixas separadas da tabela ASCII. Calcule o espelho dentro da faixa em que a letra está, sem misturar as duas."
+    ],
+    "extremos": [
+      "E as letras das pontas do alfabeto, 'a', 'z', 'A' e 'Z'?",
+      "'a' e 'z' trocam de lugar, e 'A' e 'Z' também. Se a sua conta erra por um, são as pontas do alfabeto que mostram isso primeiro.",
+      "Teste a sua conta à mão com 'a' e com 'z'. A primeira letra deve virar a última, sem sobrar nem passar nenhuma posição."
+    ]
+  }
+}

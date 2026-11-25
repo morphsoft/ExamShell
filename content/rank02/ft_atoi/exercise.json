@@ -1,0 +1,171 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_atoi(\"42\")"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "espacos-iniciais",
+      "display": "ft_atoi(\"  -15abc\")"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "sem-digitos",
+      "display": "ft_atoi(\"abc\")"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "sinais",
+      "display": "ft_atoi(\"-42\")"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "basico",
+      "display": "ft_atoi(\"0\")"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "espacos-iniciais",
+      "display": "ft_atoi(\"   123\")"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "sinais",
+      "display": "ft_atoi(\"+7\")"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "lixo-no-fim",
+      "display": "ft_atoi(\"123abc\")"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "string-vazia",
+      "display": "ft_atoi(\"\")"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "espacos-iniciais",
+      "display": "ft_atoi(\"\\t\\n  -15\")"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "10"
+      ],
+      "category": "limites",
+      "display": "ft_atoi(\"2147483647\")"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "11"
+      ],
+      "category": "limites",
+      "display": "ft_atoi(\"-2147483648\")"
+    },
+    {
+      "id": "t13",
+      "args": [
+        "12"
+      ],
+      "category": "sinal-duplo",
+      "display": "ft_atoi(\"--5\")"
+    },
+    {
+      "id": "t14",
+      "args": [
+        "13"
+      ],
+      "category": "lixo-no-fim",
+      "display": "ft_atoi(\"12 34\")"
+    },
+    {
+      "id": "t15",
+      "args": [
+        "14"
+      ],
+      "category": "zeros-a-esquerda",
+      "display": "ft_atoi(\"0042\")"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A função devolve o número que a string representa?",
+      "Cada dígito vale o seu caractere menos o caractere zero. Para ler um número com vários dígitos, vá juntando os dígitos conforme eles aparecem, abrindo uma casa decimal a cada novo dígito.",
+      "O valor de um caractere de dígito é ele menos '0'. Antes de somar o próximo dígito, o que você já tem precisa ser multiplicado por 10."
+    ],
+    "sinais": [
+      "E se a string começar com '-' ou com '+'?",
+      "O sinal de menos faz o resultado ser negativo. O sinal de mais é aceito e não muda nada. O sinal vem antes dos dígitos e só vale uma vez.",
+      "Leia o sinal antes dos dígitos e guarde o efeito dele separado, para aplicar no final. Não deixe o sinal entrar na conta dos dígitos."
+    ],
+    "espacos-iniciais": [
+      "O que o atoi faz com espaços antes do número?",
+      "Como no atoi original, os espaços em branco do começo são ignorados. Isso inclui o espaço, o tab e a quebra de linha, e não só o espaço comum.",
+      "Pule todos os caracteres de espaço em branco do começo antes de olhar o sinal. Eles são: espaço, '\\t', '\\n', '\\v', '\\f' e '\\r'."
+    ],
+    "lixo-no-fim": [
+      "O que acontece quando aparece algo que não é dígito depois do número?",
+      "A leitura termina no primeiro caractere que não é dígito. O que vem depois dele não entra no número, mesmo que tenha mais dígitos.",
+      "Pare de ler assim que achar um caractere que não está entre '0' e '9'. Não continue procurando dígitos mais adiante."
+    ],
+    "sem-digitos": [
+      "E se a string não tiver nenhum dígito para ler?",
+      "Sem nenhum dígito, o atoi devolve 0. Isso vale quando a string começa com uma letra.",
+      "Faça o resultado começar em zero e só mudar quando um dígito for lido. Assim, a string sem dígitos devolve 0 sem nenhum caso especial."
+    ],
+    "string-vazia": [
+      "E se a string for vazia?",
+      "A string vazia tem só o '\\0'. Não há sinal nem dígitos, então o resultado é 0.",
+      "Toda leitura de caractere precisa respeitar o '\\0'. Não leia nenhuma posição depois dele."
+    ],
+    "limites": [
+      "A função funciona com os extremos do int?",
+      "O maior int é 2147483647 e o menor é -2147483648. O valor absoluto do menor é maior do que o maior int, então inverter o sinal depois de juntar os dígitos pode não caber num int.",
+      "Se o seu acumulador for int, evite inverter o sinal no final. Use um tipo maior para acumular, como long, ou acumule já com o sinal aplicado."
+    ],
+    "sinal-duplo": [
+      "O que acontece quando há mais de um sinal seguido?",
+      "Só um sinal é aceito, e logo depois dele precisa vir um dígito. Com dois sinais seguidos, a leitura termina sem achar dígito, e o resultado é 0.",
+      "Depois de ler um sinal, não leia outro. Se o próximo caractere não for um dígito, o resultado fica 0."
+    ],
+    "zeros-a-esquerda": [
+      "Zeros no começo do número atrapalham?",
+      "Zeros à esquerda não mudam o valor: '0042' vale 42. Cada zero é só um dígito que soma nada.",
+      "Trate o '0' como um dígito qualquer. Não pare a leitura nem faça nada diferente quando o dígito vale 0."
+    ]
+  }
+}

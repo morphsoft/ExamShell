@@ -1,0 +1,119 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "iguais",
+      "display": "ft_strcmp(\"abc\", \"abc\")"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "basico",
+      "display": "ft_strcmp(\"abc\", \"abd\")"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "basico",
+      "display": "ft_strcmp(\"abd\", \"abc\")"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strcmp(\"\", \"\")"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strcmp(\"\", \"a\")"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strcmp(\"a\", \"\")"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "prefixo",
+      "display": "ft_strcmp(\"abc\", \"abcd\")"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "prefixo",
+      "display": "ft_strcmp(\"abcd\", \"abc\")"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "maiusculas-minusculas",
+      "display": "ft_strcmp(\"Hello\", \"hello\")"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "basico",
+      "display": "ft_strcmp(\"zzz\", \"aaa\")"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "10"
+      ],
+      "category": "iguais",
+      "display": "ft_strcmp(\"The quick brown fox\", \"The quick brown fox\")"
+    }
+  ],
+  "hints": {
+    "iguais": [
+      "E quando as duas strings são iguais?",
+      "Se todas as posições forem iguais, até o '\\0' das duas, o resultado é 0.",
+      "O '\\0' também é comparado. Quando as duas strings chegam nele ao mesmo tempo, não há diferença nenhuma, e a função devolve 0."
+    ],
+    "basico": [
+      "O que a sua função devolve quando as strings são diferentes?",
+      "O strcmp compara os caracteres posição por posição e para na primeira diferença. O resultado é negativo se o caractere de s1 for o menor, e positivo se for o maior.",
+      "A comparação decide tudo no primeiro par de caracteres diferentes: a diferença entre eles dá o sinal do resultado. Cuide da ordem: é o caractere de s1 menos o de s2."
+    ],
+    "prefixo": [
+      "E quando uma string é o começo da outra, como \"abc\" e \"abcd\"?",
+      "As strings são iguais até o fim da menor, mas o '\\0' dela é menor do que qualquer letra da outra. Por isso, a menor vem antes.",
+      "Não pare a comparação quando uma das strings acabar. O '\\0' também entra nela, e é ele que decide quem é a menor."
+    ],
+    "string-vazia": [
+      "E se uma das strings, ou as duas, for vazia?",
+      "A string vazia só tem o '\\0'. Ela é menor do que qualquer string que não seja vazia, e é igual a outra vazia.",
+      "Não leia nenhuma posição depois do '\\0' de uma das strings. A comparação precisa parar nele."
+    ],
+    "maiusculas-minusculas": [
+      "O strcmp trata maiúsculas e minúsculas como iguais?",
+      "Não. A comparação usa o valor de cada caractere na tabela ASCII, e as maiúsculas vêm antes das minúsculas: 'H' vale 72 e 'h' vale 104.",
+      "Compare os caracteres como eles são, sem converter a caixa de nenhum deles."
+    ]
+  }
+}
