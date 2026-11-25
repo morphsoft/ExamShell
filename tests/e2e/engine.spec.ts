@@ -73,6 +73,23 @@ test('carga a 10 Mbps', async ({ page, context, browserName }) => {
   console.log(`[carga] 1ª visita a 10 Mbps: ${firstLoad} ms; recarga com cache: ${cachedLoad} ms`);
 });
 
+test('.gz como arquivo comum, sem Content-Encoding (como o GitHub Pages)', async ({ page, browserName }) => {
+  test.skip(browserName !== 'chromium', 'o caminho do shim é o mesmo nos dois navegadores');
+  // o vite preview manda o .gz com Content-Encoding: gzip (o navegador já descomprime);
+  // aqui os dois .gz chegam crus, e o shim tem de descomprimir com DecompressionStream
+  const served: string[] = [];
+  for (const name of ['llvm.core.wasm.gz', 'llvm-resources.tar.gz']) {
+    await page.route(`**/clang/${name}`, (r) => {
+      served.push(name);
+      return r.fulfill({ path: `dist/clang/${name}`, headers: { 'content-type': 'application/gzip' } });
+    });
+  }
+  const r = await scenario(page, 'first_word-ok');
+  await expect(page.locator('#status')).toHaveText('ready');
+  expect(r.stdout).toBe('lorem,ipsum\n');
+  expect(served.sort()).toEqual(['llvm-resources.tar.gz', 'llvm.core.wasm.gz']);
+});
+
 test('download falha e tentar de novo funciona', async ({ page }) => {
   await page.route('**/llvm.core.wasm.gz', (r) => r.abort());
   await page.goto('engine-check.html');

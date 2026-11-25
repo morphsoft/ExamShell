@@ -29,10 +29,20 @@ async function openCache(cacheName: string): Promise<Cache | null> {
   }
 }
 
+/** O corpo começa com a assinatura do gzip? (1f 8b) */
+async function isGzip(data: Blob): Promise<boolean> {
+  const head = new Uint8Array(await data.slice(0, 2).arrayBuffer());
+  return head[0] === 0x1f && head[1] === 0x8b;
+}
+
 /**
- * Troca `globalThis.fetch`: `llvm.core.wasm` e `llvm-resources.tar` vêm do `.gz` (Cache API ou rede),
- * descomprimidos com DecompressionStream. O resto passa direto. Tem de ser instalado antes de
- * importar o bundle do @yowasp, que guarda `globalThis.fetch` ao ser avaliado.
+ * Troca `globalThis.fetch`: `llvm.core.wasm` e `llvm-resources.tar` vêm do `.gz` (Cache API ou rede).
+ * O resto passa direto. Tem de ser instalado antes de importar o bundle do @yowasp, que guarda
+ * `globalThis.fetch` ao ser avaliado.
+ *
+ * Funciona com qualquer servidor: o GitHub Pages manda o `.gz` como arquivo comum (o shim descomprime
+ * com DecompressionStream); outros (ex.: o sirv do Vite) mandam `Content-Encoding: gzip`, e o navegador
+ * já entrega descomprimido. Por isso o shim olha a assinatura do gzip em vez de confiar no nome.
  */
 export function installClangFetchShim(opts: {
   cacheName: string;
@@ -46,7 +56,8 @@ export function installClangFetchShim(opts: {
   let fromCache = true;
 
   function report(name: string, bytes: number) {
-    loaded[name] = bytes;
+    // limitado ao tamanho do .gz: com Content-Encoding o navegador conta bytes já descomprimidos
+    loaded[name] = Math.min(bytes, opts.manifest.gz[name] ?? 0);
     const loadedBytes = Object.values(loaded).reduce((a, b) => a + b, 0);
     opts.onProgress({ loadedBytes, totalBytes, fromCache });
   }
@@ -81,24 +92,22 @@ export function installClangFetchShim(opts: {
     const gzUrl = url.href + '.gz';
     const cache = await cachePromise;
     const hit = await cache?.match(gzUrl).catch(() => undefined);
-    let gz: Blob;
+    let data: Blob; // como chegou: gzip, ou já descomprimido pelo navegador
     if (hit) {
-      gz = await hit.blob();
-      report(name, gz.size);
+      data = await hit.blob();
+      report(name, data.size);
     } else {
       fromCache = false;
-      gz = await download(gzUrl, name);
+      data = await download(gzUrl, name);
     }
-    let body = gz.stream().pipeThrough(new DecompressionStream('gzip'));
+    let body = (await isGzip(data)) ? data.stream().pipeThrough(new DecompressionStream('gzip')) : data.stream();
     if (!hit && cache) {
-      // grava só depois do download inteiro E de o gzip descomprimir até o fim (CRC ok):
+      // grava só depois do download inteiro E de o corpo ser lido até o fim (no gzip, com CRC ok):
       // nada truncado ou corrompido fica no cache
       body = body.pipeThrough(
         new TransformStream({
           async flush() {
-            await cache
-              .put(gzUrl, new Response(gz, { headers: { 'content-type': 'application/gzip' } }))
-              .catch(() => {}); // cota cheia: segue sem cache
+            await cache.put(gzUrl, new Response(data)).catch(() => {}); // cota cheia: segue sem cache
           },
         }),
       );
