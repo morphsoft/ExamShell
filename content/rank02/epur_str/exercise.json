@@ -1,0 +1,122 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "vous voyez c'est facile d'afficher la meme chose"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        " seulement      la c'est  plus dur "
+      ],
+      "category": "espacos-extras"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "comme c'est cocasse",
+        "vous avez entendu, Mathilde ?"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t05",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "     "
+      ],
+      "category": "so-espacos"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "\t\tfoo\t\tbar\t"
+      ],
+      "category": "tabs"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "word"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "   a b"
+      ],
+      "category": "espacos-no-inicio"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "a b   "
+      ],
+      "category": "espacos-no-fim"
+    },
+    {
+      "id": "t11",
+      "args": [
+        " \t a \t b \t "
+      ],
+      "category": "tabs"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada palavra aparece inteira na saída, na mesma ordem em que estava na string?",
+      "A saída é feita só de palavras, separadas por exatamente um espaço. Os espaços e tabs da entrada são apenas separadores e não são copiados.",
+      "O ponto decisivo é saber quando escrever o espaço: só entre duas palavras, nunca no começo nem no fim. Pense em como o programa pode lembrar que já escreveu uma palavra."
+    ],
+    "espacos-extras": [
+      "Quando há vários espaços seguidos na entrada, o que a sua saída mostra entre as palavras?",
+      "Uma sequência de separadores vale por um só. O que importa para a saída é a quantidade de palavras, e não a quantidade de espaços que havia entre elas.",
+      "Depois de escrever uma palavra, avance pelos separadores seguintes em bloco, sem escrever nenhum deles. Só então olhe o que veio: se for outra palavra, ela precisa do separador de saída antes dela, se for o fim da string, nada mais é escrito."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe zero argumentos, ou dois?",
+      "O enunciado só pede o tratamento da string quando há exatamente um argumento. Em qualquer outro caso, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira se o argc vale exatamente 2 antes de olhar a string. Se não valer, não toque no argv e vá direto para a parte que escreve a quebra de linha."
+    ],
+    "string-vazia": [
+      "O que acontece quando o argumento é uma string vazia?",
+      "Uma string vazia não tem nenhum caractere antes do '\\0'. Não há palavras, então a saída é só a quebra de linha.",
+      "Faça cada laço testar se chegou ao '\\0' antes de escrever ou de avançar. Com a string vazia, nenhum laço deve dar sequer uma volta."
+    ],
+    "so-espacos": [
+      "E se a string tiver só espaços, sem nenhuma palavra?",
+      "Sem palavras, nada é escrito, nem mesmo um separador. A saída é só a quebra de linha.",
+      "Se o seu código escreve o separador antes de confirmar que existe uma palavra depois dele, uma string só de espaços produz um separador sobrando. Decida pelo que vem a seguir, e não pelo que ficou para trás."
+    ],
+    "tabs": [
+      "O seu programa trata o tab do mesmo jeito que o espaço?",
+      "Para o enunciado, tabs também separam palavras. O tab ('\\t') é um caractere diferente do espaço e precisa ser reconhecido à parte, no começo, no meio e no fim da string.",
+      "Em todo lugar onde o seu código pergunta se o caractere é um espaço, pergunte também se é um tab. Isso vale para pular separadores e para decidir onde a palavra acaba."
+    ],
+    "espacos-no-inicio": [
+      "E se a string começar com espaços?",
+      "Os separadores do início não pertencem a nenhuma palavra. Eles precisam ser pulados antes de escrever a primeira palavra, e não podem gerar nenhum caractere de saída.",
+      "Avance pela string, sem escrever nada, enquanto o caractere for espaço ou tab. Só quando chegar ao primeiro caractere que não é separador comece a escrever."
+    ],
+    "espacos-no-fim": [
+      "E se a string terminar com espaços?",
+      "Os separadores do fim também não pertencem a nenhuma palavra, e a saída não pode terminar com espaço. Depois da última palavra vem direto a quebra de linha.",
+      "Só escreva um separador de saída quando houver outra palavra logo depois dele. Ao chegar ao fim da string, nada de separador."
+    ]
+  }
+}

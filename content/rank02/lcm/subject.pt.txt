@@ -1,0 +1,33 @@
+Nome do exercício  : lcm
+Arquivos esperados : lcm.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva uma função que recebe dois unsigned int como parâmetros e devolve o
+MMC desses parâmetros.
+
+O MMC (Mínimo Múltiplo Comum) de dois inteiros diferentes de zero é o menor
+inteiro estritamente positivo divisível pelos dois inteiros.
+
+Um MMC pode ser calculado de duas maneiras:
+
+- Você pode calcular todos os múltiplos de cada inteiro até encontrar um
+  múltiplo comum diferente de 0.
+- Você pode usar o MDC (Máximo Divisor Comum) desses dois inteiros e calcular
+  assim:
+
+  MMC(x, y) = | x * y | / MDC(x, y)
+
+  | x * y | significa "valor absoluto do produto de x por y".
+
+Se pelo menos um dos inteiros for nulo, o MMC é igual a 0.
+
+A sua função deve ser prototipada assim:
+
+unsigned int	lcm(unsigned int a, unsigned int b);
+
+Exemplos:
+
+lcm(4, 6) devolve 12.
+lcm(21, 6) devolve 42.
+lcm(0, 5) devolve 0.

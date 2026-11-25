@@ -1,0 +1,26 @@
+Assignment name  : ft_atoi_base
+Expected files   : ft_atoi_base.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write a function that converts the string argument str (base N <= 16) to an
+integer (base 10) and returns it.
+
+The characters recognized in the input are: 0123456789abcdef
+Those are, of course, to be limited according to the requested base. For
+example, base 4 recognizes "0123" and base 16 recognizes "0123456789abcdef".
+
+Uppercase letters must also be recognized: "12fdbA" is the same as "12FDBA".
+
+Minus signs ('-') are interpreted only if they are the first character of the
+string.
+
+Your function must be declared as follows:
+
+int	ft_atoi_base(const char *str, int str_base);
+
+Examples:
+
+ft_atoi_base("101", 2) returns 5.
+ft_atoi_base("-ff", 16) returns -255.
+ft_atoi_base("12fdbA", 16) returns 1244602.

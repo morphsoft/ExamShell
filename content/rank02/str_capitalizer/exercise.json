@@ -1,0 +1,129 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "a FiRSt LiTTlE test"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "SecONd teST A LITtle BiT   Bigger",
+        "   But... MORE    complex",
+        "   Lorem ipsum dolor sit amet, consectetur   "
+      ],
+      "category": "varios-argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "     "
+      ],
+      "category": "espacos-preservados"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "a"
+      ],
+      "category": "palavra-de-uma-letra"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "ABC DEF"
+      ],
+      "category": "resto-minusculo"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "\tfoo\tBAR"
+      ],
+      "category": "tabs"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "hello",
+        "WORLD"
+      ],
+      "category": "varios-argumentos"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "hello world  "
+      ],
+      "category": "espacos-preservados"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "1abc x2y"
+      ],
+      "category": "nao-letra"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada palavra da sua saída começa com maiúscula e tem o resto em minúsculas?",
+      "Cada palavra tem duas partes: o primeiro caractere vira maiúsculo, se for uma letra, e todos os outros viram minúsculos. O que não é letra fica como está.",
+      "O ponto decisivo é saber, para cada caractere, se ele é o primeiro da palavra. Olhe o caractere anterior: um espaço, um tab ou o início da string significam que este é o primeiro."
+    ],
+    "argumentos": [
+      "O que o seu programa escreve quando não recebe nenhum argumento?",
+      "Sem argumentos, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc, que vale 1 nesse caso.",
+      "Se o argc for 1, escreva apenas a quebra de linha. Caso contrário, percorra os argumentos a partir da posição 1 do argv."
+    ],
+    "varios-argumentos": [
+      "Cada argumento sai na sua própria linha, com a regra aplicada do zero?",
+      "A regra vale para cada argumento separadamente: cada um termina com a sua quebra de linha, e o primeiro caractere de cada argumento é o primeiro de uma palavra.",
+      "Não carregue nenhuma informação sobre o caractere anterior de um argumento para o seguinte. Ao começar um novo argumento, o estado volta ao início."
+    ],
+    "string-vazia": [
+      "O que acontece quando o argumento é uma string vazia?",
+      "Uma string vazia não tem nenhum caractere antes do '\\0', então não há nada para transformar. A saída desse argumento é só a quebra de linha.",
+      "Faça o laço testar o '\\0' antes de ler o caractere. Com a string vazia, o laço não deve rodar, e só a quebra de linha é escrita."
+    ],
+    "espacos-preservados": [
+      "Os espaços da entrada aparecem na saída, na mesma quantidade?",
+      "Diferente de outros exercícios, aqui o programa não remove nem reduz separadores: ele só muda a caixa das letras. A saída tem o mesmo comprimento da entrada.",
+      "Escreva todo caractere da string, na ordem, mudando apenas as letras. Espaços, inclusive no começo e no fim, são escritos como vieram."
+    ],
+    "palavra-de-uma-letra": [
+      "O que o seu programa faz com uma palavra de uma só letra?",
+      "Uma palavra de uma letra só tem o primeiro caractere, e o enunciado diz que ela deve ficar em maiúscula.",
+      "Confira que a decisão de maiúscula não depende de existir um caractere seguinte na palavra. A letra única é a primeira, e basta isso."
+    ],
+    "resto-minusculo": [
+      "As letras maiúsculas que aparecem no meio da palavra viram minúsculas?",
+      "Só o primeiro caractere da palavra fica em maiúscula. Todos os outros precisam virar minúsculos, inclusive os que já eram maiúsculos na entrada.",
+      "Em todo caractere que não é o primeiro da palavra, converta uma letra maiúscula em minúscula. Não basta apenas cuidar do primeiro caractere."
+    ],
+    "tabs": [
+      "O seu programa trata o tab como separador de palavras, assim como o espaço?",
+      "Para o enunciado, o tab também delimita palavras. O caractere depois de um tab é o primeiro de uma nova palavra, e o próprio tab deve sair como veio.",
+      "Onde o seu código pergunta se o caractere anterior é um espaço, pergunte também se é um tab ('\\t')."
+    ],
+    "nao-letra": [
+      "E se a palavra começar com um dígito ou outro símbolo?",
+      "O enunciado só manda colocar em maiúscula o primeiro caractere se ele for uma letra. Um dígito no começo continua dígito, e as letras que vêm depois dele ficam em minúsculas.",
+      "Só converta para maiúscula se o caractere for uma letra de 'a' a 'z', e só quando ele for o primeiro da palavra. Não adie a maiúscula para a próxima letra."
+    ]
+  }
+}

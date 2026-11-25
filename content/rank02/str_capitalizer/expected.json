@@ -1,0 +1,35 @@
+{
+  "t01": {
+    "stdout": "\n"
+  },
+  "t02": {
+    "stdout": "A First Little Test\n"
+  },
+  "t03": {
+    "stdout": "Second Test A Little Bit   Bigger\n   But... More    Complex\n   Lorem Ipsum Dolor Sit Amet, Consectetur   \n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "     \n"
+  },
+  "t06": {
+    "stdout": "A\n"
+  },
+  "t07": {
+    "stdout": "Abc Def\n"
+  },
+  "t08": {
+    "stdout": "\tFoo\tBar\n"
+  },
+  "t09": {
+    "stdout": "Hello\nWorld\n"
+  },
+  "t10": {
+    "stdout": "Hello World  \n"
+  },
+  "t11": {
+    "stdout": "1abc X2y\n"
+  }
+}

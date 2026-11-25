@@ -1,0 +1,112 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "5"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "7"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "1"
+      ],
+      "category": "um-nao-e-primo"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "2"
+      ],
+      "category": "limite-inclusivo"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "2",
+        "3"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "0"
+      ],
+      "category": "nao-positivo"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "-5"
+      ],
+      "category": "nao-positivo"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "100"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "11"
+      ],
+      "category": "limite-inclusivo"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "2000"
+      ],
+      "category": "soma-grande"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Os números que você soma são todos os primos até o valor recebido, e só eles?",
+      "Um primo é um número maior que 1 que não tem outros divisores além de 1 e dele mesmo. Você precisa decidir, número por número, se ele é primo, e acumular a soma dos que forem. Como só write e exit são permitidas, a conversão da string em número também é com você.",
+      "A ideia decisiva é separar o problema: uma parte que responde 'este número é primo?' e outra que percorre os candidatos até o valor dado, somando os que passam no teste."
+    ],
+    "argumentos": [
+      "O que o seu programa escreve quando recebe zero argumentos, ou dois?",
+      "Quando o número de argumentos não é exatamente 1, a saída é o dígito 0 seguido de quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira o argc antes de ler o argv. Se o valor não for o esperado, escreva o 0 e a quebra de linha e termine o programa, sem tocar nos argumentos."
+    ],
+    "nao-positivo": [
+      "E se o argumento for 0 ou um número negativo?",
+      "O enunciado só pede a soma para um número positivo. Para qualquer outro valor a saída é 0. Cuidado com o sinal de menos ao converter a string em número: ignorá-lo transforma -5 em 5.",
+      "Depois de converter a string, se o valor não for maior que zero, escreva 0 e a quebra de linha direto, sem rodar o cálculo dos primos. Garanta que o sinal de menos seja reconhecido na conversão."
+    ],
+    "um-nao-e-primo": [
+      "O número 1 é primo?",
+      "Um primo precisa ser maior que 1. O 1 só tem um divisor, ele mesmo, e por isso não entra na soma. Se ele entrar, o resultado fica 1 a mais.",
+      "Faça o seu teste de primalidade rejeitar o 1 (e também o 0). Para a entrada 1, a soma é 0."
+    ],
+    "limite-inclusivo": [
+      "Se o próprio número recebido for primo, ele entra na soma?",
+      "O enunciado fala em primos menores ou iguais ao argumento. Então o valor recebido também é um candidato, e conta se for primo.",
+      "Olhe a condição que decide até onde você testa candidatos: ela precisa aceitar o próprio valor do argumento, e não parar um antes dele."
+    ],
+    "soma-grande": [
+      "O seu programa escreve corretamente uma soma com vários dígitos, e termina rápido?",
+      "O write escreve caracteres, então um valor como 277050 precisa ser escrito dígito por dígito, do mais significativo para o menos. Além disso, testar divisores até o próprio número deixa tudo lento: se um número tem um divisor, ele tem também um divisor que não passa da raiz quadrada.",
+      "Para escrever, separe os dígitos com divisão e resto por 10 (a ordem inversa pode ser resolvida com recursão ou com um pequeno buffer). Para o teste de primalidade, pare de tentar divisores quando o divisor ao quadrado passar do candidato."
+    ]
+  }
+}

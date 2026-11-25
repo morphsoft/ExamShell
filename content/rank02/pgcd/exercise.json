@@ -1,0 +1,150 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "42",
+        "10"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "42",
+        "12"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "14",
+        "77"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "17",
+        "3"
+      ],
+      "category": "coprimos"
+    },
+    {
+      "id": "t05",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "12"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "4",
+        "6",
+        "8"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "5",
+        "5"
+      ],
+      "category": "iguais"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "1",
+        "9"
+      ],
+      "category": "coprimos"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "48",
+        "18"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "100",
+        "10"
+      ],
+      "category": "multiplo"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "10",
+        "42"
+      ],
+      "category": "ordem-dos-argumentos"
+    },
+    {
+      "id": "t13",
+      "args": [
+        "10",
+        "100"
+      ],
+      "category": "multiplo"
+    },
+    {
+      "id": "t14",
+      "args": [
+        "2147483646",
+        "1073741823"
+      ],
+      "category": "valores-grandes"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O número que você mostra divide os dois valores sem deixar resto, e é o maior que faz isso?",
+      "O maior divisor comum é o maior número que divide os dois ao mesmo tempo. Você pode procurá-lo testando candidatos, ou usar o fato de que ele não muda quando se troca o maior número pelo resto da divisão dele pelo menor.",
+      "Escolha um dos dois caminhos e teste-o no papel com 42 e 12, que deve dar 6. Lembre que a conversão das strings em números pode ser feita com atoi, e o resultado sai com printf."
+    ],
+    "argumentos": [
+      "O que o seu programa escreve quando o número de parâmetros não é 2?",
+      "O enunciado só pede o divisor quando há exatamente dois parâmetros. Em qualquer outro caso, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira se o argc vale exatamente 3 antes de converter qualquer string. Se não valer, escreva apenas a quebra de linha e termine."
+    ],
+    "coprimos": [
+      "E quando os dois números não têm divisor em comum além do 1?",
+      "Nesse caso o maior divisor comum é 1, e o enunciado garante que o resultado nunca é zero. Seu programa não deve escrever nada diferente de 1.",
+      "Se você testa candidatos, garanta que o 1 também é testado. Se você usa restos de divisão, confira o que sobra quando o resto chega a 1."
+    ],
+    "iguais": [
+      "O que acontece quando os dois números são iguais?",
+      "O maior divisor de um número com ele mesmo é o próprio número.",
+      "Confira o que o seu cálculo faz quando a diferença ou o resto entre os dois é zero logo no primeiro passo. A resposta tem de ser o próprio número."
+    ],
+    "multiplo": [
+      "E se um dos números for múltiplo do outro?",
+      "Quando um número divide o outro, o menor dos dois é o próprio maior divisor comum.",
+      "Teste o seu programa com 100 e 10 e também com 10 e 100: o resultado é o mesmo, e é o menor dos dois."
+    ],
+    "ordem-dos-argumentos": [
+      "O resultado muda se você trocar a ordem dos argumentos?",
+      "Não deve mudar: o maior divisor comum de a e b é o mesmo que o de b e a. O seu programa não pode supor que o primeiro argumento é o maior.",
+      "Compare os dois valores antes de usá-los, ou escolha um método que funcione nas duas ordens. Teste 42 e 10, e depois 10 e 42."
+    ],
+    "valores-grandes": [
+      "O seu programa funciona com números perto do limite do int?",
+      "Os números cabem em um int, mas um laço que testa todos os candidatos, a partir do 1 até o menor número, pode dar mais de um bilhão de voltas com valores perto de dois bilhões.",
+      "Troque a busca por candidatos, que é lenta, por um método que reduza os números rapidamente, usando o resto da divisão. Assim, poucos passos resolvem até valores enormes."
+    ]
+  }
+}

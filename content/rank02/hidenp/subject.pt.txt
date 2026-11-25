@@ -1,0 +1,26 @@
+Nome do exercício  : hidenp
+Arquivos esperados : hidenp.c
+Funções permitidas : write
+--------------------------------------------------------------------------------
+
+Escreva um programa chamado hidenp que recebe duas strings e exibe 1 seguido de
+uma quebra de linha se a primeira string estiver escondida na segunda, ou 0
+seguido de uma quebra de linha caso contrário.
+
+Sejam s1 e s2 strings. Dizemos que s1 está escondida em s2 se for possível
+encontrar cada caractere de s1 em s2, na mesma ordem em que aparecem em s1.
+Além disso, a string vazia está escondida em qualquer string.
+
+Se o número de parâmetros não for 2, o programa exibe uma quebra de linha.
+
+Exemplos:
+
+$> ./hidenp "fgex.;" "tyf34gdgf;'ektufjhgdgex.;.;rtjynur6" | cat -e
+1$
+$> ./hidenp "abc" "2altrb53c.sse" | cat -e
+1$
+$> ./hidenp "abc" "btarc" | cat -e
+0$
+$> ./hidenp | cat -e
+$
+$>

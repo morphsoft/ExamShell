@@ -1,0 +1,29 @@
+Assignment name  : rstr_capitalizer
+Expected files   : rstr_capitalizer.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes one or more strings and, for each argument, puts
+the last character of each word (if it's a letter) in uppercase and the rest
+in lowercase, then displays the result followed by a newline.
+
+A word is a section of string delimited by spaces/tabs, or by the start/end of
+the string. If a word has a single letter, it must be capitalized.
+
+A letter is a character in the set [a-zA-Z].
+
+If there are no parameters, display a newline.
+
+Examples:
+
+$> ./rstr_capitalizer | cat -e
+$
+$> ./rstr_capitalizer "a FiRSt LiTTlE test" | cat -e
+A firsT littlE tesT$
+$> ./rstr_capitalizer "SecONd teST A LITtle BiT   Bigger" \
+"   But... MORE    complex" "   Lorem ipsum dolor sit amet, consectetur   " \
+| cat -e
+seconD tesT A littlE biT   biggeR$
+   but... morE    compleX$
+   loreM ipsuM doloR siT amet, consectetuR   $
+$>

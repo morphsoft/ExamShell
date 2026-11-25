@@ -1,0 +1,196 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "7",
+        "24"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "6",
+        "12",
+        "24"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [],
+      "category": "sem-argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "a"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "category": "varios-digitos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "a b",
+        "c"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x",
+        "x"
+      ],
+      "category": "varios-digitos"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O número que você escreve é a quantidade de argumentos, sem contar o nome do programa?",
+      "O argc conta também o nome do programa, que fica em argv na posição 0. Os argumentos de verdade são os que vêm depois dele.",
+      "O valor a mostrar é o argc menos 1. Lembre que o write escreve caracteres, então o número precisa virar o caractere do dígito antes de ser escrito."
+    ],
+    "sem-argumentos": [
+      "O que o seu programa escreve quando não recebe nenhum argumento?",
+      "Sem argumentos, o argc vale 1 e a saída deve ser o caractere '0' e a quebra de linha. Um programa que só escreve de dentro de um laço sobre os argumentos fica mudo nesse caso.",
+      "Calcule o número de argumentos e escreva esse valor sempre, inclusive quando ele for zero. O zero não é um caso especial: é um número como os outros."
+    ],
+    "varios-digitos": [
+      "O que acontece quando o resultado tem mais de um dígito?",
+      "O write escreve bytes, e não números. Um valor como 10 precisa ser escrito como os caracteres '1' e '0', nessa ordem, do dígito mais significativo para o menos.",
+      "Separe os dígitos com divisão e resto por 10 e escreva um de cada vez. Como eles saem do último para o primeiro, resolva a ordem com recursão ou com um pequeno buffer."
+    ],
+    "string-vazia": [
+      "Um argumento vazio conta como argumento?",
+      "Conta. Uma string vazia ainda ocupa uma posição em argv e entra no argc.",
+      "Não inspecione o conteúdo dos argumentos: para este exercício só a quantidade importa."
+    ]
+  }
+}

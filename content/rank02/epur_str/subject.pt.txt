@@ -1,0 +1,26 @@
+Nome do exercício  : epur_str
+Arquivos esperados : epur_str.c
+Funções permitidas : write
+--------------------------------------------------------------------------------
+
+Escreva um programa que recebe uma string e a exibe com exatamente um espaço
+entre as palavras, sem espaços nem tabs no início ou no fim, seguida de uma
+quebra de linha.
+
+Uma "palavra" é definida como uma parte da string delimitada por
+espaços/tabs, ou pelo início/fim da string.
+
+Se o número de argumentos não for 1, ou se não houver palavras para exibir, o
+programa exibe uma quebra de linha.
+
+Exemplos:
+
+$> ./epur_str "vous voyez c'est facile d'afficher la meme chose" | cat -e
+vous voyez c'est facile d'afficher la meme chose$
+$> ./epur_str " seulement      la c'est  plus dur " | cat -e
+seulement la c'est plus dur$
+$> ./epur_str "comme c'est cocasse" "vous avez entendu, Mathilde ?" | cat -e
+$
+$> ./epur_str "" | cat -e
+$
+$>

@@ -1,0 +1,137 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_atoi_base(\"101\", 2)"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "negativos",
+      "display": "ft_atoi_base(\"-ff\", 16)"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "maiusculas",
+      "display": "ft_atoi_base(\"12fdbA\", 16)"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "basico",
+      "display": "ft_atoi_base(\"42\", 10)"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "outras-bases",
+      "display": "ft_atoi_base(\"777\", 8)"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "outras-bases",
+      "display": "ft_atoi_base(\"321\", 4)"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "letras",
+      "display": "ft_atoi_base(\"ab\", 16)"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "maiusculas",
+      "display": "ft_atoi_base(\"FF\", 16)"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "zeros-iniciais",
+      "display": "ft_atoi_base(\"0\", 10)"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "negativos",
+      "display": "ft_atoi_base(\"-7\", 10)"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "10"
+      ],
+      "category": "zeros-iniciais",
+      "display": "ft_atoi_base(\"0010\", 2)"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "11"
+      ],
+      "category": "valores-grandes",
+      "display": "ft_atoi_base(\"7fffffff\", 16)"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O valor que a sua função devolve corresponde aos dígitos lidos, na base pedida?",
+      "Em qualquer base, cada posição vale a base vezes a posição que está à sua direita. Você precisa trocar cada caractere pelo valor do dígito que ele representa e combinar esses valores usando a base.",
+      "A ideia decisiva é combinar os dígitos com a base recebida no parâmetro, e não com 10, depois de transformar cada caractere no seu valor numérico."
+    ],
+    "negativos": [
+      "O que a sua função faz com o '-' no começo da string?",
+      "O sinal só vale quando é o primeiro caractere. Ele não é um dígito: precisa ser consumido antes de ler os dígitos, e o resultado final sai negativo.",
+      "Guarde se há sinal e avance uma posição se houver. Converta os dígitos restantes normalmente e aplique o sinal apenas no fim."
+    ],
+    "maiusculas": [
+      "E se a letra vier em maiúscula, como o 'A' ou o 'F'?",
+      "O enunciado diz que maiúsculas e minúsculas valem o mesmo: 'A' e 'a' são o mesmo dígito, de valor 10.",
+      "Ou converta a letra para minúscula antes de calcular o valor, ou trate as duas faixas, de 'a' a 'f' e de 'A' a 'F', com o mesmo cálculo."
+    ],
+    "outras-bases": [
+      "A sua função funciona com bases diferentes de 2, 10 e 16?",
+      "A base é um parâmetro: o mesmo código precisa servir para a base 4, a 8 ou qualquer outra até 16, sem nenhum número de base fixo no código.",
+      "Procure no seu código algum 10, 2 ou 16 escrito direto e troque pelo parâmetro str_base."
+    ],
+    "letras": [
+      "Como a sua função transforma o caractere 'a' no número 10?",
+      "Os dígitos de '0' a '9' valem o caractere menos '0'. As letras continuam depois: 'a' vale 10, 'b' vale 11, e assim por diante até o 'f', que vale 15.",
+      "Trate as letras de 'a' a 'f' como um caso separado dos dígitos, calculando o valor a partir da distância até o 'a' e somando o deslocamento certo."
+    ],
+    "zeros-iniciais": [
+      "Zeros no começo da string atrapalham o resultado?",
+      "Zeros à esquerda não mudam o valor: cada um contribui com 0, e o resultado segue em 0 até o primeiro dígito diferente de zero. A string \"0\" inteira vale 0.",
+      "Não trate o caractere '0' como fim da string nem como erro: ele é um dígito válido e passa pelo mesmo cálculo dos demais."
+    ],
+    "valores-grandes": [
+      "O resultado fica correto quando a string tem muitos dígitos, como 7fffffff?",
+      "7fffffff é o maior valor que cabe em um int. A variável que acumula o resultado precisa guardar tudo isso, e a função deve ler todos os dígitos da string.",
+      "Confira o tipo da variável que acumula o resultado (um char ou um short não guarda tanto) e não limite a quantidade de dígitos lidos."
+    ]
+  }
+}

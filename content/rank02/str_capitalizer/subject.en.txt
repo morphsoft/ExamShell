@@ -1,0 +1,30 @@
+Assignment name  : str_capitalizer
+Expected files   : str_capitalizer.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes one or more strings and, for each argument,
+capitalizes the first character of each word (if it's a letter, obviously),
+puts the rest in lowercase, and displays the result on the standard output,
+followed by a newline.
+
+A word is a section of string delimited by spaces/tabs, or by the start/end of
+the string. If a word has a single letter, it must be capitalized.
+
+A letter is a character in the set [a-zA-Z].
+
+If there are no parameters, display a newline.
+
+Examples:
+
+$> ./str_capitalizer | cat -e
+$
+$> ./str_capitalizer "a FiRSt LiTTlE test" | cat -e
+A First Little Test$
+$> ./str_capitalizer "SecONd teST A LITtle BiT   Bigger" \
+"   But... MORE    complex" "   Lorem ipsum dolor sit amet, consectetur   " \
+| cat -e
+Second Test A Little Bit   Bigger$
+   But... More    Complex$
+   Lorem Ipsum Dolor Sit Amet, Consectetur   $
+$>

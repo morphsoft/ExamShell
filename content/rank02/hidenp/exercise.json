@@ -1,0 +1,137 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "fgex.;",
+        "tyf34gdgf;'ektufjhgdgex.;.;rtjynur6"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "abc",
+        "2altrb53c.sse"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "abc",
+        "btarc"
+      ],
+      "category": "ordem"
+    },
+    {
+      "id": "t04",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "abc",
+        "abd"
+      ],
+      "category": "caractere-ausente"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "",
+        "abc"
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "",
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "a",
+        ""
+      ],
+      "category": "caractere-ausente"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "abc"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "a",
+        "b",
+        "c"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "aa",
+        "a"
+      ],
+      "category": "repetidos"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "aa",
+        "aba"
+      ],
+      "category": "repetidos"
+    },
+    {
+      "id": "t13",
+      "args": [
+        "abc",
+        "abc"
+      ],
+      "category": "basico"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Para cada caractere da primeira string, o seu programa encontra um caractere igual na segunda?",
+      "Cada caractere de s1 precisa ser achado em s2, e na mesma ordem. Eles não precisam estar lado a lado: podem existir outros caracteres entre eles. A saída é 1 se todos foram achados, ou 0 caso contrário.",
+      "A ideia decisiva é que a posição em s2 nunca volta para trás. Cada caractere de s1 só pode ser procurado depois do ponto em que o anterior foi achado."
+    ],
+    "ordem": [
+      "A ordem dos caracteres de s1 importa para o resultado?",
+      "Importa. 'abc' não está escondida em 'btarc', porque o único 'b' vem antes do 'a', e a ordem de s1 tem o 'a' antes do 'b'. Ter todas as letras não basta.",
+      "Se a busca de cada caractere recomeçar do início de s2, a ordem errada passa a ser aceita. Faça cada busca continuar de onde a anterior parou."
+    ],
+    "caractere-ausente": [
+      "A resposta muda quando um caractere de s1 não existe em s2?",
+      "Basta um caractere de s1 sem correspondência para o resultado ser 0.",
+      "Se você chegar ao fim de s2 sem ter achado todos os caracteres de s1, a resposta é 0. Cuide para não ler além do '\\0' de s2."
+    ],
+    "string-vazia": [
+      "O que significa uma string vazia estar escondida em outra?",
+      "O enunciado diz que a string vazia está escondida em qualquer string, inclusive em outra vazia. O resultado é 1.",
+      "Se s1 não tem caracteres, não há nada para procurar. Considere que s1 ter chegado ao fim é o que significa sucesso, sem depender de s2 ter conteúdo."
+    ],
+    "argumentos": [
+      "O que o seu programa escreve quando o número de parâmetros não é 2?",
+      "O enunciado só pede o 1 ou o 0 quando há exatamente dois parâmetros. Em qualquer outro caso, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira se o argc vale exatamente 3 antes de olhar as strings. Se não valer, não toque no argv e escreva apenas a quebra de linha."
+    ],
+    "repetidos": [
+      "E se s1 repetir o mesmo caractere, como em 'aa'?",
+      "Cada caractere de s1 precisa de uma ocorrência própria em s2: o mesmo 'a' de s2 não pode valer por dois. Por isso 'aa' não está escondida em 'a', mas está em 'aba'.",
+      "Depois de usar uma posição de s2 para casar um caractere de s1, a busca pelo próximo caractere começa na posição seguinte."
+    ]
+  }
+}

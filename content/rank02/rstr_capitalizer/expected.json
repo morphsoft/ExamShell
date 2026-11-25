@@ -1,0 +1,35 @@
+{
+  "t01": {
+    "stdout": "\n"
+  },
+  "t02": {
+    "stdout": "A firsT littlE tesT\n"
+  },
+  "t03": {
+    "stdout": "seconD tesT A littlE biT   biggeR\n   but... morE    compleX\n   loreM ipsuM doloR siT amet, consectetuR   \n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "     \n"
+  },
+  "t06": {
+    "stdout": "A\n"
+  },
+  "t07": {
+    "stdout": "abC deF\n"
+  },
+  "t08": {
+    "stdout": "\tfoO\tbaR\n"
+  },
+  "t09": {
+    "stdout": "hellO\nworlD\n"
+  },
+  "t10": {
+    "stdout": "hellO worlD  \n"
+  },
+  "t11": {
+    "stdout": "abc. xy2\n"
+  }
+}

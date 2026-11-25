@@ -1,0 +1,35 @@
+{
+  "t01": {
+    "stdout": "vous voyez c'est facile d'afficher la meme chose\n"
+  },
+  "t02": {
+    "stdout": "seulement la c'est plus dur\n"
+  },
+  "t03": {
+    "stdout": "\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "\n"
+  },
+  "t07": {
+    "stdout": "foo bar\n"
+  },
+  "t08": {
+    "stdout": "word\n"
+  },
+  "t09": {
+    "stdout": "a b\n"
+  },
+  "t10": {
+    "stdout": "a b\n"
+  },
+  "t11": {
+    "stdout": "a b\n"
+  }
+}

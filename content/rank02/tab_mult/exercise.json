@@ -1,0 +1,80 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "9"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "19"
+      ],
+      "category": "varios-digitos"
+    },
+    {
+      "id": "t03",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "1"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "10"
+      ],
+      "category": "varios-digitos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "123"
+      ],
+      "category": "varios-digitos"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "238609294"
+      ],
+      "category": "valores-grandes"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "5"
+      ],
+      "category": "basico"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada linha da sua saída tem exatamente o formato '1 x 9 = 9', com os espaços nos lugares certos?",
+      "O formato é: o multiplicador, ' x ', o número recebido, ' = ', o produto e a quebra de linha. Os multiplicadores vão de 1 a 9, nessa ordem, e o número recebido é o mesmo em todas as linhas.",
+      "Escreva à parte uma função que mostra um int com write, e use-a três vezes por linha (multiplicador, número e produto), com os textos fixos escritos entre elas."
+    ],
+    "varios-digitos": [
+      "O que acontece quando o número ou o produto têm mais de um dígito?",
+      "O write escreve bytes, e não números. Um valor como 171 precisa ser escrito como três caracteres, do dígito mais significativo para o menos.",
+      "Separe os dígitos com divisão e resto por 10. Como eles saem do último para o primeiro, resolva a ordem com recursão ou com um pequeno buffer."
+    ],
+    "argumentos": [
+      "O que o seu programa escreve quando não recebe nenhum parâmetro?",
+      "Sem parâmetros, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc, que vale 1 nesse caso.",
+      "Confira o argc antes de ler o argv. Se não houver o parâmetro, escreva apenas a quebra de linha e termine, sem tocar em argv[1]."
+    ],
+    "valores-grandes": [
+      "O seu programa funciona com um número de quase 239 milhões?",
+      "O enunciado garante que o número vezes 9 cabe em um int, mas esse produto pode chegar a 10 dígitos. Um buffer pequeno demais, ou um tipo menor que o int, corta os dígitos.",
+      "Confira que a sua função de escrever números suporta 10 dígitos, e que a conversão da string e a multiplicação usam int, ou um tipo maior."
+    ]
+  }
+}

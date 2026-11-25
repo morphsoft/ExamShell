@@ -1,0 +1,27 @@
+Nome do exercício  : ft_atoi_base
+Arquivos esperados : ft_atoi_base.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva uma função que converte a string recebida em str (base N <= 16) para
+um inteiro (base 10) e o devolve.
+
+Os caracteres reconhecidos na entrada são: 0123456789abcdef
+Eles são, é claro, limitados de acordo com a base pedida. Por exemplo, a base
+4 reconhece "0123" e a base 16 reconhece "0123456789abcdef".
+
+Letras maiúsculas também devem ser reconhecidas: "12fdbA" é o mesmo que
+"12FDBA".
+
+O sinal de menos ('-') só é interpretado se for o primeiro caractere da
+string.
+
+A sua função deve ser declarada assim:
+
+int	ft_atoi_base(const char *str, int str_base);
+
+Exemplos:
+
+ft_atoi_base("101", 2) devolve 5.
+ft_atoi_base("-ff", 16) devolve -255.
+ft_atoi_base("12fdbA", 16) devolve 1244602.

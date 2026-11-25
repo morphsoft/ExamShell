@@ -1,0 +1,35 @@
+{
+  "t01": {
+    "stdout": "a\n"
+  },
+  "t02": {
+    "stdout": "ff\n"
+  },
+  "t03": {
+    "stdout": "4eae66\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "0\n"
+  },
+  "t06": {
+    "stdout": "1\n"
+  },
+  "t07": {
+    "stdout": "f\n"
+  },
+  "t08": {
+    "stdout": "10\n"
+  },
+  "t09": {
+    "stdout": "1000\n"
+  },
+  "t10": {
+    "stdout": "7fffffff\n"
+  },
+  "t11": {
+    "stdout": "\n"
+  }
+}

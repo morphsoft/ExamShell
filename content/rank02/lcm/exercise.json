@@ -1,0 +1,116 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "lcm(4, 6)"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "basico",
+      "display": "lcm(21, 6)"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "zero",
+      "display": "lcm(0, 5)"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "zero",
+      "display": "lcm(5, 0)"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "iguais",
+      "display": "lcm(1, 1)"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "coprimos",
+      "display": "lcm(7, 13)"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "iguais",
+      "display": "lcm(12, 12)"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "multiplos",
+      "display": "lcm(6, 3)"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "multiplos",
+      "display": "lcm(3, 6)"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "valores-grandes",
+      "display": "lcm(60000, 70000)"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O resultado da sua função é o menor número divisível pelos dois, e não só um múltiplo comum qualquer?",
+      "O MMC pode ser achado testando múltiplos de um dos números até que um deles seja divisível pelo outro, ou usando o máximo divisor comum dos dois.",
+      "Escolha um dos dois caminhos e teste no papel com 4 e 6 antes de escrever o código: o resultado esperado é 12. Se você obtiver 24, ou 2, algo no caminho escolhido está errado."
+    ],
+    "zero": [
+      "O que a sua função devolve quando um dos números é 0?",
+      "O enunciado diz que, se pelo menos um dos inteiros for nulo, o MMC é 0. Essa verificação precisa vir antes de qualquer divisão ou laço.",
+      "Trate o caso do zero logo no começo da função e devolva 0 sem fazer mais nada. Dividir por zero quebra o programa, e um laço que procura múltiplos pode nunca terminar."
+    ],
+    "iguais": [
+      "O que acontece quando os dois números são iguais?",
+      "O menor múltiplo comum de um número com ele mesmo é o próprio número.",
+      "Se o seu cálculo usa a diferença entre os números, ou começa a busca a partir do dobro, confira o que ele faz quando a diferença é zero."
+    ],
+    "coprimos": [
+      "O seu código funciona quando os dois números não têm divisor em comum além do 1?",
+      "Quando o único divisor comum é 1, o menor múltiplo comum é o produto dos dois números.",
+      "Se você usa o máximo divisor comum, confira que ele dá 1 para 7 e 13. Se você testa múltiplos, confira que a busca vai até o produto."
+    ],
+    "multiplos": [
+      "E se um dos números já for múltiplo do outro?",
+      "Quando um número divide o outro, o MMC é o maior dos dois: lcm(3, 6) é 6, e não 18.",
+      "A ordem dos argumentos não pode mudar o resultado. Teste lcm(6, 3) e lcm(3, 6): os dois devem dar 6."
+    ],
+    "valores-grandes": [
+      "O resultado fica certo quando o produto dos dois números passa de dois bilhões?",
+      "Os parâmetros e o retorno são unsigned int. Uma variável intermediária do tipo int, com sinal, estoura quando o valor passa de 2147483647, mesmo que o resultado final coubesse.",
+      "Use unsigned int nas variáveis intermediárias, como o produto, e confira o exemplo de 60000 e 70000, cujo produto é maior que o maior int."
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_range(1, 3)"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "negativos",
+      "display": "ft_range(-1, 2)"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "inicio-igual-fim",
+      "display": "ft_range(0, 0)"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "start-maior",
+      "display": "ft_range(0, -3)"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "inicio-igual-fim",
+      "display": "ft_range(5, 5)"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "negativos",
+      "display": "ft_range(-3, -1)"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "basico",
+      "display": "ft_range(10, 20)"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "start-maior",
+      "display": "ft_range(3, -2)"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "start-maior",
+      "display": "ft_range(-2, -5)"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "intervalo-grande",
+      "display": "ft_range(0, 1000)"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O vetor tem todos os valores do intervalo, incluindo os dois extremos?",
+      "Os extremos entram no vetor. Por isso o tamanho é a distância entre start e end mais 1. A função devolve o ponteiro para o primeiro elemento do vetor que você alocou com malloc.",
+      "Calcule primeiro quantos elementos precisa, aloque esse tanto de ints e só depois preencha. Se você alocar só a distância, vai faltar espaço para um dos valores."
+    ],
+    "inicio-igual-fim": [
+      "O que a sua função devolve quando start é igual a end?",
+      "Nesse caso o vetor tem exatamente um elemento, que é o próprio valor. A distância é zero, mas o tamanho do vetor nunca é zero.",
+      "Confira se o seu cálculo de tamanho dá 1 quando start e end são iguais, e se o preenchimento escreve esse único valor."
+    ],
+    "negativos": [
+      "A sua função funciona quando os valores são negativos?",
+      "Negativos e zero são valores comuns do intervalo. Um contador sem sinal, ou uma conta de tamanho que supõe valores positivos, quebra com eles.",
+      "Use tipos com sinal para os valores e confira o tamanho num exemplo como de -1 a 2, que precisa de 4 elementos."
+    ],
+    "start-maior": [
+      "E se start for maior que end?",
+      "A função não pode supor que start vem antes de end. O vetor continua com todos os valores entre os dois, e o tamanho continua sendo a distância entre eles mais 1, qualquer que seja a ordem.",
+      "Decida a direção comparando start e end, e calcule a distância sem sinal, ou seja, sempre positiva. Em um sentido some 1 a cada passo, e no outro subtraia 1."
+    ],
+    "intervalo-grande": [
+      "A sua função funciona com um intervalo de mil elementos?",
+      "O malloc recebe o tamanho em bytes, e não em elementos. Cada elemento é um int, que ocupa mais de um byte. Uma alocação pequena demais corrompe a memória quando o vetor é grande.",
+      "Multiplique o número de elementos pelo tamanho de um int na hora de chamar o malloc."
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+Nome do exercício  : add_prime_sum
+Arquivos esperados : add_prime_sum.c
+Funções permitidas : write, exit
+--------------------------------------------------------------------------------
+
+Escreva um programa que recebe um inteiro positivo como argumento e exibe a
+soma de todos os números primos menores ou iguais a ele, seguida de uma quebra
+de linha.
+
+Se o número de argumentos não for 1, ou se o argumento não for um número
+positivo, exiba apenas 0 seguido de uma quebra de linha.
+
+Sim, os exemplos estão certos.
+
+Exemplos:
+
+$> ./add_prime_sum 5
+10
+$> ./add_prime_sum 7 | cat -e
+17$
+$> ./add_prime_sum | cat -e
+0$
+$>

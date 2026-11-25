@@ -1,0 +1,30 @@
+Nome do exercício  : rstr_capitalizer
+Arquivos esperados : rstr_capitalizer.c
+Funções permitidas : write
+--------------------------------------------------------------------------------
+
+Escreva um programa que recebe uma ou mais strings e, para cada argumento,
+coloca em maiúscula o último caractere de cada palavra (se for uma letra) e o
+resto em minúsculas, e então exibe o resultado seguido de uma quebra de linha.
+
+Uma palavra é uma parte da string delimitada por espaços/tabs, ou pelo
+início/fim da string. Se uma palavra tiver uma única letra, ela deve ficar em
+maiúscula.
+
+Uma letra é um caractere do conjunto [a-zA-Z].
+
+Se não houver parâmetros, exiba uma quebra de linha.
+
+Exemplos:
+
+$> ./rstr_capitalizer | cat -e
+$
+$> ./rstr_capitalizer "a FiRSt LiTTlE test" | cat -e
+A firsT littlE tesT$
+$> ./rstr_capitalizer "SecONd teST A LITtle BiT   Bigger" \
+"   But... MORE    complex" "   Lorem ipsum dolor sit amet, consectetur   " \
+| cat -e
+seconD tesT A littlE biT   biggeR$
+   but... morE    compleX$
+   loreM ipsuM doloR siT amet, consectetuR   $
+$>

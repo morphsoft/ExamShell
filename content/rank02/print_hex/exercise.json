@@ -1,0 +1,112 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "10"
+      ],
+      "category": "letras"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "255"
+      ],
+      "category": "letras"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "5156454"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t04",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "0"
+      ],
+      "category": "zero"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "1"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "15"
+      ],
+      "category": "letras"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "16"
+      ],
+      "category": "zeros-no-meio"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "4096"
+      ],
+      "category": "zeros-no-meio"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "2147483647"
+      ],
+      "category": "valores-grandes"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "1",
+        "2"
+      ],
+      "category": "argumentos"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Os dígitos hexadecimais que você escreve estão na ordem certa?",
+      "Dividir por 16 e pegar o resto separa os dígitos, mas eles saem de trás para a frente: primeiro o menos significativo. Como o write não permite voltar atrás, a ordem precisa ser resolvida antes de escrever.",
+      "Resolva a ordem guardando os restos num pequeno buffer para escrevê-los de trás para a frente, ou usando recursão. E lembre que o write só escreve caracteres, e não valores numéricos."
+    ],
+    "letras": [
+      "Como o seu programa escreve o dígito de valor 10 em hexadecimal?",
+      "Em base 16, os valores de 10 a 15 viram as letras de 'a' a 'f', em minúsculas. Escrever o caractere '0' somado a 10 produz um símbolo que não é letra nenhuma.",
+      "Para valores menores que 10, parta do caractere '0'. Para os demais, parta do caractere 'a', descontando o 10. Uma string com os 16 dígitos, indexada pelo valor, também resolve de uma vez."
+    ],
+    "argumentos": [
+      "O que o seu programa escreve quando recebe zero argumentos, ou dois?",
+      "O enunciado só pede a conversão quando há exatamente um parâmetro. Em qualquer outro caso, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira se o argc vale exatamente 2 antes de converter a string. Se não valer, não toque no argv e escreva apenas a quebra de linha."
+    ],
+    "zero": [
+      "O que o seu programa escreve para o número 0?",
+      "Zero em hexadecimal é o caractere '0'. Se o seu laço só roda enquanto o número for diferente de zero, para o 0 ele não roda nenhuma vez, e nada é escrito.",
+      "Garanta que pelo menos um dígito seja escrito mesmo quando o número é 0, seja tratando o zero como caso à parte, seja com uma estrutura que escreva antes de testar."
+    ],
+    "zeros-no-meio": [
+      "Os zeros no meio ou no fim do resultado aparecem na sua saída?",
+      "Em hexadecimal, 16 é '10' e 4096 é '1000'. Esses zeros são dígitos de verdade: resto zero também precisa ser escrito.",
+      "Continue dividindo por 16 enquanto o que sobra do número for diferente de zero, e não enquanto o resto for diferente de zero. Um resto zero é um dígito como os outros."
+    ],
+    "valores-grandes": [
+      "O seu programa funciona com o maior int, 2147483647?",
+      "Esse valor tem 8 dígitos em hexadecimal. Um buffer pequeno demais, ou uma variável de tipo menor que o int, corta ou corrompe os dígitos.",
+      "Confira que o buffer comporta 8 dígitos e que a conversão da string para número usa um tipo que guarde todo o valor, como int ou maior."
+    ]
+  }
+}
