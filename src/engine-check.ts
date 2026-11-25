@@ -1,34 +1,29 @@
 // Página mínima do teste de viabilidade: carrega o Clang no navegador e roda um cenário (?scenario=).
+// Esta página vai para o site publicado: nenhum programa daqui pode ser solução de um exercício.
 import { createBrowserEngine, type BrowserEngine } from './engine/browserEngine';
 import type { RunResult } from './engine/types';
 
-const FIRST_WORD = `#include <unistd.h>
+/** Ecoa argv[1] e uma quebra de linha. */
+const ECHO = `#include <unistd.h>
 int main(int argc, char **argv)
 {
 	int i = 0;
 	if (argc == 2)
-	{
-		while (argv[1][i] == ' ' || argv[1][i] == '\\t')
-			i++;
-		while (argv[1][i] && argv[1][i] != ' ' && argv[1][i] != '\\t')
+		while (argv[1][i])
 			write(1, &argv[1][i++], 1);
-	}
 	write(1, "\\n", 1);
 	return (0);
 }
 `;
 
-/** Esquece de pular os espaços do início. */
-const FIRST_WORD_BUG = `#include <unistd.h>
+/** Esquece a quebra de linha do fim. */
+const ECHO_BUG = `#include <unistd.h>
 int main(int argc, char **argv)
 {
 	int i = 0;
 	if (argc == 2)
-	{
-		while (argv[1][i] && argv[1][i] != ' ' && argv[1][i] != '\\t')
+		while (argv[1][i])
 			write(1, &argv[1][i++], 1);
-	}
-	write(1, "\\n", 1);
 	return (0);
 }
 `;
@@ -54,14 +49,14 @@ async function runProgram(engine: BrowserEngine, src: string, args: string[], ti
 }
 
 const SCENARIOS: Record<string, (engine: BrowserEngine) => Promise<unknown>> = {
-  'first_word-ok': (e) => runProgram(e, FIRST_WORD, LOREM),
-  'first_word-bug': (e) => runProgram(e, FIRST_WORD_BUG, LOREM),
+  'echo-ok': (e) => runProgram(e, ECHO, LOREM),
+  'echo-bug': (e) => runProgram(e, ECHO_BUG, LOREM),
   werror: (e) => e.compileObjects({ 'main.c': 'int main(void){int x; return 0;}' }, {}),
   'null-write': (e) => runProgram(e, NULL_WRITE, []),
   'long-size': (e) => runProgram(e, LONG_SIZE, []),
   'infinite-then-ok': async (e) => ({
     first: await runProgram(e, INFINITE, [], 2000),
-    second: await runProgram(e, FIRST_WORD, LOREM),
+    second: await runProgram(e, ECHO, LOREM),
   }),
 };
 

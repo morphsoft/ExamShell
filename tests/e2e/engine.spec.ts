@@ -8,14 +8,14 @@ async function scenario(page: Page, name: string) {
   return JSON.parse((await result.textContent()) ?? '');
 }
 
-test('first_word-ok', async ({ page }) => {
-  const r = await scenario(page, 'first_word-ok');
-  expect(r.stdout).toBe('lorem,ipsum\n');
+test('echo-ok: compila e roda', async ({ page }) => {
+  const r = await scenario(page, 'echo-ok');
+  expect(r).toMatchObject({ outcome: 'exit', exitCode: 0, stdout: '  lorem,ipsum  \n' });
 });
 
-test('first_word-bug', async ({ page }) => {
-  const r = await scenario(page, 'first_word-bug');
-  expect(r.stdout).toBe('\n');
+test('echo-bug: saída errada', async ({ page }) => {
+  const r = await scenario(page, 'echo-bug');
+  expect(r.stdout).toBe('  lorem,ipsum  ');
 });
 
 test('werror', async ({ page }) => {
@@ -37,7 +37,7 @@ test('long-size', async ({ page }) => {
 test('infinite-then-ok', async ({ page }) => {
   const r = await scenario(page, 'infinite-then-ok');
   expect(r.first.outcome).toBe('timeout');
-  expect(r.second.stdout).toBe('lorem,ipsum\n');
+  expect(r.second.stdout).toBe('  lorem,ipsum  \n');
 });
 
 test('carga a 10 Mbps', async ({ page, context, browserName }) => {
@@ -84,9 +84,9 @@ test('.gz como arquivo comum, sem Content-Encoding (como o GitHub Pages)', async
       return r.fulfill({ path: `dist/clang/${name}`, headers: { 'content-type': 'application/gzip' } });
     });
   }
-  const r = await scenario(page, 'first_word-ok');
+  const r = await scenario(page, 'echo-ok');
   await expect(page.locator('#status')).toHaveText('ready');
-  expect(r.stdout).toBe('lorem,ipsum\n');
+  expect(r.stdout).toBe('  lorem,ipsum  \n');
   expect(served.sort()).toEqual(['llvm-resources.tar.gz', 'llvm.core.wasm.gz']);
 });
 
