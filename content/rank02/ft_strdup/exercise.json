@@ -1,5 +1,6 @@
 {
   "summary": "Duplica uma string com malloc.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n#include <stdlib.h>\n\nchar *ft_strdup(char *src);\n\nint\tmain(void)\n{\n\tchar\t*copy;\n\n\tcopy = ft_strdup(\"Hello\");\n\tprintf(\"%s\\n\", copy ? copy : \"(null)\");\n\tfree(copy);\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

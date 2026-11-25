@@ -1,5 +1,6 @@
 {
   "summary": "Conta os nós de uma lista encadeada.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n#include <stdlib.h>\n#include \"ft_list.h\"\n\nint ft_list_size(t_list *begin_list);\n\nstatic t_list\t*new_node(void *data, t_list *next)\n{\n\tt_list\t*node;\n\n\tnode = malloc(sizeof(t_list));\n\tnode->data = data;\n\tnode->next = next;\n\treturn (node);\n}\n\nint\tmain(void)\n{\n\tt_list\t*list;\n\n\tlist = new_node(\"a\", new_node(\"b\", new_node(\"c\", NULL)));\n\tprintf(\"%d\\n\", ft_list_size(list));\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_list_size([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL)" },
     { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_list_size([\"a\"] -> NULL)" },

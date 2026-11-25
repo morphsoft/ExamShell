@@ -1,5 +1,6 @@
 {
   "summary": "Remove da lista os nós iguais a uma referência.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include \"ft_list.h\"\n\nvoid ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());\n\nstatic t_list\t*new_node(void *data, t_list *next)\n{\n\tt_list\t*node;\n\n\tnode = malloc(sizeof(t_list));\n\tnode->data = data;\n\tnode->next = next;\n\treturn (node);\n}\n\nint\tmain(void)\n{\n\tt_list\t*list;\n\n\tlist = new_node(\"a\", new_node(\"b\", new_node(\"c\", NULL)));\n\tft_list_remove_if(&list, \"b\", strcmp);\n\twhile (list != NULL)\n\t{\n\t\tprintf(\"%s\\n\", (char *)list->data);\n\t\tlist = list->next;\n\t}\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, \"b\", cmp)" },
     { "id": "t02", "args": ["1"], "category": "cabeca", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, \"a\", cmp)" },

@@ -1,5 +1,6 @@
 {
   "summary": "Pinta a área conectada de um mapa 2D.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n#include \"t_point.h\"\n\nvoid flood_fill(char **tab, t_point size, t_point begin);\n\nint\tmain(void)\n{\n\tchar\trow0[] = \"11111111\";\n\tchar\trow1[] = \"10001001\";\n\tchar\trow2[] = \"10010001\";\n\tchar\trow3[] = \"10110001\";\n\tchar\trow4[] = \"11100001\";\n\tchar\t*area[] = {row0, row1, row2, row3, row4};\n\tt_point\tsize = {8, 5};\n\tt_point\tbegin = {7, 4};\n\tint\t\ti;\n\n\tflood_fill(area, size, begin);\n\ti = 0;\n\twhile (i < 5)\n\t{\n\t\tprintf(\"%s\\n\", area[i]);\n\t\ti++;\n\t}\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "flood_fill(area, {8, 5}, {7, 4}) /* zona de '1' do exemplo */" },
     { "id": "t02", "args": ["1"], "category": "xy-trocados", "display": "flood_fill(area, {5, 5}, {1, 3}) /* x = 1 (coluna), y = 3 (linha) */" },

@@ -1,5 +1,6 @@
 {
   "summary": "Converte string em int, como atoi.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nint ft_atoi(const char *str);\n\nint\tmain(void)\n{\n\tprintf(\"%d\\n\", ft_atoi(\"42\"));\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

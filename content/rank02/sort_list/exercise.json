@@ -1,5 +1,6 @@
 {
   "summary": "Ordena uma lista encadeada.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n#include <stdlib.h>\n#include \"list.h\"\n\nt_list *sort_list(t_list* lst, int (*cmp)(int, int));\n\nstatic t_list\t*new_node(int data, t_list *next)\n{\n\tt_list\t*node;\n\n\tnode = malloc(sizeof(t_list));\n\tnode->data = data;\n\tnode->next = next;\n\treturn (node);\n}\n\nstatic int\tascending(int a, int b)\n{\n\treturn (a <= b);\n}\n\nint\tmain(void)\n{\n\tt_list\t*list;\n\n\tlist = new_node(3, new_node(1, new_node(2, NULL)));\n\tlist = sort_list(list, ascending);\n\twhile (list != NULL)\n\t{\n\t\tprintf(\"%d\\n\", list->data);\n\t\tlist = list->next;\n\t}\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "sort_list([3] -> [1] -> [2] -> NULL, ascending)" },
     { "id": "t02", "args": ["1"], "category": "descendente", "display": "sort_list([3] -> [1] -> [2] -> NULL, descending)" },

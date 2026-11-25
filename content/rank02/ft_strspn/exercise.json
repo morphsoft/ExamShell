@@ -1,5 +1,6 @@
 {
   "summary": "Conta o trecho inicial só com caracteres aceitos.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nsize_t ft_strspn(const char *s, const char *accept);\n\nint\tmain(void)\n{\n\tprintf(\"%zu\\n\", ft_strspn(\"129th\", \"0123456789\"));\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

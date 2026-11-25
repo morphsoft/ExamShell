@@ -3,7 +3,7 @@ import { byLevel, getExercise, loadExercises } from '../../src/content/loadExerc
 import { LEVEL_INFO } from '../../src/content/levels';
 import { RANK02_CATALOG } from '../../src/content/rank02Catalog';
 import { exerciseContentSchema } from '../../src/content/schema';
-import { grade } from '../../src/engine/grade';
+import { grade, runOnce } from '../../src/engine/grade';
 import type { Engine, LoadedExercise, SourceFiles } from '../../src/engine/types';
 import { looksLikeCode } from '../../src/hints/looksLikeCode';
 import { createNodeEngine } from '../support/nodeEngine';
@@ -230,5 +230,54 @@ it('LEVEL_INFO tem os 4 títulos do spec', () => {
     2: { title: 'Strings e bits', subtitle: 'funções da libc, bits e malloc' },
     3: { title: 'Números e listas', subtitle: 'matemática, bases e listas encadeadas' },
     4: { title: 'Algoritmos', subtitle: 'split, ordenação e flood fill' },
+  });
+});
+
+describe('main de exemplo', () => {
+  const functions = exercises.filter((e) => e.kind === 'function');
+  const referenceOf = (id: string): SourceFiles => {
+    const dir = `/reference/rank02/${id}/`;
+    const files: SourceFiles = {};
+    for (const name of byFolder(Object.keys(referenceFiles)).get(id) ?? []) files[name] = referenceFiles[dir + name];
+    return files;
+  };
+
+  it('existe em todo exercício de função e em nenhum programa', () => {
+    expect(functions).toHaveLength(28);
+    for (const ex of exercises) {
+      if (ex.kind === 'function') expect(ex.sampleMain?.trim(), ex.id).toBeTruthy();
+      else expect(ex.sampleMain, ex.id).toBeUndefined();
+    }
+  });
+
+  it('não define a função do exercício', async () => {
+    for (const ex of functions) {
+      const name = /(\w+)\s*\(/.exec(ex.prototype ?? '')?.[1] ?? '';
+      expect(name, ex.id).not.toBe('');
+      const headers: SourceFiles = { ...ex.provided };
+      for (const [file, text] of Object.entries(referenceOf(ex.id))) if (file.endsWith('.h')) headers[file] = text;
+      const compiled = await engine.compileObjects({ 'main.c': ex.sampleMain ?? '' }, headers);
+      expect(compiled.ok ? '' : compiled.stderr, ex.id).toBe('');
+      if (!compiled.ok) continue;
+      expect(await engine.definedSymbols(compiled.objects), ex.id).not.toContain(name);
+    }
+  });
+
+  it('compila com a referência, roda sem travar e imprime algo', async () => {
+    for (const ex of functions) {
+      const out = await runOnce(ex, referenceOf(ex.id), { mainC: ex.sampleMain, args: [] }, engine);
+      expect(out.failure, ex.id).toBeNull();
+      expect(out.run?.outcome, ex.id).toBe('exit');
+      expect(out.run?.exitCode, ex.id).toBe(0);
+      expect(out.run?.stdout.trim().length, ex.id).toBeGreaterThan(0);
+    }
+  }, 120_000);
+
+  it('não tem a sentinela de referência e tem no máximo 40 linhas', () => {
+    for (const ex of functions) {
+      const main = ex.sampleMain ?? '';
+      expect(main, ex.id).not.toContain('EXAMSHELL-REFERENCE');
+      expect(main.trimEnd().split('\n').length, ex.id).toBeLessThanOrEqual(40);
+    }
   });
 });

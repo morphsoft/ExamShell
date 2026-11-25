@@ -1,5 +1,6 @@
 {
   "summary": "Aplica uma função em cada nó da lista.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n#include <stdlib.h>\n#include \"ft_list.h\"\n\nvoid ft_list_foreach(t_list *begin_list, void (*f)(void *));\n\nstatic t_list\t*new_node(void *data, t_list *next)\n{\n\tt_list\t*node;\n\n\tnode = malloc(sizeof(t_list));\n\tnode->data = data;\n\tnode->next = next;\n\treturn (node);\n}\n\nstatic void\tprint_str(void *data)\n{\n\tprintf(\"%s\\n\", (char *)data);\n}\n\nint\tmain(void)\n{\n\tt_list\t*list;\n\n\tlist = new_node(\"a\", new_node(\"b\", new_node(\"c\", NULL)));\n\tft_list_foreach(list, print_str);\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_list_foreach([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, print_str)" },
     { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_list_foreach([\"a\"] -> NULL, print_str)" },

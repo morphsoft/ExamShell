@@ -1,5 +1,6 @@
 {
   "summary": "Mínimo múltiplo comum.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nunsigned int lcm(unsigned int a, unsigned int b);\n\nint\tmain(void)\n{\n\tprintf(\"%u\\n\", lcm(4, 6));\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

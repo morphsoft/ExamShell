@@ -1,5 +1,6 @@
 {
   "summary": "Compara duas strings, como strcmp.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nint ft_strcmp(char *s1, char *s2);\n\nint\tmain(void)\n{\n\tprintf(\"%d\\n\", ft_strcmp(\"abc\", \"abc\"));\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

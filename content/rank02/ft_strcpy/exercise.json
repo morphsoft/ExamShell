@@ -1,5 +1,6 @@
 {
   "summary": "Copia uma string para outra, como strcpy.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nchar *ft_strcpy(char *s1, char *s2);\n\nint\tmain(void)\n{\n\tchar\tdst[16] = {0};\n\n\tft_strcpy(dst, \"Hello\");\n\tprintf(\"%s\\n\", dst);\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

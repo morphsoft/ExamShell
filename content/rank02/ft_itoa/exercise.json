@@ -1,5 +1,6 @@
 {
   "summary": "Converte int em string, como itoa.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n#include <stdlib.h>\n\nchar *ft_itoa(int nbr);\n\nint\tmain(void)\n{\n\tchar\t*str;\n\n\tstr = ft_itoa(42);\n\tprintf(\"%s\\n\", str ? str : \"(null)\");\n\tfree(str);\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_itoa(42)" },
     { "id": "t02", "args": ["1"], "category": "negativos", "display": "ft_itoa(-42)" },

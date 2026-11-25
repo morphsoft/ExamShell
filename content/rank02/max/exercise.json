@@ -1,5 +1,6 @@
 {
   "summary": "Devolve o maior valor de um array.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nint max(int* tab, unsigned int len);\n\nint\tmain(void)\n{\n\tint\ttab[] = {3, 7, 2};\n\n\tprintf(\"%d\\n\", max(tab, 3));\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

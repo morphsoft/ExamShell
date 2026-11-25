@@ -1,5 +1,6 @@
 {
   "summary": "Escreve uma string na saída.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nvoid ft_putstr(char *str);\n\nint\tmain(void)\n{\n\tft_putstr(\"Hello\");\n\tprintf(\"\\n\");\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

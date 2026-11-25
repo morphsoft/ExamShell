@@ -1,5 +1,6 @@
 {
   "summary": "Devolve o tamanho de uma string.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nint ft_strlen(char *str);\n\nint\tmain(void)\n{\n\tprintf(\"%d\\n\", ft_strlen(\"Hello\"));\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_strlen(\"Hello\")" },
     { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_strlen(\"abcdefghijklmnopqrstuvwxyz\")" },

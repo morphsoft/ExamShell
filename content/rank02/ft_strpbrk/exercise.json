@@ -1,5 +1,6 @@
 {
   "summary": "Acha o primeiro caractere de um conjunto.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nchar *ft_strpbrk(const char *s1, const char *s2);\n\nint\tmain(void)\n{\n\tchar\t*found;\n\n\tfound = ft_strpbrk(\"Hello, World\", \"o,\");\n\tprintf(\"%s\\n\", found ? found : \"(null)\");\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

@@ -1,5 +1,6 @@
 {
   "summary": "Inverte a string no próprio lugar.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nchar *ft_strrev(char *str);\n\nint\tmain(void)\n{\n\tchar\tstr[] = \"Hello\";\n\n\tft_strrev(str);\n\tprintf(\"%s\\n\", str);\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

@@ -19,6 +19,7 @@ const testCaseSchema = z
 export const exerciseContentSchema = z
   .object({
     summary: z.string().min(1).max(80),
+    sampleMain: z.string().min(1).optional(),
     tests: z.array(testCaseSchema).min(1),
     hints: z.record(kebab, z.tuple([hint, hint, hint])),
     starter: z.record(z.string(), z.string()).optional(),

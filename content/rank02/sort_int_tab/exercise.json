@@ -1,5 +1,6 @@
 {
   "summary": "Ordena um array de int.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nvoid sort_int_tab(int *tab, unsigned int size);\n\nint\tmain(void)\n{\n\tint\ttab[] = {3, 1, 2};\n\tint\ti;\n\n\tsort_int_tab(tab, 3);\n\ti = 0;\n\twhile (i < 3)\n\t{\n\t\tprintf(\"%d \", tab[i]);\n\t\ti++;\n\t}\n\tprintf(\"\\n\");\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "sort_int_tab({3, 1, 2}, 3)" },
     { "id": "t02", "args": ["1"], "category": "basico", "display": "sort_int_tab({4, 1, 4, 1}, 4)" },

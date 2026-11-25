@@ -19,6 +19,7 @@ export interface TestCase {
 export type HintLadder = [string, string, string];
 export interface ExerciseContent {
   summary: string; // uma linha para a tela de início (1 a 80 caracteres, sem código)
+  sampleMain?: string; // só 'function': main que chama a função e imprime o resultado (nunca a implementa)
   tests: TestCase[];
   hints: Record<string, HintLadder>; // por category
   starter?: SourceFiles; // conteúdo inicial de algum expectedFile (ex.: struct do subject)

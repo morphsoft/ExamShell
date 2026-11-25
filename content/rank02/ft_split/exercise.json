@@ -1,5 +1,6 @@
 {
   "summary": "Separa uma string em palavras.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n#include <stdlib.h>\n\nchar **ft_split(char *str);\n\nint\tmain(void)\n{\n\tchar\t**words;\n\tint\t\ti;\n\n\twords = ft_split(\"Hello world\");\n\tif (words == NULL)\n\t\treturn (printf(\"(null)\\n\"), 0);\n\ti = 0;\n\twhile (words[i] != NULL)\n\t{\n\t\tprintf(\"[%s]\\n\", words[i]);\n\t\tfree(words[i]);\n\t\ti++;\n\t}\n\tfree(words);\n\treturn (0);\n}\n",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_split(\"Hello world\")" },
     { "id": "t02", "args": ["1"], "category": "uma-palavra", "display": "ft_split(\"one\")" },

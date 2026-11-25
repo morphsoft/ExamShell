@@ -1,5 +1,6 @@
 {
   "summary": "Troca dois inteiros de lugar usando ponteiros.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nvoid ft_swap(int *a, int *b);\n\nint\tmain(void)\n{\n\tint\ta;\n\tint\tb;\n\n\ta = 1;\n\tb = 2;\n\tft_swap(&a, &b);\n\tprintf(\"a = %d, b = %d\\n\", a, b);\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",

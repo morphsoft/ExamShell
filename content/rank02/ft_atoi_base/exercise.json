@@ -1,5 +1,6 @@
 {
   "summary": "Converte uma string numa base de 2 a 16 em int.",
+  "sampleMain": "// main de exemplo: chama a função com o 1º exemplo do enunciado. Edite à vontade.\n#include <stdio.h>\n\nint ft_atoi_base(const char *str, int str_base);\n\nint\tmain(void)\n{\n\tprintf(\"%d\\n\", ft_atoi_base(\"101\", 2));\n\treturn (0);\n}\n",
   "tests": [
     {
       "id": "t01",
