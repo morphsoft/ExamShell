@@ -77,4 +77,7 @@ describe('randomSession', () => {
   it('remainingMs', () => {
     expect(remainingMs({ startedAt: 0 } as never, 1000)).toBe(EXAM_DURATION_MS - 1000);
   });
+  it('remainingMs pode ficar negativo', () => {
+    expect(remainingMs({ startedAt: 0 } as never, EXAM_DURATION_MS + 5000)).toBe(-5000);
+  });
 });

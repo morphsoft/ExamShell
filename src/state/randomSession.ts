@@ -132,12 +132,39 @@ export function reduceSession(s: RandomSession, a: RandomAction, pool: Pool): Ra
 }
 
 export function remainingMs(s: RandomSession, now: number): number {
-  return Math.max(0, EXAM_DURATION_MS - (now - s.startedAt));
+  // Pode ser negativo: o relógio é informativo, o candidato pode continuar.
+  return EXAM_DURATION_MS - (now - s.startedAt);
+}
+
+const isNum = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+
+function validLevel(r: unknown, i: number): boolean {
+  if (!r || typeof r !== 'object') return false;
+  const l = r as Record<string, unknown>;
+  return (
+    l.level === i + 1 &&
+    (l.outcome === 'pending' || l.outcome === 'passed' || l.outcome === 'skipped') &&
+    (l.exerciseId === null || typeof l.exerciseId === 'string') &&
+    isNum(l.attempts) &&
+    isNum(l.hintsUsed) &&
+    typeof l.lastAttemptFailed === 'boolean' &&
+    Array.isArray(l.swappedFrom)
+  );
 }
 
 export function loadSession(): RandomSession | null {
-  const s = readJson<RandomSession | null>(SESSION_KEY, null);
-  return s && typeof s === 'object' && Array.isArray(s.levels) && s.levels.length === 4 ? s : null;
+  const s = readJson<unknown>(SESSION_KEY, null);
+  if (!s || typeof s !== 'object') return null;
+  const o = s as Record<string, unknown>;
+  const ok =
+    isNum(o.seed) &&
+    isNum(o.draws) &&
+    isNum(o.startedAt) &&
+    (o.currentLevel === 1 || o.currentLevel === 2 || o.currentLevel === 3 || o.currentLevel === 4) &&
+    (o.finishedAt === null || isNum(o.finishedAt)) &&
+    !!o.drafts && typeof o.drafts === 'object' && !Array.isArray(o.drafts) &&
+    Array.isArray(o.levels) && o.levels.length === 4 && o.levels.every(validLevel);
+  return ok ? (s as RandomSession) : null;
 }
 
 export function saveSession(s: RandomSession | null): void {
