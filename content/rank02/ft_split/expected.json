@@ -1,0 +1,23 @@
+{
+  "t01": {
+    "stdout": "[Hello]\n[world]\n"
+  },
+  "t02": {
+    "stdout": "[one]\n"
+  },
+  "t03": {
+    "stdout": "[lead]\n[and]\n[trail]\n"
+  },
+  "t04": {
+    "stdout": "[many]\n[spaces]\n[here]\n"
+  },
+  "t05": {
+    "stdout": "[tab]\n[separated]\n[words]\n"
+  },
+  "t06": {
+    "stdout": "[line]\n[one]\n[line]\n[two]\n"
+  },
+  "t07": {
+    "stdout": "[a]\n[b]\n"
+  }
+}

@@ -1,0 +1,34 @@
+Nome do exercício  : ft_list_foreach
+Arquivos esperados : ft_list_foreach.c, ft_list.h
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva uma função que recebe uma lista e um ponteiro para função, e aplica
+essa função a cada elemento da lista.
+
+Ela deve ser declarada assim:
+
+void	ft_list_foreach(t_list *begin_list, void (*f)(void *));
+
+A função apontada por f será usada assim:
+
+(*f)(list_ptr->data);
+
+Você deve usar a estrutura abaixo e entregá-la num arquivo chamado ft_list.h:
+
+typedef struct    s_list
+{
+    struct s_list *next;
+    void          *data;
+}                 t_list;
+
+Exemplos:
+
+Nestes exemplos, ["a"] é um elemento cujo data aponta para a string "a", e [1]
+é um elemento cujo data aponta para o int 1. print_str escreve a string que
+recebe seguida de uma quebra de linha, e add_one soma 1 ao int que recebe.
+
+ft_list_foreach(["a"] -> ["b"] -> ["c"] -> NULL, print_str) escreve a, b e c,
+cada um em sua linha.
+ft_list_foreach(["a"] -> NULL, print_str) escreve a.
+ft_list_foreach([1] -> [2] -> [3] -> NULL, add_one) deixa os ints como 2, 3, 4.

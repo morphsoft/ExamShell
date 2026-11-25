@@ -1,0 +1,45 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, \"b\", cmp)" },
+    { "id": "t02", "args": ["1"], "category": "cabeca", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, \"a\", cmp)" },
+    { "id": "t03", "args": ["2"], "category": "todos", "display": "ft_list_remove_if([\"a\"] -> [\"a\"] -> [\"a\"] -> NULL, \"a\", cmp)" },
+    { "id": "t04", "args": ["3"], "category": "ultimo", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, \"c\", cmp)" },
+    { "id": "t05", "args": ["4"], "category": "nenhum", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, \"x\", cmp)" },
+    { "id": "t06", "args": ["5"], "category": "consecutivos", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"b\"] -> [\"c\"] -> NULL, \"b\", cmp)" },
+    { "id": "t07", "args": ["6"], "category": "consecutivos", "display": "ft_list_remove_if([\"a\"] -> [\"a\"] -> [\"b\"] -> [\"a\"] -> [\"c\"] -> [\"a\"] -> NULL, \"a\", cmp)" },
+    { "id": "t08", "args": ["7"], "category": "consecutivos", "display": "ft_list_remove_if([\"b\"] -> [\"a\"] -> [\"a\"] -> [\"a\"] -> NULL, \"a\", cmp)" }
+  ],
+  "hints": {
+    "basico": [
+      "A sua função remove do meio da lista o elemento que a função cmp diz ser igual à referência?",
+      "Para decidir se um elemento sai, chame cmp com o data do elemento e o dado de referência: quando ela devolve 0, os dois são iguais. Comparar os ponteiros diretamente não serve, porque dois dados iguais podem estar em endereços diferentes.",
+      "Para tirar um elemento, o ponteiro que apontava para ele (o next do anterior) passa a apontar para o seguinte. Depois disso, o elemento removido pode ser liberado com free."
+    ],
+    "cabeca": [
+      "O que muda quando o elemento a remover é o primeiro da lista?",
+      "O primeiro elemento não tem anterior: quem aponta para ele é o ponteiro de início da lista, que está fora dos elementos. Se esse ponteiro continua apontando para o elemento removido, a lista devolvida ao chamador fica errada.",
+      "Por isso a função recebe o endereço do ponteiro de início, e não o próprio ponteiro. Para remover a cabeça, escreva nesse endereço o elemento seguinte."
+    ],
+    "todos": [
+      "E se todos os elementos da lista forem removidos?",
+      "No fim, a lista deve ficar vazia, isto é, o ponteiro de início precisa valer NULL. Se a remoção da cabeça é tratada só uma vez, depois dela pode sobrar uma nova cabeça que também devia sair.",
+      "Enquanto o primeiro elemento for igual à referência, continue removendo o primeiro. Só depois dessa etapa passe para os elementos seguintes."
+    ],
+    "ultimo": [
+      "O último elemento da lista também pode ser removido?",
+      "O último elemento aponta para NULL. Ao removê-lo, o next do anterior precisa receber esse NULL, para que a lista termine no elemento certo.",
+      "Confira que a sua repetição ainda olha o último elemento, e que depois de remover ele o next do anterior fica valendo NULL, e não um endereço já liberado."
+    ],
+    "nenhum": [
+      "O que a sua função faz quando nenhum elemento é igual à referência?",
+      "Nesse caso a lista deve ficar exatamente como estava: nenhum elemento é removido e nenhum liberado. A lista que você devolve ao chamador começa no mesmo elemento de antes.",
+      "Só altere um ponteiro ou chame free quando cmp devolver 0 para aquele elemento. Nos outros casos, apenas avance para o elemento seguinte."
+    ],
+    "consecutivos": [
+      "E quando dois ou mais elementos a remover estão um depois do outro?",
+      "Depois de remover um elemento, o que passou a ser o seguinte também pode ser igual à referência. Se você avança logo após a remoção, esse elemento nunca é conferido e fica na lista.",
+      "Avance para o próximo elemento apenas quando o atual não foi removido. Depois de uma remoção, confira de novo o elemento que tomou o lugar do removido."
+    ]
+  },
+  "starter": {"ft_list.h":"typedef struct    s_list\n{\n    struct s_list *next;\n    void          *data;\n}                 t_list;\n"}
+}

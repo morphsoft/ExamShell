@@ -1,0 +1,23 @@
+{
+  "t01": {
+    "stdout": "ironic? it Isn't gatherings. love I But people! hate You\n"
+  },
+  "t02": {
+    "stdout": "abcdefghijklm\n"
+  },
+  "t03": {
+    "stdout": "Leviosa Wingardium\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "e d c b a\n"
+  },
+  "t07": {
+    "stdout": "foo world hello\n"
+  }
+}

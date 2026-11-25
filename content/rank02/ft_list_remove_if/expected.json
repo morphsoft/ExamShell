@@ -1,0 +1,26 @@
+{
+  "t01": {
+    "stdout": "[a] -> [c] -> NULL\n"
+  },
+  "t02": {
+    "stdout": "[b] -> [c] -> NULL\n"
+  },
+  "t03": {
+    "stdout": "NULL\n"
+  },
+  "t04": {
+    "stdout": "[a] -> [b] -> NULL\n"
+  },
+  "t05": {
+    "stdout": "[a] -> [b] -> [c] -> NULL\n"
+  },
+  "t06": {
+    "stdout": "[a] -> [c] -> NULL\n"
+  },
+  "t07": {
+    "stdout": "[b] -> [c] -> NULL\n"
+  },
+  "t08": {
+    "stdout": "[b] -> NULL\n"
+  }
+}

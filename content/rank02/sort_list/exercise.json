@@ -1,0 +1,40 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["0"], "category": "basico", "display": "sort_list([3] -> [1] -> [2] -> NULL, ascending)" },
+    { "id": "t02", "args": ["1"], "category": "descendente", "display": "sort_list([3] -> [1] -> [2] -> NULL, descending)" },
+    { "id": "t03", "args": ["2"], "category": "duplicatas", "display": "sort_list([4] -> [1] -> [4] -> [1] -> NULL, ascending)" },
+    { "id": "t04", "args": ["3"], "category": "basico", "display": "sort_list([1] -> [2] -> [3] -> [4] -> [5] -> NULL, ascending)" },
+    { "id": "t05", "args": ["4"], "category": "ordem-inversa", "display": "sort_list([5] -> [4] -> [3] -> [2] -> [1] -> NULL, ascending)" },
+    { "id": "t06", "args": ["5"], "category": "negativos", "display": "sort_list([-3] -> [5] -> [-10] -> [0] -> [2] -> [-1] -> NULL, ascending)" },
+    { "id": "t07", "args": ["6"], "category": "descendente", "display": "sort_list([1] -> [5] -> [-2] -> [5] -> [0] -> NULL, descending)" },
+    { "id": "t08", "args": ["7"], "category": "basico", "display": "sort_list([31] -> [4] -> [15] -> [9] -> [26] -> [5] -> [35] -> [8] -> [97] -> [93] -> [23] -> [84] -> NULL, ascending)" }
+  ],
+  "hints": {
+    "basico": [
+      "Depois da sua função, os data da lista que ela devolve estão na ordem pedida por cmp, do primeiro ao último?",
+      "A função cmp diz se dois valores estão na ordem certa: ela devolve um valor diferente de 0 quando estão, e 0 quando não estão. Ordenar é comparar valores vizinhos e corrigir os que estão fora de ordem, repetindo até não restar nenhum.",
+      "A ideia decisiva: dois elementos vizinhos só precisam trocar de lugar quando cmp devolve 0 para eles. E a função devolve o primeiro elemento da lista já ordenada, que pode ser diferente do primeiro de antes."
+    ],
+    "descendente": [
+      "A sua função obedece à cmp recebida, ou sempre ordena do mesmo jeito?",
+      "Quem define a ordem é a função cmp que o chamador passa, e não a sua função. Com uma cmp que diz que o maior vem antes, o resultado deve sair do maior para o menor.",
+      "Não compare os valores diretamente com um operador dentro da sua função. Toda decisão de ordem passa por uma chamada a cmp com os dois valores."
+    ],
+    "duplicatas": [
+      "Os elementos repetidos continuam na lista depois de ordenada?",
+      "O enunciado diz que as duplicatas devem permanecer. Com uma cmp crescente, dois valores iguais já estão na ordem certa, então não há por que remover nenhum deles.",
+      "Ordenar só muda a posição dos elementos: a lista termina com o mesmo número de elementos que tinha. Se você ligar ou trocar elementos, confira que nenhum deles fica sem ser apontado por outro."
+    ],
+    "ordem-inversa": [
+      "A sua função ordena corretamente uma lista que está do contrário da ordem pedida?",
+      "Esse é o pior caso: cada elemento precisa andar até o outro extremo da lista. Uma única passada pela lista só leva um elemento para o lugar certo.",
+      "Repita a verificação dos vizinhos quantas vezes forem necessárias, até uma passada inteira não precisar de nenhuma troca."
+    ],
+    "negativos": [
+      "A sua função ordena certo quando há números negativos?",
+      "Quem compara os valores é a cmp, e ela trata os negativos como qualquer outro int: o mais negativo é o menor. Se o seu código decide a ordem por conta própria, o sinal pode atrapalhar.",
+      "Entregue sempre os valores com sinal para cmp e confie na resposta dela, sem corrigir nem tratar os negativos de um jeito especial."
+    ]
+  },
+  "starter": {"list.h":"typedef struct s_list t_list;\n\nstruct s_list\n{\n    int    data;\n    t_list *next;\n};\n"}
+}

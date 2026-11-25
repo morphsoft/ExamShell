@@ -1,0 +1,47 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["225225"], "category": "basico" },
+    { "id": "t02", "args": ["8333325"], "category": "basico" },
+    { "id": "t03", "args": ["9539"], "category": "primo" },
+    { "id": "t04", "args": ["804577"], "category": "primo" },
+    { "id": "t05", "args": ["42"], "category": "basico" },
+    { "id": "t06", "args": ["1"], "category": "um" },
+    { "id": "t07", "args": [], "category": "argumentos" },
+    { "id": "t08", "args": ["42", "21"], "category": "argumentos" },
+    { "id": "t09", "args": ["2"], "category": "primo" },
+    { "id": "t10", "args": ["1024"], "category": "fatores-repetidos" },
+    { "id": "t11", "args": ["49"], "category": "quadrado-de-primo" }
+  ],
+  "hints": {
+    "basico": [
+      "Os fatores que o seu programa exibe, multiplicados entre si, dão o número original?",
+      "Todo número maior que 1 é um produto de primos. Para achá-los, teste os candidatos em ordem crescente e, a cada divisão exata, anote o fator e continue com o que sobrou.",
+      "Um mesmo fator pode servir mais de uma vez, então só passe para o próximo candidato quando o atual não dividir mais o que sobrou. O '*' vai entre os fatores, nunca antes do primeiro nem depois do último."
+    ],
+    "primo": [
+      "O que o seu programa exibe quando o número já é primo?",
+      "Um número primo não tem divisor além dele mesmo, então o único fator é o próprio número, sem nenhum '*' na saída.",
+      "Se os candidatos a divisor terminam sem nenhuma divisão exata, o que sobrou ainda precisa ser exibido. Garanta que o número sozinho apareça nesse caso."
+    ],
+    "um": [
+      "O que o seu programa exibe para o número 1?",
+      "O 1 não tem nenhum fator primo, e mesmo assim o enunciado mostra que a saída para ele é o próprio 1. Um laço que só roda para números maiores que 1 nunca escreve nada.",
+      "Trate o número 1 à parte: escreva 1 e a quebra de linha, e só então siga para a fatoração dos demais números."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe zero argumentos, ou dois?",
+      "O enunciado só pede a fatoração quando o número de parâmetros é 1. Em qualquer outro caso, a saída é só a quebra de linha. O nome do programa também conta no argc.",
+      "Confira se o argc vale exatamente 2 antes de converter o argumento. Se não valer, escreva só a quebra de linha e termine, sem tocar no argv."
+    ],
+    "fatores-repetidos": [
+      "Um fator que divide o número várias vezes aparece várias vezes na sua saída?",
+      "No exemplo 225225, o 3 aparece duas vezes e o 5 também. Um número como 1024 é feito só de fatores iguais: o mesmo primo precisa ser exibido uma vez para cada divisão exata.",
+      "Depois de uma divisão exata, teste o mesmo candidato de novo antes de passar para o seguinte. Só avance quando ele não dividir mais o que sobrou."
+    ],
+    "quadrado-de-primo": [
+      "E um número que é o quadrado de um primo, como 49?",
+      "Se você para de procurar divisores antes da hora, o último fator pode ser perdido ou exibido como se o número fosse primo. O 49 só é divisível por 7, e 7 vezes 7 dá exatamente 49.",
+      "Confira a condição de parada: o candidato igual à raiz do que sobrou ainda precisa ser testado. Pare só quando o candidato multiplicado por ele mesmo passar do que sobrou."
+    ]
+  }
+}

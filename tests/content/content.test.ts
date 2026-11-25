@@ -63,6 +63,8 @@ describe('loadExercises', () => {
     expect(loadExercises().map((e) => e.id)).toEqual(expectedOrder);
   });
 
+  it('todos os 57 exercícios têm conteúdo', () => expect(loadExercises()).toHaveLength(57));
+
   it('inclui os 5 pilotos', () => {
     const ids = loadExercises().map((e) => e.id);
     for (const id of PILOTS) expect(ids).toContain(id);

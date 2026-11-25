@@ -1,0 +1,20 @@
+{
+  "t01": {
+    "stdout": "a\nb\nc\n"
+  },
+  "t02": {
+    "stdout": "a\n"
+  },
+  "t03": {
+    "stdout": "2 3 4\n"
+  },
+  "t04": {
+    "stdout": "first\nsecond\nthird\nfourth\nfifth\n"
+  },
+  "t05": {
+    "stdout": "a\n(null)\nc\n"
+  },
+  "t06": {
+    "stdout": "11 21\n"
+  }
+}

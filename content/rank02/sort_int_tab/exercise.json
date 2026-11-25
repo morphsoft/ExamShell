@@ -1,0 +1,44 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["0"], "category": "basico", "display": "sort_int_tab({3, 1, 2}, 3)" },
+    { "id": "t02", "args": ["1"], "category": "duplicatas", "display": "sort_int_tab({4, 1, 4, 1}, 4)" },
+    { "id": "t03", "args": ["2"], "category": "basico", "display": "sort_int_tab({7}, 1)" },
+    { "id": "t04", "args": ["3"], "category": "ordem-inversa", "display": "sort_int_tab({9, 8, 7, 6, 5, 4, 3, 2, 1}, 9)" },
+    { "id": "t05", "args": ["4"], "category": "negativos", "display": "sort_int_tab({-3, 5, -10, 0, 2, -1}, 6)" },
+    { "id": "t06", "args": ["5"], "category": "extremos", "display": "sort_int_tab({INT_MAX, INT_MIN, 0, -1, 1}, 5)" },
+    { "id": "t07", "args": ["6"], "category": "respeita-o-tamanho", "display": "sort_int_tab({9, 8, 7, 6, 5, 4}, 4) /* só os 4 primeiros fazem parte do vetor */" },
+    { "id": "t08", "args": ["7"], "category": "basico", "display": "sort_int_tab({31, 4, 15, 9, 26, 5, 35, 8, 97, 93, 23, 84, 62, 64, 33, 83, 27, 95, 2, 88}, 20)" }
+  ],
+  "hints": {
+    "basico": [
+      "Depois da sua função, cada elemento do vetor é menor ou igual ao seguinte?",
+      "Ordenar no próprio vetor é comparar elementos e trocar de lugar os que estão fora de ordem, repetindo isso até nenhum par ficar invertido. Uma única passada pelo vetor quase nunca basta.",
+      "A ideia decisiva: uma troca só vale a pena entre dois elementos vizinhos que estão na ordem errada, e é preciso repetir a verificação até que não sobre nenhum par assim."
+    ],
+    "duplicatas": [
+      "Os valores repetidos continuam no vetor depois da ordenação?",
+      "O enunciado diz que os valores repetidos devem ser preservados. Ordenar só reorganiza os elementos: nenhum valor some e nenhum aparece a mais.",
+      "Se você copia um valor por cima de outro sem guardá-lo antes, um deles se perde. Para trocar dois elementos, guarde um deles numa variável temporária."
+    ],
+    "ordem-inversa": [
+      "A sua função ordena corretamente um vetor que está do maior para o menor?",
+      "Esse é o pior caso: cada elemento precisa andar até o outro lado do vetor. Uma única passada leva apenas o maior elemento para o fim.",
+      "Repita as passadas de comparação o número de vezes necessário, até o vetor todo estar em ordem, e não apenas uma ou duas vezes."
+    ],
+    "negativos": [
+      "A sua função ordena certo quando há números negativos?",
+      "Números negativos são menores que zero e que todos os positivos, e entre eles vale a mesma regra: o mais negativo vem primeiro. Se você compara o valor absoluto, o resultado fica errado.",
+      "Compare os valores como são, com sinal. Quem tem menor valor, incluindo os negativos, deve vir antes no vetor."
+    ],
+    "extremos": [
+      "O que acontece com o maior e o menor int possíveis?",
+      "Calcular a diferença entre dois ints para decidir qual é maior pode estourar o int quando um é muito grande e o outro é muito pequeno. O resultado do estouro tem o sinal trocado.",
+      "Compare os dois valores diretamente, dizendo qual é maior, em vez de subtrair um do outro."
+    ],
+    "respeita-o-tamanho": [
+      "A sua função mexe só nos 'size' primeiros elementos?",
+      "O vetor tem exatamente size elementos. Os elementos que vêm depois dele na memória não fazem parte do vetor e não podem ser lidos para comparação nem alterados.",
+      "Confira os limites da sua repetição: o último índice válido é size menos um. Ao comparar um elemento com o seguinte, o seguinte também precisa estar dentro do vetor."
+    ]
+  }
+}

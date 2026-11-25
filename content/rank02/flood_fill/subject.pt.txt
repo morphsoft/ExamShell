@@ -1,0 +1,42 @@
+Nome do exercício  : flood_fill
+Arquivos esperados : flood_fill.c, t_point.h
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva uma função que recebe um char ** como um vetor bidimensional de char,
+um t_point com as dimensões desse vetor e um t_point com o ponto inicial.
+
+A partir do t_point 'begin', a função preenche uma zona inteira, trocando os
+caracteres dela pelo caractere 'F'. Uma zona é um grupo do mesmo caractere
+delimitado, na horizontal e na vertical, por outros caracteres ou pelo limite
+do vetor.
+
+A função flood_fill não preenche na diagonal.
+
+A função flood_fill será prototipada assim:
+
+void	flood_fill(char **tab, t_point size, t_point begin);
+
+A estrutura t_point é prototipada assim:
+
+typedef struct  s_point
+{
+    int           x;
+    int           y;
+}               t_point;
+
+Exemplos:
+
+Com size = {8, 5} e begin = {7, 4}, o vetor antes e depois da chamada:
+
+11111111
+10001001
+10010001
+10110001
+11100001
+
+FFFFFFFF
+F000F00F
+F00F000F
+F0FF000F
+FFF0000F

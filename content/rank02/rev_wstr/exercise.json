@@ -1,0 +1,33 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["You hate people! But I love gatherings. Isn't it ironic?"], "category": "basico" },
+    { "id": "t02", "args": ["abcdefghijklm"], "category": "uma-palavra" },
+    { "id": "t03", "args": ["Wingardium Leviosa"], "category": "basico" },
+    { "id": "t04", "args": [], "category": "argumentos" },
+    { "id": "t05", "args": ["a", "b"], "category": "argumentos" },
+    { "id": "t06", "args": ["a b c d e"], "category": "palavras-de-uma-letra" },
+    { "id": "t07", "args": ["hello world foo"], "category": "basico" }
+  ],
+  "hints": {
+    "basico": [
+      "As palavras saem na ordem inversa, cada uma inteira e na ordem correta das letras?",
+      "A ordem das palavras é invertida, mas as letras dentro de cada palavra continuam na ordem original. Por isso não basta escrever a string de trás para frente: é preciso achar cada palavra e escrevê-la normalmente.",
+      "Uma ideia que ajuda: percorrer a string de trás para frente, palavra por palavra, em vez de da frente para trás. Entre uma palavra e a seguinte vai um único espaço."
+    ],
+    "uma-palavra": [
+      "O que o seu programa escreve quando a string tem uma palavra só?",
+      "Com uma palavra só, não existe nenhum espaço na string: a palavra vai do primeiro ao último caractere. Se você só reconhece o começo de uma palavra ao achar um espaço antes dela, essa palavra se perde.",
+      "O começo de uma palavra pode ser o início da string, e não apenas o caractere depois de um espaço. Cuidado para não ler uma posição antes do início da string, e não escreva um espaço sobrando."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe zero argumentos, ou dois?",
+      "O enunciado só pede as palavras invertidas quando há exatamente um parâmetro. Em qualquer outro caso, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira se o argc vale exatamente 2 antes de olhar a string. Se não valer, não toque no argv e vá direto para a parte que escreve a quebra de linha."
+    ],
+    "palavras-de-uma-letra": [
+      "O seu programa lida bem com palavras de uma letra só?",
+      "Numa palavra de uma letra, o começo e o fim estão separados por um único caractere. Se a sua busca pelo começo dá um passo a mais ou a menos, essas palavras saem vazias ou duplicadas.",
+      "Teste com calma os índices do começo e do fim de cada palavra: numa palavra de uma letra, o trecho a escrever tem exatamente um caractere."
+    ]
+  }
+}

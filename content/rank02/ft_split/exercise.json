@@ -1,0 +1,43 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_split(\"Hello world\")" },
+    { "id": "t02", "args": ["1"], "category": "uma-palavra", "display": "ft_split(\"one\")" },
+    { "id": "t03", "args": ["2"], "category": "separadores-nas-pontas", "display": "ft_split(\"  lead and trail  \")" },
+    { "id": "t04", "args": ["3"], "category": "separadores-repetidos", "display": "ft_split(\"many     spaces   here\")" },
+    { "id": "t05", "args": ["4"], "category": "tabs", "display": "ft_split(\"tab\\tseparated\\twords\")" },
+    { "id": "t06", "args": ["5"], "category": "quebras-de-linha", "display": "ft_split(\"line one\\nline two\")" },
+    { "id": "t07", "args": ["6"], "category": "separadores-repetidos", "display": "ft_split(\"a \\t\\nb\")" }
+  ],
+  "hints": {
+    "basico": [
+      "Cada palavra do vetor é uma cópia própria, terminada em '\\0', e o vetor termina em NULL?",
+      "Dividir em palavras pede duas coisas: saber quantas palavras existem, para alocar o vetor, e saber onde cada uma começa e termina, para copiá-la. O vetor precisa de uma posição a mais para o NULL final.",
+      "Aloque o vetor com uma posição extra e guarde nela o NULL. Cada palavra é uma cópia nova, com o seu próprio '\\0' no final, e não um pedaço da string original."
+    ],
+    "uma-palavra": [
+      "O que a sua função devolve quando a string tem uma palavra só?",
+      "Uma palavra que vai até o fim da string não tem separador depois dela. Se você só reconhece o fim de uma palavra ao encontrar um separador, essa última palavra se perde.",
+      "O fim de uma palavra pode ser um separador ou o '\\0' da string. Trate os dois do mesmo jeito, tanto na hora de contar as palavras quanto na hora de copiá-las."
+    ],
+    "separadores-nas-pontas": [
+      "E se a string começar ou terminar com separadores?",
+      "Separadores no começo ou no fim não formam palavra nenhuma. Se cada separador vira o fim de uma palavra, aparecem palavras vazias no vetor.",
+      "Antes de começar uma palavra, pule os separadores. E só conte ou copie uma palavra quando houver pelo menos um caractere que não seja separador."
+    ],
+    "separadores-repetidos": [
+      "O que acontece quando há vários separadores seguidos entre duas palavras?",
+      "Vários separadores seguidos ainda separam só duas palavras, e entre elas não existe nenhuma palavra vazia. Se você conta separadores em vez de palavras, o vetor sai com tamanho errado.",
+      "Conte as palavras pelo momento em que um caractere que não é separador aparece depois de um separador (ou do começo da string), e não pela quantidade de separadores."
+    ],
+    "tabs": [
+      "O seu código trata o tab do mesmo jeito que o espaço?",
+      "Para o enunciado, tabs também delimitam palavras. O tab ('\\t') é um caractere diferente do espaço, e precisa ser reconhecido à parte.",
+      "Em todo lugar onde o seu código pergunta se um caractere é separador, inclua o tab. Isso vale tanto para contar as palavras quanto para medir e copiar cada uma."
+    ],
+    "quebras-de-linha": [
+      "O seu código trata a quebra de linha como separador?",
+      "Para o enunciado, a quebra de linha ('\\n') também delimita palavras, assim como o espaço e o tab. Se ela não for reconhecida, duas palavras viram uma só.",
+      "Inclua a quebra de linha na mesma verificação que reconhece o espaço e o tab, e use essa única verificação em todos os pontos do seu código."
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+Nome do exercício  : sort_list
+Arquivos esperados : sort_list.c, list.h
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva a seguinte função:
+
+t_list	*sort_list(t_list* lst, int (*cmp)(int, int));
+
+Essa função deve ordenar a lista recebida como parâmetro, usando o ponteiro
+para função cmp para escolher a ordem a aplicar, e devolve um ponteiro para o
+primeiro elemento da lista ordenada.
+
+As duplicatas devem permanecer.
+
+As entradas sempre serão consistentes.
+
+Você deve usar o tipo t_list descrito no arquivo list.h que é fornecido a você.
+Você deve incluir esse arquivo (#include "list.h").
+
+As funções passadas como cmp sempre devolverão um valor diferente de 0 se a e
+b estiverem na ordem certa, e 0 caso contrário.
+
+Por exemplo, a função abaixo, usada como cmp, ordena a lista em ordem
+crescente:
+
+int ascending(int a, int b)
+{
+	return (a <= b);
+}
+
+Exemplos:
+
+Nestes exemplos, [3] é um elemento cujo data é o int 3, e descending é a função
+que devolve (a >= b). A lista é mostrada como sort_list a devolve.
+
+sort_list([3] -> [1] -> [2] -> NULL, ascending) devolve
+[1] -> [2] -> [3] -> NULL.
+sort_list([3] -> [1] -> [2] -> NULL, descending) devolve
+[3] -> [2] -> [1] -> NULL.
+sort_list([4] -> [1] -> [4] -> [1] -> NULL, ascending) devolve
+[1] -> [1] -> [4] -> [4] -> NULL.

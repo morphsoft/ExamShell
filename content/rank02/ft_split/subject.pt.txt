@@ -1,0 +1,20 @@
+Nome do exercício  : ft_split
+Arquivos esperados : ft_split.c
+Funções permitidas : malloc
+--------------------------------------------------------------------------------
+
+Escreva uma função que recebe uma string, divide-a em palavras e devolve as
+palavras num vetor de strings terminado em NULL.
+
+Uma "palavra" é um trecho da string delimitado por espaços/tabs/quebras de
+linha, ou pelo início/fim da string.
+
+A sua função deve ser declarada assim:
+
+char	**ft_split(char *str);
+
+Exemplos:
+
+ft_split("Hello world") devolve o vetor {"Hello", "world", NULL}.
+ft_split("one") devolve o vetor {"one", NULL}.
+ft_split("  lead and trail  ") devolve o vetor {"lead", "and", "trail", NULL}.

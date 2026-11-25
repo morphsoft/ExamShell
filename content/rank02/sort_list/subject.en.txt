@@ -1,0 +1,43 @@
+Assignment name  : sort_list
+Expected files   : sort_list.c, list.h
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write the following functions:
+
+t_list	*sort_list(t_list* lst, int (*cmp)(int, int));
+
+This function must sort the list given as a parameter, using the function
+pointer cmp to select the order to apply, and returns a pointer to the
+first element of the sorted list.
+
+Duplications must remain.
+
+Inputs will always be consistent.
+
+You must use the type t_list described in the file list.h
+that is provided to you. You must include that file
+(#include "list.h").
+
+Functions passed as cmp will always return a value different from
+0 if a and b are in the right order, 0 otherwise.
+
+For example, the following function used as cmp will sort the list
+in ascending order:
+
+int ascending(int a, int b)
+{
+	return (a <= b);
+}
+
+Examples:
+
+In these examples, [3] is an element whose data is the int 3, and descending is
+the function that returns (a >= b). The list is shown as sort_list returns it.
+
+sort_list([3] -> [1] -> [2] -> NULL, ascending) returns
+[1] -> [2] -> [3] -> NULL.
+sort_list([3] -> [1] -> [2] -> NULL, descending) returns
+[3] -> [2] -> [1] -> NULL.
+sort_list([4] -> [1] -> [4] -> [1] -> NULL, ascending) returns
+[1] -> [1] -> [4] -> [4] -> NULL.

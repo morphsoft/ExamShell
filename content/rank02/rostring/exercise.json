@@ -1,0 +1,44 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["abc   "], "category": "uma-palavra" },
+    { "id": "t02", "args": ["Que la      lumiere soit et la lumiere fut"], "category": "espacos-extras" },
+    { "id": "t03", "args": ["     AkjhZ zLKIJz , 23y"], "category": "espacos-extras" },
+    { "id": "t04", "args": ["first", "2", "11000000"], "category": "mais-argumentos" },
+    { "id": "t05", "args": [], "category": "argumentos" },
+    { "id": "t06", "args": ["a b"], "category": "basico" },
+    { "id": "t07", "args": ["one\ttwo\tthree"], "category": "tabs" },
+    { "id": "t08", "args": ["x   y   z   "], "category": "espacos-extras" }
+  ],
+  "hints": {
+    "basico": [
+      "A primeira palavra vai para o fim, e as outras continuam na mesma ordem?",
+      "A rotação tira a primeira palavra do começo e a coloca no fim. Todas as outras palavras mantêm a ordem, só que agora vêm antes dela.",
+      "A ideia decisiva: a primeira palavra só é escrita depois de todas as outras. Entre duas palavras vai exatamente um espaço."
+    ],
+    "uma-palavra": [
+      "O que o seu programa escreve quando só existe uma palavra, com espaços em volta?",
+      "Se há uma palavra só, rotacionar não muda nada: a saída é essa palavra, sem os espaços em volta. Se você escreve um espaço entre as palavras, mesmo sem ter outra palavra, o espaço sobra.",
+      "Escreva um espaço só quando existir uma palavra do outro lado dele. Espaços do começo e do fim da string nunca vão para a saída."
+    ],
+    "espacos-extras": [
+      "Os espaços repetidos ou nas pontas da string aparecem na sua saída?",
+      "Na saída as palavras ficam separadas por apenas um espaço, não importa quantos separadores havia na entrada. Separadores no começo ou no fim da string não fazem parte de nenhuma palavra.",
+      "Pule todos os separadores antes de cada palavra, inclusive os do começo da string, e escreva um único espaço entre palavras. Cuidado para não deixar um espaço sobrando no final."
+    ],
+    "mais-argumentos": [
+      "O que o seu programa faz quando recebe mais de um argumento?",
+      "O programa só precisa de pelo menos um argumento. Nos exemplos do enunciado, com três argumentos a saída usa só a primeira string, e os outros argumentos são ignorados.",
+      "Não exija que o argc valha exatamente 2. Confira apenas se há pelo menos um argumento e trabalhe só com o primeiro."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando não recebe nenhum argumento?",
+      "Sem argumentos, não existe string para rotacionar, e a saída é só a quebra de linha. Nesse caso o argv na posição 1 não existe e não deve ser lido.",
+      "Confira o argc antes de olhar o argv na posição 1. Se não houver argumento, vá direto para a parte que escreve a quebra de linha."
+    ],
+    "tabs": [
+      "O seu programa trata o tab do mesmo jeito que o espaço?",
+      "Para o enunciado, tabs também delimitam palavras. O tab ('\\t') é um caractere diferente do espaço, e precisa ser reconhecido à parte.",
+      "Em todo lugar onde o seu código pergunta se o caractere é um espaço, pergunte também se é um tab. Na saída, as palavras continuam separadas por um espaço comum."
+    ]
+  }
+}

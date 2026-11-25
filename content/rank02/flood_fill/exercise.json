@@ -1,0 +1,39 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["0"], "category": "basico", "display": "flood_fill(area, {8, 5}, {7, 4}) /* zona de '1' do exemplo */" },
+    { "id": "t02", "args": ["1"], "category": "xy-trocados", "display": "flood_fill(area, {5, 5}, {1, 3}) /* x = 1 (coluna), y = 3 (linha) */" },
+    { "id": "t03", "args": ["2"], "category": "diagonal", "display": "flood_fill(area, {4, 4}, {0, 0}) /* vizinhos só na diagonal */" },
+    { "id": "t04", "args": ["3"], "category": "zona-longa", "display": "flood_fill(area, {5, 5}, {0, 0}) /* zona em serpente */" },
+    { "id": "t05", "args": ["4"], "category": "zona-longa", "display": "flood_fill(area, {5, 5}, {4, 4}) /* a mesma serpente, pela outra ponta */" },
+    { "id": "t06", "args": ["5"], "category": "zonas-separadas", "display": "flood_fill(area, {5, 4}, {0, 0}) /* outro '0' fora da zona */" },
+    { "id": "t07", "args": ["6"], "category": "basico", "display": "flood_fill(area, {8, 5}, {0, 0}) /* zona de '1' pelo canto */" }
+  ],
+  "hints": {
+    "basico": [
+      "Depois de pintar o ponto inicial, o que a sua função faz com os pontos ao redor dele?",
+      "O preenchimento começa em um ponto e se espalha: cada ponto pintado passa a vez para os vizinhos que ainda fazem parte da mesma zona, e esses fazem o mesmo com os deles.",
+      "A ideia decisiva: um ponto só é pintado se ainda tiver o caractere que o ponto inicial tinha antes de ser pintado, e pontos fora da grade nunca são pintados."
+    ],
+    "xy-trocados": [
+      "No t_point, o x indica a coluna ou a linha?",
+      "O x é a posição na horizontal, ou seja, a coluna, e o y é a posição na vertical, ou seja, a linha. Para ler um caractere, primeiro você escolhe a linha em tab e depois a coluna dentro dela.",
+      "Em tab, o primeiro índice vem do y e o segundo vem do x. O mesmo vale para os limites: o x vai de zero até size.x menos um, e o y vai de zero até size.y menos um."
+    ],
+    "diagonal": [
+      "Quais vizinhos a sua função visita a partir de cada ponto?",
+      "Cada ponto tem quatro vizinhos que contam: o de cima, o de baixo, o da esquerda e o da direita. Os pontos que só se tocam pela quina pertencem a zonas diferentes.",
+      "Visite somente os quatro vizinhos em cruz. Se algum passo seu mexe no x e no y ao mesmo tempo, ele chega a um vizinho diagonal, que não deve ser preenchido."
+    ],
+    "zona-longa": [
+      "A sua função consegue seguir uma zona que faz curvas e volta?",
+      "Uma zona comprida pode subir, descer, ir para a esquerda e para a direita antes de acabar. Se você só visita alguns dos quatro vizinhos, partes da zona ficam sem pintar.",
+      "A partir de cada ponto pintado, tente os quatro vizinhos, sempre. Não escolha uma direção só porque ela funcionou no exemplo da prova."
+    ],
+    "zonas-separadas": [
+      "O mesmo caractere aparece em outro lugar da grade que não toca a zona?",
+      "Uma zona é um grupo do mesmo caractere ligado na horizontal e na vertical. Outro trecho com o mesmo caractere, separado por caracteres diferentes, é outra zona e deve ficar como está.",
+      "Não percorra a grade inteira trocando todo caractere igual ao inicial. Parta apenas do ponto begin e só chegue aos pontos que se conectam a ele por vizinhos da mesma zona."
+    ]
+  },
+  "starter": {"t_point.h":"typedef struct    s_point\n{\n    int           x;\n    int           y;\n}                 t_point;\n"}
+}

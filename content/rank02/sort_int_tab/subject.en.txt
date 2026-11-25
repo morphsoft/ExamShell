@@ -1,0 +1,21 @@
+Assignment name  : sort_int_tab
+Expected files   : sort_int_tab.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write the following function:
+
+void	sort_int_tab(int *tab, unsigned int size);
+
+It must sort (in-place) the 'tab' int array, that contains exactly 'size'
+members, in ascending order.
+
+Doubles must be preserved.
+
+Input is always coherent.
+
+Examples:
+
+sort_int_tab({3, 1, 2}, 3) leaves the array as {1, 2, 3}.
+sort_int_tab({4, 1, 4, 1}, 4) leaves the array as {1, 1, 4, 4}.
+sort_int_tab({7}, 1) leaves the array as {7}.
