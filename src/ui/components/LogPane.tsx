@@ -154,6 +154,14 @@ function FailureView({ ex, failure, total }: { ex: LoadedExercise; failure: Fail
       if (failure.reason === 'duplicate-main') {
         return <FailHead>neste exercício não se entrega main; use a aba {SCRATCH_TAB.label} para testar</FailHead>;
       }
+      if (failure.reason === 'missing-symbol' && failure.symbol === 'main') {
+        return (
+          <>
+            <FailHead>não encontrei a função main — todo programa precisa dela para começar</FailHead>
+            <Stderr stderr={failure.stderr} />
+          </>
+        );
+      }
       if (failure.reason === 'missing-symbol') {
         return (
           <>

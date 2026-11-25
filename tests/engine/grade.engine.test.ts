@@ -102,3 +102,13 @@ int main(int argc, char **argv)
     expect(r.failure).toBeNull();
   });
 });
+
+describe('programa sem main (motor real)', () => {
+  const helper = '#include <unistd.h>\nvoid helper(void) { write(1, "x", 1); }\n';
+  for (const [name, src] of [['só helper', helper], ['arquivo vazio', '']] as const) {
+    it(`${name}: erro de link em main`, async () => {
+      const r = await grade(ex, { 'first_word.c': src }, engine);
+      expect(r.failure).toMatchObject({ kind: 'link', reason: 'missing-symbol', symbol: 'main' });
+    });
+  }
+});

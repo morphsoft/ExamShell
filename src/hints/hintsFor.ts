@@ -10,6 +10,7 @@ export function hintsFor(failure: Failure, ex: LoadedExercise): HintLadder {
       return GENERIC_HINTS.forbidden;
     case 'link':
       if (failure.reason === 'duplicate-main') return GENERIC_HINTS['duplicate-main'];
+      if (failure.reason === 'missing-symbol' && failure.symbol === 'main') return GENERIC_HINTS['missing-main'];
       if (failure.reason === 'missing-symbol') return GENERIC_HINTS['missing-symbol'];
       return GENERIC_HINTS.compile;
     case 'crash':

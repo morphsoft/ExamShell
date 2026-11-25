@@ -29,6 +29,10 @@ describe('hintsFor', () => {
     expect(hintsFor({ kind: 'link', reason: 'duplicate-main', stderr: '' }, ex)).toBe(GENERIC_HINTS['duplicate-main']);
     expect(hintsFor({ kind: 'link', reason: 'missing-symbol', symbol: 'f', stderr: '' }, ex)).toBe(GENERIC_HINTS['missing-symbol']);
   });
+  it('missing-symbol: main usa escada própria', () => {
+    expect(hintsFor({ kind: 'link', reason: 'missing-symbol', symbol: 'main', stderr: '' }, ex)).toBe(GENERIC_HINTS['missing-main']);
+    expect(hintsFor({ kind: 'link', reason: 'missing-symbol', symbol: 'ft_strlen', stderr: '' }, ex)).toBe(GENERIC_HINTS['missing-symbol']);
+  });
 });
 
 describe('looksLikeCode', () => {

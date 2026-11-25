@@ -219,6 +219,14 @@ test('rodar com argumentos mostra a saída com $ no fim da linha', async ({ page
   await expect(log).toContainText('aspas sem fechar');
 });
 
+test('programa sem main: erro de link, não segfault', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, '');
+  const result = await grademe(page);
+  await expect(result).toContainText('não encontrei a função main');
+  await expect(page.getByTestId('log')).not.toContainText('segfault');
+});
+
 test('função proibida reprova com o nome dela', async ({ page }) => {
   await open(page, 'first_word');
   await setCode(page, FIRST_WORD_PRINTF);

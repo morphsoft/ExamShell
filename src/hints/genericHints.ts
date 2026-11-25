@@ -5,6 +5,7 @@ export type GenericHintKey =
   | 'forbidden'
   | 'duplicate-main'
   | 'missing-symbol'
+  | 'missing-main'
   | 'crash'
   | 'timeout'
   | 'newline'
@@ -30,6 +31,11 @@ export const GENERIC_HINTS: Record<GenericHintKey, HintLadder> = {
     'O programa foi montado, mas faltou uma peça: alguma função usada não foi encontrada. Qual nome aparece na mensagem?',
     'Isso acontece quando o nome da função no seu arquivo é diferente do nome pedido no enunciado, ou quando uma função chamada nunca foi escrita. Maiúsculas, minúsculas e sublinhados importam.',
     'Compare, letra por letra, o nome e os parâmetros da sua função com o que o enunciado pede. Confirme também que cada função que você chama está definida em algum lugar. Corrigindo isso, você avança.',
+  ],
+  'missing-main': [
+    'Por onde o seu programa começa a rodar? Quem decide qual é a primeira função a ser executada?',
+    'Todo programa precisa da função de entrada que o sistema chama primeiro. Ela tem um nome exato e recebe parâmetros para os argumentos da linha de comando. Maiúsculas e minúsculas importam, e um erro de digitação no nome faz com que ela simplesmente não exista.',
+    'Confira se o seu arquivo tem a função de entrada, escrita exatamente com o nome certo, e se não ficou vazio nem só com funções auxiliares. Corrija o nome ou escreva a função e tente de novo. Você está quase lá!',
   ],
   crash: [
     'O programa travou no meio da execução. Em que momento ele pode estar lendo ou escrevendo onde não deveria?',

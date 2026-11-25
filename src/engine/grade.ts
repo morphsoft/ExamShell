@@ -28,8 +28,14 @@ async function build(
   const { sources, headers } = splitSources(ex, userFiles);
   const compiled = await engine.compileObjects(sources, headers);
   if (!compiled.ok) return { failure: { kind: 'compile', stderr: compiled.stderr } };
-  if (ex.kind === 'function' && definesMain(await engine.definedSymbols(compiled.objects))) {
+  const hasMain = definesMain(await engine.definedSymbols(compiled.objects));
+  if (ex.kind === 'function' && hasMain) {
     return { failure: { kind: 'link', reason: 'duplicate-main', stderr: '' } };
+  }
+  // O runtime wasi referencia main de forma fraca: sem main o link "passa" e o programa trava.
+  // No exame real (gcc) isso é erro de link, então reproduzimos aqui.
+  if (ex.kind === 'program' && !hasMain) {
+    return { failure: { kind: 'link', reason: 'missing-symbol', symbol: 'main', stderr: '' } };
   }
   if (checkForbidden) {
     const symbols = await engine.undefinedSymbols(compiled.objects);
