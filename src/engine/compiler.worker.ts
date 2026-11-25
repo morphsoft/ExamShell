@@ -24,13 +24,32 @@ async function init(clangBaseUrl: string): Promise<Compiler> {
   const res = await fetch(clangBaseUrl + 'manifest.json', { cache: 'no-cache' });
   if (!res.ok) throw new Error(`falha ao baixar manifest.json do compilador: HTTP ${res.status}`);
   const manifest = (await res.json()) as ClangManifest;
-  installClangFetchShim({
-    cacheName: CLANG_CACHE_PREFIX + manifest.version,
+  const cacheName = CLANG_CACHE_PREFIX + manifest.version;
+  const shim = installClangFetchShim({
+    cacheName,
     manifest,
     onProgress: (progress) => post({ type: 'progress', progress }),
   });
-  // só depois do shim: o bundle guarda globalThis.fetch quando é avaliado
-  const clang = (await import(/* @vite-ignore */ clangBaseUrl + 'bundle.js')) as ClangModule;
+  try {
+    return await load(clangBaseUrl, manifest.version);
+  } catch (err) {
+    // algo do cache pode estar estragado: sem apagar, "tentar de novo" cairia no mesmo erro
+    if (shim.usedCache()) {
+      try {
+        await caches.delete(cacheName);
+      } catch {
+        /* sem Cache API: nada a apagar */
+      }
+    }
+    throw err;
+  }
+}
+
+async function load(clangBaseUrl: string, version: string): Promise<Compiler> {
+  // só depois do shim: o bundle guarda globalThis.fetch quando é avaliado.
+  // ?v=: um bundle.js velho do cache HTTP não carrega com os .wasm de outra versão
+  const url = `${clangBaseUrl}bundle.js?v=${encodeURIComponent(version)}`;
+  const clang = (await import(/* @vite-ignore */ url)) as ClangModule;
   // baixa os recursos já aqui, com progresso mudo (o padrão do @yowasp loga cada pedaço no console)
   await clang.runLLVM(undefined, {}, { fetchProgress: () => {} });
   const c = createCompiler(clang);

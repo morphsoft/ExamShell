@@ -393,3 +393,23 @@ test('se o editor não carregar, aparece um aviso com "recarregar" em vez de tel
   await expect(page.locator('.cm-content')).toBeVisible();
   await expect(fallback).toHaveCount(0);
 });
+
+test('compilador que não baixa: aviso, detalhe do erro e dica de recarregar; tentar de novo funciona', async ({
+  page,
+}) => {
+  const wasm = '**/clang/llvm.core.wasm.gz';
+  await page.route(wasm, (r) => r.abort());
+  await page.goto('./#/treino/first_word');
+  const loader = page.getByTestId('compiler-loader');
+  await expect(loader).toContainText('Não consegui baixar o compilador. Verifique a conexão e tente de novo.', {
+    timeout: LOAD,
+  });
+  await expect(loader).toContainText('Se tentar de novo não resolver, recarregue a página.');
+  await loader.getByText('detalhes do erro').click();
+  await expect(loader.locator('pre')).toContainText('llvm.core.wasm.gz');
+
+  await page.unroute(wasm);
+  await page.getByTestId('compiler-retry').click();
+  await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
+  await expect(loader).toBeHidden();
+});

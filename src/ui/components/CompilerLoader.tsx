@@ -4,10 +4,13 @@ import { loadPercent } from '../engineContext';
 export function CompilerLoader({
   status,
   progress,
+  error,
   onRetry,
 }: {
   status: EngineStatus;
   progress: LoadProgress | null;
+  /** O motivo da falha, quando `status` é 'error'. */
+  error?: string | null;
   onRetry(): void;
 }) {
   if (status === 'ready') return null;
@@ -19,6 +22,13 @@ export function CompilerLoader({
         <button type="button" className="btn" data-testid="compiler-retry" onClick={onRetry}>
           tentar de novo
         </button>
+        <span className="loader-help">Se tentar de novo não resolver, recarregue a página.</span>
+        {error && (
+          <details className="loader-details">
+            <summary>detalhes do erro</summary>
+            <pre>{error}</pre>
+          </details>
+        )}
       </div>
     );
   }

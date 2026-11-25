@@ -43,17 +43,20 @@ async function isGzip(data: Blob): Promise<boolean> {
  * Funciona com qualquer servidor: o GitHub Pages manda o `.gz` como arquivo comum (o shim descomprime
  * com DecompressionStream); outros (ex.: o sirv do Vite) mandam `Content-Encoding: gzip`, e o navegador
  * já entrega descomprimido. Por isso o shim olha a assinatura do gzip em vez de confiar no nome.
+ *
+ * `usedCache()` diz se algum arquivo veio da Cache API (aí, se a carga falhar, o cache pode estar estragado).
  */
 export function installClangFetchShim(opts: {
   cacheName: string;
   manifest: { gz: Record<string, number> };
   onProgress(p: LoadProgress): void;
-}): void {
+}): { usedCache(): boolean } {
   const realFetch = globalThis.fetch.bind(globalThis);
   const cachePromise = openCache(opts.cacheName);
   const totalBytes = Object.values(opts.manifest.gz).reduce((a, b) => a + b, 0);
   const loaded: Record<string, number> = {};
   let fromCache = true;
+  let cacheHits = 0;
 
   function report(name: string, bytes: number) {
     // limitado ao tamanho do .gz: com Content-Encoding o navegador conta bytes já descomprimidos
@@ -64,7 +67,8 @@ export function installClangFetchShim(opts: {
 
   async function download(url: string, name: string): Promise<Blob> {
     try {
-      const res = await realFetch(url);
+      // revalida com o servidor: um .gz velho do cache HTTP não pode passar por um novo
+      const res = await realFetch(url, { cache: 'no-cache' });
       if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
       const reader = res.body.getReader();
       const chunks: Uint8Array[] = [];
@@ -94,6 +98,7 @@ export function installClangFetchShim(opts: {
     const hit = await cache?.match(gzUrl).catch(() => undefined);
     let data: Blob; // como chegou: gzip, ou já descomprimido pelo navegador
     if (hit) {
+      cacheHits++;
       data = await hit.blob();
       report(name, data.size);
     } else {
@@ -114,4 +119,5 @@ export function installClangFetchShim(opts: {
     }
     return new Response(body, { headers: { 'content-type': contentType } });
   };
+  return { usedCache: () => cacheHits > 0 };
 }

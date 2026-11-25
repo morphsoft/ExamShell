@@ -102,3 +102,21 @@ test('download falha e tentar de novo funciona', async ({ page }) => {
   await expect(page.locator('#status')).toHaveText('ready', { timeout: 110000 });
   await expect(page.locator('#error')).toBeHidden();
 });
+
+test('cache estragado: a falha apaga o cache, e tentar de novo baixa tudo de novo', async ({ page }) => {
+  await page.goto('engine-check.html');
+  await expect(page.locator('#status')).toHaveText('ready', { timeout: 110000 });
+  // troca o llvm.core.wasm.gz guardado por um gzip válido de algo que não é wasm
+  await page.evaluate(async () => {
+    const name = (await caches.keys()).find((k) => k.startsWith('examshell-clang-'));
+    if (!name) throw new Error('o compilador não ficou no cache');
+    const junk = await new Response(new Blob(['não sou wasm']).stream().pipeThrough(new CompressionStream('gzip'))).blob();
+    await (await caches.open(name)).put(new URL('clang/llvm.core.wasm.gz', location.href).href, new Response(junk));
+  });
+
+  await page.reload();
+  await expect(page.locator('#status')).toHaveText('error', { timeout: 60000 });
+  await page.locator('#retry').click();
+  await expect(page.locator('#status')).toHaveText('ready', { timeout: 110000 });
+  await expect(page.locator('#progress')).not.toContainText('(cache)');
+});

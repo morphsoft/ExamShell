@@ -187,6 +187,8 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
   flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 14px;
   color: #ffd0d0; background: #2a1620; border-left: 3px solid var(--red);
 }
+.loader-help, .loader-details { flex-basis: 100%; }
+.loader-help { color: #e9c9c9; }
 
 .log {
   flex: 0 0 42%; min-height: 0; overflow-y: auto; scrollbar-width: thin;
