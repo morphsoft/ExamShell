@@ -1,4 +1,5 @@
 {
+  "summary": "Copia uma string para outra, como strcpy.",
   "tests": [
     {
       "id": "t01",

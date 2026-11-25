@@ -1,4 +1,5 @@
 {
+  "summary": "Soma todos os primos até n.",
   "tests": [
     {
       "id": "t01",

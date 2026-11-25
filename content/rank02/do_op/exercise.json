@@ -1,4 +1,5 @@
 {
+  "summary": "Calculadora com + - * / %.",
   "tests": [
     {
       "id": "t01",

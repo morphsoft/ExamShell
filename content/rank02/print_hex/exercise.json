@@ -1,4 +1,5 @@
 {
+  "summary": "Mostra um número em hexadecimal.",
   "tests": [
     {
       "id": "t01",

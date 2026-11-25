@@ -1,4 +1,5 @@
 {
+  "summary": "Deixa só um espaço entre as palavras.",
   "tests": [
     {
       "id": "t01",

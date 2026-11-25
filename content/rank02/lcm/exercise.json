@@ -1,4 +1,5 @@
 {
+  "summary": "Mínimo múltiplo comum.",
   "tests": [
     {
       "id": "t01",

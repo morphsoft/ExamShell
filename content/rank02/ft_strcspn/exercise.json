@@ -1,4 +1,5 @@
 {
+  "summary": "Conta até o primeiro caractere proibido.",
   "tests": [
     {
       "id": "t01",

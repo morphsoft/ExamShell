@@ -1,4 +1,5 @@
 {
+  "summary": "Mostra os 8 bits de um byte.",
   "tests": [
     {
       "id": "t01",

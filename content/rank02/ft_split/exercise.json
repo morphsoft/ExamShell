@@ -1,4 +1,5 @@
 {
+  "summary": "Separa uma string em palavras.",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_split(\"Hello world\")" },
     { "id": "t02", "args": ["1"], "category": "uma-palavra", "display": "ft_split(\"one\")" },

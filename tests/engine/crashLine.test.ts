@@ -11,6 +11,7 @@ beforeAll(async () => {
 const program = (file: string): LoadedExercise => ({
   id: file.replace(/\.c$/, ''),
   level: 1,
+  summary: '',
   kind: 'program',
   expectedFiles: [file],
   allowedFunctions: ['write'],
@@ -23,6 +24,7 @@ const program = (file: string): LoadedExercise => ({
 const ftStrlen = (harness: string): LoadedExercise => ({
   id: 'ft_strlen',
   level: 1,
+  summary: '',
   kind: 'function',
   expectedFiles: ['ft_strlen.c'],
   allowedFunctions: [],

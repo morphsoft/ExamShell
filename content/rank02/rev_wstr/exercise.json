@@ -1,4 +1,5 @@
 {
+  "summary": "Mostra as palavras em ordem inversa.",
   "tests": [
     { "id": "t01", "args": ["You hate people! But I love gatherings. Isn't it ironic?"], "category": "basico" },
     { "id": "t02", "args": ["abcdefghijklm"], "category": "uma-palavra" },

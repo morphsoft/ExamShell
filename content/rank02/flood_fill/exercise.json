@@ -1,4 +1,5 @@
 {
+  "summary": "Pinta a área conectada de um mapa 2D.",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "flood_fill(area, {8, 5}, {7, 4}) /* zona de '1' do exemplo */" },
     { "id": "t02", "args": ["1"], "category": "xy-trocados", "display": "flood_fill(area, {5, 5}, {1, 3}) /* x = 1 (coluna), y = 3 (linha) */" },

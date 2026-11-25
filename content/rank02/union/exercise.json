@@ -1,4 +1,5 @@
 {
+  "summary": "Caracteres das duas strings, sem repetir.",
   "tests": [
     {
       "id": "t01",

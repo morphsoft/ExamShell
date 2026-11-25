@@ -1,4 +1,5 @@
 {
+  "summary": "Converte lowerCamelCase para snake_case.",
   "tests": [
     {
       "id": "t01",

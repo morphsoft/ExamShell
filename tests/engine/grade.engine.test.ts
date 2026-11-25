@@ -11,6 +11,7 @@ beforeAll(async () => {
 const ex: LoadedExercise = {
   id: 'first_word',
   level: 1,
+  summary: '',
   kind: 'program',
   expectedFiles: ['first_word.c'],
   allowedFunctions: ['write'],
@@ -62,6 +63,7 @@ describe('main do cadete em exercício de função (motor real)', () => {
   const fnEx: LoadedExercise = {
     id: 'ft_strlen',
     level: 1,
+    summary: '',
     kind: 'function',
     expectedFiles: ['ft_strlen.c'],
     allowedFunctions: [],

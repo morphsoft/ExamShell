@@ -1,4 +1,5 @@
 {
+  "summary": "Aplica uma função em cada nó da lista.",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_list_foreach([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, print_str)" },
     { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_list_foreach([\"a\"] -> NULL, print_str)" },

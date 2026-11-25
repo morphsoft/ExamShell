@@ -1,4 +1,5 @@
 {
+  "summary": "Devolve o maior valor de um array.",
   "tests": [
     {
       "id": "t01",

@@ -1,4 +1,5 @@
 {
+  "summary": "Acha o primeiro caractere de um conjunto.",
   "tests": [
     {
       "id": "t01",

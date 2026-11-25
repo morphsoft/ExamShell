@@ -1,4 +1,5 @@
 {
+  "summary": "Converte int em string, como itoa.",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_itoa(42)" },
     { "id": "t02", "args": ["1"], "category": "negativos", "display": "ft_itoa(-42)" },

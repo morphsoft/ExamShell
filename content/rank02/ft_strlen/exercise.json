@@ -1,4 +1,5 @@
 {
+  "summary": "Devolve o tamanho de uma string.",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_strlen(\"Hello\")" },
     { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_strlen(\"abcdefghijklmnopqrstuvwxyz\")" },

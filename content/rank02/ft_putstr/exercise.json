@@ -1,4 +1,5 @@
 {
+  "summary": "Escreve uma string na saída.",
   "tests": [
     {
       "id": "t01",

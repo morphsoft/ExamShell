@@ -1,4 +1,5 @@
 {
+  "summary": "Mostra a primeira palavra da string.",
   "tests": [
     { "id": "t01", "args": ["FOR PONY"], "category": "basico" },
     { "id": "t02", "args": ["this        ...    is sparta, then again, maybe    not"], "category": "basico" },

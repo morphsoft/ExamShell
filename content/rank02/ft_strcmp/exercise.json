@@ -1,4 +1,5 @@
 {
+  "summary": "Compara duas strings, como strcmp.",
   "tests": [
     {
       "id": "t01",

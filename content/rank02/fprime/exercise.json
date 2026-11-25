@@ -1,4 +1,5 @@
 {
+  "summary": "Fatores primos de um número.",
   "tests": [
     { "id": "t01", "args": ["225225"], "category": "basico" },
     { "id": "t02", "args": ["8333325"], "category": "basico" },

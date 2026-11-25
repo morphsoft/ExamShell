@@ -1,4 +1,5 @@
 {
+  "summary": "Caracteres que aparecem nas duas strings, sem repetir.",
   "tests": [
     { "id": "t01", "args": ["padinton", "paqefwtdjetyiytjneytjoeyjnejeyj"], "category": "basico" },
     { "id": "t02", "args": ["ddf6vewg64f", "gtwthgdwthdwfteewhrtag6h4ffdhsd"], "category": "basico" },

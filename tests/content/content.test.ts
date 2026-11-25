@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { byLevel, getExercise, loadExercises } from '../../src/content/loadExercises';
+import { LEVEL_INFO } from '../../src/content/levels';
 import { RANK02_CATALOG } from '../../src/content/rank02Catalog';
 import { exerciseContentSchema } from '../../src/content/schema';
 import { grade } from '../../src/engine/grade';
@@ -13,6 +14,11 @@ const PILOTS = ['first_word', 'ft_strlen', 'inter', 'ft_list_size', 'ft_itoa'];
 // Lidos pelo Vite (como o site faz), sem APIs do Node. reference/ só entra aqui, nunca no site.
 const contentFiles = import.meta.glob('/content/rank02/*/*');
 const rawExerciseJson = import.meta.glob<string>('/content/rank02/*/exercise.json', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
+const prototypeHtml = import.meta.glob<string>('/docs/superpowers/specs/prototypes/inicio-preparacao.html', {
   eager: true,
   query: '?raw',
   import: 'default',
@@ -188,5 +194,41 @@ describe.each(exercises.map((ex) => [ex.id, ex] as [string, LoadedExercise]))('%
     const result = await grade(ex, files, engine);
     expect(result.failure).toBeNull();
     expect(result.passed).toBe(ex.tests.length);
+  });
+});
+
+describe('descrição curta', () => {
+  it('todo exercício tem summary de 1 a 80 caracteres, sem código e sem repetir', () => {
+    const all = loadExercises();
+    for (const ex of all) {
+      expect(ex.summary.length, ex.id).toBeGreaterThan(0);
+      expect(ex.summary.length, ex.id).toBeLessThanOrEqual(80);
+      expect(looksLikeCode(ex.summary), ex.id).toBe(false);
+    }
+    expect(new Set(all.map((e) => e.summary)).size).toBe(57);
+  });
+
+  it('bate com o array EX do protótipo: mesmos ids, níveis e textos', () => {
+    const html = Object.values(prototypeHtml)[0] ?? '';
+    const block = html.slice(html.indexOf('var EX = ['), html.indexOf('].map(function (r)'));
+    const tuples = [...block.matchAll(/\["([^"]+)",(\d),"[PF]",("(?:[^"\\]|\\.)*"),/g)].map((m) => ({
+      id: m[1],
+      level: Number(m[2]),
+      summary: JSON.parse(m[3]) as string,
+    }));
+    expect(tuples).toHaveLength(57);
+    expect(tuples.map(({ id, level }) => ({ id, level }))).toEqual(
+      RANK02_CATALOG.map(({ id, level }) => ({ id, level })),
+    );
+    for (const t of tuples) expect(getExercise(t.id)?.summary, t.id).toBe(t.summary);
+  });
+});
+
+it('LEVEL_INFO tem os 4 títulos do spec', () => {
+  expect(LEVEL_INFO).toEqual({
+    1: { title: 'Primeiros passos', subtitle: 'strings, write e laços' },
+    2: { title: 'Strings e bits', subtitle: 'funções da libc, bits e malloc' },
+    3: { title: 'Números e listas', subtitle: 'matemática, bases e listas encadeadas' },
+    4: { title: 'Algoritmos', subtitle: 'split, ordenação e flood fill' },
   });
 });

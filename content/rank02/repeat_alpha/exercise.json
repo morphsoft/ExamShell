@@ -1,4 +1,5 @@
 {
+  "summary": "Repete cada letra pela posição dela no alfabeto.",
   "tests": [
     {
       "id": "t01",

@@ -1,4 +1,5 @@
 {
+  "summary": "Mostra a string de trás para frente.",
   "tests": [
     {
       "id": "t01",

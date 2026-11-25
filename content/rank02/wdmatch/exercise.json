@@ -1,4 +1,5 @@
 {
+  "summary": "Dá para formar a 1ª string com letras da 2ª?",
   "tests": [
     {
       "id": "t01",

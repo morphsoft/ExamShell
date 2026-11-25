@@ -1,4 +1,5 @@
 {
+  "summary": "Converte uma string numa base de 2 a 16 em int.",
   "tests": [
     {
       "id": "t01",

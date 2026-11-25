@@ -1,4 +1,5 @@
 {
+  "summary": "Inverte maiúsculas e minúsculas.",
   "tests": [
     {
       "id": "t01",

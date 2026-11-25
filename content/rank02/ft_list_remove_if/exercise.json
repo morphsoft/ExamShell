@@ -1,4 +1,5 @@
 {
+  "summary": "Remove da lista os nós iguais a uma referência.",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, \"b\", cmp)" },
     { "id": "t02", "args": ["1"], "category": "cabeca", "display": "ft_list_remove_if([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL, \"a\", cmp)" },

@@ -1,4 +1,5 @@
 {
+  "summary": "Inverte a string no próprio lugar.",
   "tests": [
     {
       "id": "t01",

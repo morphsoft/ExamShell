@@ -1,4 +1,5 @@
 {
+  "summary": "Diz se um número é potência de 2.",
   "tests": [
     {
       "id": "t01",

@@ -1,4 +1,5 @@
 {
+  "summary": "Máximo divisor comum.",
   "tests": [
     {
       "id": "t01",

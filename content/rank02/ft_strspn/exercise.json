@@ -1,4 +1,5 @@
 {
+  "summary": "Conta o trecho inicial só com caracteres aceitos.",
   "tests": [
     {
       "id": "t01",

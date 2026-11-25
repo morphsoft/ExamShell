@@ -1,4 +1,5 @@
 {
+  "summary": "Duplica uma string com malloc.",
   "tests": [
     {
       "id": "t01",

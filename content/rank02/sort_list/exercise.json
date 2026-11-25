@@ -1,4 +1,5 @@
 {
+  "summary": "Ordena uma lista encadeada.",
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "sort_list([3] -> [1] -> [2] -> NULL, ascending)" },
     { "id": "t02", "args": ["1"], "category": "descendente", "display": "sort_list([3] -> [1] -> [2] -> NULL, descending)" },

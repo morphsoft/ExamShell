@@ -1,4 +1,5 @@
 {
+  "summary": "Converte string em int, como atoi.",
   "tests": [
     {
       "id": "t01",

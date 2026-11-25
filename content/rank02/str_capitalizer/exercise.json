@@ -1,4 +1,5 @@
 {
+  "summary": "Primeira letra de cada palavra em maiúscula.",
   "tests": [
     {
       "id": "t01",

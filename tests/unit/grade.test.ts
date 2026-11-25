@@ -6,6 +6,7 @@ function makeEx(over: Partial<LoadedExercise> = {}): LoadedExercise {
   return {
     id: 'first_word',
     level: 1,
+    summary: '',
     kind: 'program',
     expectedFiles: ['first_word.c'],
     allowedFunctions: ['write'],

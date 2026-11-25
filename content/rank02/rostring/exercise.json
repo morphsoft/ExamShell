@@ -1,4 +1,5 @@
 {
+  "summary": "Leva a primeira palavra para o fim.",
   "tests": [
     { "id": "t01", "args": ["abc   "], "category": "uma-palavra" },
     { "id": "t02", "args": ["Que la      lumiere soit et la lumiere fut"], "category": "espacos-extras" },

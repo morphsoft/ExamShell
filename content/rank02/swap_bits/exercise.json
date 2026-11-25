@@ -1,4 +1,5 @@
 {
+  "summary": "Troca as duas metades de um byte.",
   "tests": [
     {
       "id": "t01",

@@ -1,4 +1,5 @@
 {
+  "summary": "Tabuada de 1 a 9 de um número.",
   "tests": [
     {
       "id": "t01",

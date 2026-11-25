@@ -18,6 +18,7 @@ const testCaseSchema = z
 /** Formato de `content/rank02/<id>/exercise.json`. */
 export const exerciseContentSchema = z
   .object({
+    summary: z.string().min(1).max(80),
     tests: z.array(testCaseSchema).min(1),
     hints: z.record(kebab, z.tuple([hint, hint, hint])),
     starter: z.record(z.string(), z.string()).optional(),

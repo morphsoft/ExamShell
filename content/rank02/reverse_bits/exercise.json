@@ -1,4 +1,5 @@
 {
+  "summary": "Inverte a ordem dos bits de um byte.",
   "tests": [
     {
       "id": "t01",

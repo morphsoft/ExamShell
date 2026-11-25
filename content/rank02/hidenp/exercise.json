@@ -1,4 +1,5 @@
 {
+  "summary": "A 1ª string está escondida, em ordem, na 2ª?",
   "tests": [
     {
       "id": "t01",
