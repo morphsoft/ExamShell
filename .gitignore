@@ -4,3 +4,4 @@ public/clang/
 .superpowers/
 test-results/
 playwright-report/
+*.tsbuildinfo
