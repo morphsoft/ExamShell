@@ -98,6 +98,58 @@ int main(void)
     expect(r.stdout).toBe('2147483648');
   });
 
+  it('printf("%ld") com long compila e roda, como no gcc do exame (x86-64)', async () => {
+    const r = await build('#include <stdio.h>\nint main(void){ long n = 5; printf("%ld\\n", n); return (0); }');
+    expect(r).toMatchObject({ outcome: 'exit', exitCode: 0, stdout: '5\n' });
+  });
+
+  it('printf("%lu") com typedef de unsigned long também', async () => {
+    const r = await build(
+      '#include <stdio.h>\ntypedef unsigned long t_n;\nint main(void){ t_n n = 7; printf("%lu\\n", n); return (0); }',
+    );
+    expect(r.stdout).toBe('7\n');
+  });
+
+  it('printf("%ld") com long no main de rascunho (link) também', async () => {
+    const c = await engine.compileObjects({ 'f.c': 'int f(void) { return (5); }' }, {});
+    if (!c.ok) throw new Error(c.stderr);
+    const l = await engine.link(
+      c.objects,
+      { 'main.c': '#include <stdio.h>\nint f(void);\nint main(void){ long n = f(); printf("%ld\\n", n); return (0); }' },
+      {},
+    );
+    if (!l.ok) throw new Error(l.stderr);
+    const r = await engine.openRunSession(l.wasm, './prog').run({ args: [] }, 10000);
+    expect(r.stdout).toBe('5\n');
+  });
+
+  it('erro de formato de verdade continua reprovando', async () => {
+    const c = await engine.compileObjects(
+      { 'main.c': '#include <stdio.h>\nint main(void){ printf("%d\\n", "x"); return (0); }' },
+      {},
+    );
+    expect(c.ok).toBe(false);
+    expect(c.stderr).toContain('[-Werror,-Wformat]');
+  });
+
+  it('long com %d continua reprovando (o gcc também reprova)', async () => {
+    const c = await engine.compileObjects(
+      { 'main.c': '#include <stdio.h>\nint main(void){ long n = 5; printf("%d\\n", n); return (0); }' },
+      {},
+    );
+    expect(c.ok).toBe(false);
+    expect(c.stderr).toContain("format specifies type 'int' but the argument has type 'long'");
+  });
+
+  it('%ld com long junto de outro erro: reprova e mostra o outro erro', async () => {
+    const c = await engine.compileObjects(
+      { 'main.c': '#include <stdio.h>\nint main(void){ long n = 5; int x; printf("%ld\\n", n); return (0); }' },
+      {},
+    );
+    expect(c.ok).toBe(false);
+    expect(c.stderr).toContain("unused variable 'x'");
+  });
+
   it('diagnóstico sem _L64', async () => {
     const c = await engine.compileObjects({ 'main.c': 'int main(void){long n; return 0;}' }, {});
     expect(c.ok).toBe(false);
