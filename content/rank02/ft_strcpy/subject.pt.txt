@@ -1,0 +1,18 @@
+Nome do exercício  : ft_strcpy
+Arquivos esperados : ft_strcpy.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Reproduza o comportamento da função strcpy (man strcpy).
+
+A sua função deve ser declarada assim:
+
+char	*ft_strcpy(char *s1, char *s2);
+
+Exemplos:
+
+Com char dst[16] e char src[] = "Hello":
+
+ft_strcpy(dst, src) faz dst conter "Hello" e devolve dst.
+
+Com src = "", ft_strcpy(dst, src) faz dst conter "" e devolve dst.

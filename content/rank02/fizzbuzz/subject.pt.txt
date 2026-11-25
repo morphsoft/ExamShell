@@ -1,0 +1,33 @@
+Nome do exercício  : fizzbuzz
+Arquivos esperados : fizzbuzz.c
+Funções permitidas : write
+--------------------------------------------------------------------------------
+
+Escreva um programa que imprime os números de 1 a 100, cada um seguido de uma
+quebra de linha.
+
+Mas, para os múltiplos de 3, ele imprime "fizz" no lugar do número.
+Para os múltiplos de 5, imprime "buzz" no lugar do número.
+Para os números que são múltiplos de 3 e de 5 ao mesmo tempo, imprime
+"fizzbuzz" no lugar do número.
+
+Exemplos:
+
+$> ./fizzbuzz
+1
+2
+fizz
+4
+buzz
+fizz
+7
+8
+fizz
+buzz
+11
+fizz
+13
+14
+fizzbuzz
+[...]
+$>

@@ -1,0 +1,95 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_strcpy(dst, \"Hello\") /* dst começa zerado */"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "basico",
+      "display": "ft_strcpy(dst, \"The quick brown fox\") /* dst começa zerado */"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "basico",
+      "display": "ft_strcpy(dst, \"x\") /* dst começa zerado */"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "terminador-nulo",
+      "display": "ft_strcpy(dst, \"ab\") /* dst começa com \"XXXXXXXXXXXX\" */"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "string-vazia",
+      "display": "ft_strcpy(dst, \"\") /* dst começa com \"ABCDEFGHIJ\" */"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "basico",
+      "display": "ft_strcpy(dst, \"  \\t  \") /* dst começa zerado */"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "retorno",
+      "display": "ft_strcpy(dst, \"Hello\") == dst ?"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "string-longa",
+      "display": "ft_strcpy(dst, \"aaaa…aaaa\") /* 200 caracteres */"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Depois da chamada, o destino tem uma cópia exata da origem?",
+      "Copiar uma string é ir passando os caracteres da origem para as mesmas posições do destino, um a um. O destino já tem espaço suficiente: você não aloca nada.",
+      "Use um mesmo índice para ler da origem e escrever no destino, avançando até chegar ao '\\0' da origem. Não mexa na origem."
+    ],
+    "terminador-nulo": [
+      "O destino termina com o '\\0' depois da cópia?",
+      "Se o destino já tinha uma string maior, os caracteres antigos continuam lá depois da cópia, a menos que o '\\0' seja escrito. Sem ele, a string do destino \"cresce\" para além da cópia.",
+      "O laço que copia para ao ver o '\\0' da origem, e por isso não o copia. Escreva o '\\0' no destino depois do laço, na posição em que a cópia terminou."
+    ],
+    "string-vazia": [
+      "E se a origem for uma string vazia?",
+      "Copiar a string vazia significa deixar o destino também vazio: ele precisa ter o '\\0' logo na primeira posição, apagando o que havia antes.",
+      "O laço de cópia não roda nenhuma vez com a origem vazia. Então o '\\0' do destino precisa ser escrito fora do laço, na posição zero."
+    ],
+    "retorno": [
+      "O que a sua função devolve?",
+      "Como no strcpy original, a função devolve o endereço do destino, o mesmo ponteiro que recebeu em s1, e não o final dele nem a origem.",
+      "Se você anda com o próprio ponteiro s1 durante a cópia, ele deixa de apontar para o começo. Use um índice para andar, ou guarde o começo antes de mexer, e devolva o começo do destino."
+    ],
+    "string-longa": [
+      "A sua função copia strings grandes sem cortar nada?",
+      "A cópia só deve parar no '\\0' da origem. Qualquer limite fixo de tamanho no seu código corta strings mais longas.",
+      "Não limite o número de voltas do laço a um valor fixo. Continue até encontrar o '\\0' da origem, seja qual for o tamanho dela."
+    ]
+  }
+}

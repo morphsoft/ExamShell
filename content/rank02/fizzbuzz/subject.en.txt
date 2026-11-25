@@ -1,0 +1,32 @@
+Assignment name  : fizzbuzz
+Expected files   : fizzbuzz.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that prints the numbers from 1 to 100, each followed by a
+newline.
+
+But for multiples of 3, it prints "fizz" instead of the number.
+For multiples of 5, it prints "buzz" instead of the number.
+For numbers that are multiples of both 3 and 5, it prints "fizzbuzz" instead.
+
+Examples:
+
+$> ./fizzbuzz
+1
+2
+fizz
+4
+buzz
+fizz
+7
+8
+fizz
+buzz
+11
+fizz
+13
+14
+fizzbuzz
+[...]
+$>

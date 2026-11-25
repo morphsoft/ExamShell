@@ -1,0 +1,105 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "abc"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "Alex."
+      ],
+      "category": "maiusculas"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "abacadaba 42!"
+      ],
+      "category": "nao-letras"
+    },
+    {
+      "id": "t04",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "abc",
+        ""
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "azAZ"
+      ],
+      "category": "limites-do-alfabeto"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "@[`{"
+      ],
+      "category": "nao-letras"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "  \t "
+      ],
+      "category": "nao-letras"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "Hello World"
+      ],
+      "category": "basico"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada letra aparece tantas vezes quanto a posição dela no alfabeto, contando 'a' como 1?",
+      "A posição de uma letra no alfabeto sai da distância entre ela e a primeira letra. Atenção: 'a' tem posição 1, e não 0. O resto da string segue na mesma ordem.",
+      "A ideia que resolve: a quantidade de repetições é a letra menos 'a', mais 1. Escreva a própria letra com write essa quantidade de vezes antes de passar à próxima."
+    ],
+    "maiusculas": [
+      "A letra maiúscula também é repetida, e continua maiúscula?",
+      "A maiúscula tem a mesma posição no alfabeto que a minúscula correspondente, e a saída mantém a caixa original. Mas o valor de 'A' na tabela ASCII é diferente do de 'a'.",
+      "Para as maiúsculas, calcule a quantidade de repetições a partir do 'A' em vez do 'a', e escreva o próprio caractere original, sem trocar a caixa."
+    ],
+    "nao-letras": [
+      "O que acontece com dígitos, espaços e símbolos?",
+      "Só as letras se repetem. Os outros caracteres saem uma única vez, do jeito que entraram. Cuidado com símbolos como o colchete '[' e a crase '`', que ficam entre as faixas das maiúsculas e das minúsculas na tabela ASCII.",
+      "Reconheça as letras com as faixas exatas, de 'a' a 'z' e de 'A' a 'Z'. Se o caractere não cair em nenhuma delas, escreva-o uma única vez."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe um número de argumentos diferente do pedido?",
+      "O enunciado só pede o resultado quando há exatamente um argumento além do nome do programa. Em qualquer outro caso, a saída é só a quebra de linha. O nome do programa também conta no argc.",
+      "Confira o argc logo no começo, antes de olhar qualquer posição do argv. Se o número não for o esperado, escreva só a quebra de linha e encerre sem tocar nos argumentos."
+    ],
+    "string-vazia": [
+      "O que acontece quando o argumento é uma string vazia?",
+      "Uma string vazia não tem nenhum caractere antes do '\\0'. Não há nada para processar, então a saída deve ser só a quebra de linha.",
+      "Faça o laço testar o '\\0' antes de ler ou de escrever qualquer caractere. Com a string vazia, ele não deve dar nenhuma volta, e a quebra de linha sai do mesmo jeito."
+    ],
+    "limites-do-alfabeto": [
+      "O 'a' sai uma vez e o 'z' sai vinte e seis?",
+      "Nas pontas do alfabeto, um erro de um para mais ou para menos aparece logo. Se o 'a' sair zero vezes, por exemplo, a conta está começando do número errado.",
+      "Confira a conta com o 'a': ele deve ser escrito uma vez, e não nenhuma. Depois, o 'z' deve sair exatamente 26 vezes."
+    ]
+  }
+}

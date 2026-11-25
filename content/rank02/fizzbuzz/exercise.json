@@ -1,0 +1,59 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "a",
+        "b"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        ""
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "100"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "x",
+        "y",
+        "z"
+      ],
+      "category": "argumentos"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada linha tem o número certo, ou fizz, buzz ou fizzbuzz no lugar dele?",
+      "Os números vão de 1 a 100, um por linha. Múltiplos de 3 viram fizz, múltiplos de 5 viram buzz, e os que são os dois ao mesmo tempo viram fizzbuzz. Com só o write, você precisa transformar cada número em caracteres.",
+      "A ordem das verificações é a chave: o caso dos dois ao mesmo tempo precisa ser decidido antes dos outros, senão o fizz ou o buzz sozinho \"ganha\". E o 100 tem três dígitos, então escrever um caractere só não basta."
+    ],
+    "argumentos": [
+      "O resultado do seu programa muda quando ele recebe argumentos?",
+      "O enunciado não usa argumentos: a saída é sempre a mesma, com ou sem eles. Se o programa depende do argc ou lê o argv, passar parâmetros pode mudar o resultado.",
+      "Não use o argc nem o argv em lugar nenhum. O main pode até ser declarado sem parâmetros."
+    ]
+  }
+}

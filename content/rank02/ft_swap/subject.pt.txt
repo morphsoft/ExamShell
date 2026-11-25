@@ -1,0 +1,16 @@
+Nome do exercício  : ft_swap
+Arquivos esperados : ft_swap.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva uma função que troca o conteúdo de dois inteiros cujos endereços são
+passados como parâmetros.
+
+A sua função deve ser declarada assim:
+
+void	ft_swap(int *a, int *b);
+
+Exemplos:
+
+Com a = 1 e b = 2, depois de ft_swap(&a, &b) temos a = 2 e b = 1.
+Com a = -5 e b = 0, depois de ft_swap(&a, &b) temos a = 0 e b = -5.

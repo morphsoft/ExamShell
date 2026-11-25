@@ -1,0 +1,16 @@
+Assignment name  : ft_swap
+Expected files   : ft_swap.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write a function that swaps the contents of two integers the addresses of
+which are passed as parameters.
+
+Your function must be declared as follows:
+
+void	ft_swap(int *a, int *b);
+
+Examples:
+
+With a = 1 and b = 2, after ft_swap(&a, &b) we have a = 2 and b = 1.
+With a = -5 and b = 0, after ft_swap(&a, &b) we have a = 0 and b = -5.

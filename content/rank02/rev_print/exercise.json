@@ -1,0 +1,81 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "zaz"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "dub0 a POIL"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "a",
+        "b"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "x"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "  ab\tcd  "
+      ],
+      "category": "espacos-e-tabs"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "0123456789"
+      ],
+      "category": "basico"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A sua saída tem todos os caracteres, do último ao primeiro, sem o '\\0'?",
+      "Inverter é escrever a string de trás para frente. Primeiro é preciso saber onde ela termina: a última posição com caractere é a anterior ao '\\0'.",
+      "O erro mais comum é de um: escrever o '\\0' ou esquecer a posição 0. O último caractere está na posição tamanho menos um, e o primeiro, na zero."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe um número de argumentos diferente do pedido?",
+      "O enunciado só pede a string invertida quando há exatamente um parâmetro. Em qualquer outro caso, a saída é só a quebra de linha. O nome do programa também conta no argc.",
+      "Confira o argc logo no começo, antes de olhar qualquer posição do argv. Se o número não for o esperado, escreva só a quebra de linha e encerre sem tocar nos argumentos."
+    ],
+    "string-vazia": [
+      "O que acontece quando o argumento é uma string vazia?",
+      "A string vazia tem tamanho zero. Ao andar para trás, não existe nenhuma posição válida, e ler antes do início da string pega lixo da memória.",
+      "Teste a condição do laço antes de ler qualquer caractere, de modo que, com tamanho zero, nenhuma posição seja acessada. A quebra de linha sai do mesmo jeito."
+    ],
+    "espacos-e-tabs": [
+      "Os espaços e tabs do começo e do fim também são invertidos?",
+      "Aqui não existe a ideia de palavra: espaços e tabs são caracteres como os outros. Os que estavam no fim da string passam a ser os primeiros da saída.",
+      "Não pule nem apare nenhum caractere. Inverta a string inteira, do primeiro ao último byte."
+    ]
+  }
+}

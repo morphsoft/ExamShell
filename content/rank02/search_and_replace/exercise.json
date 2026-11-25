@@ -1,0 +1,144 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "Papache est un sabre",
+        "a",
+        "o"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "zaz",
+        "r",
+        "u"
+      ],
+      "category": "letra-ausente"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "zaz",
+        "art",
+        "zul"
+      ],
+      "category": "mais-de-um-caractere"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "zaz",
+        "r"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "jacob",
+        "a",
+        "b",
+        "c",
+        "e",
+        "i",
+        "o",
+        "u"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "ZoZ eT Dork",
+        "Z",
+        "M"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t07",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "",
+        "a",
+        "b"
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "aaa",
+        "a",
+        "b"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "a b\tc",
+        " ",
+        "_"
+      ],
+      "category": "espacos"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "abc",
+        "a",
+        "xy"
+      ],
+      "category": "mais-de-um-caractere"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "abcabc",
+        "c",
+        "a"
+      ],
+      "category": "basico"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Todas as ocorrências da letra são trocadas, e o resto da string fica como estava?",
+      "Percorra a string uma única vez. Cada caractere é comparado com a letra procurada. Se for igual, sai a letra nova no lugar dele, e se não for, sai o próprio caractere.",
+      "Não pare na primeira ocorrência e não escreva nada a mais. Para cada posição da string, escreva exatamente um caractere, o novo ou o original, e a quebra de linha só no final."
+    ],
+    "letra-ausente": [
+      "O que sai quando a letra procurada não está na string?",
+      "Não há nada para trocar, e isso não é erro: a string sai igual, seguida da quebra de linha.",
+      "Não trate a ausência como um caso especial. Se você escreve cada caractere, trocado ou não, a string sem a letra já sai certa."
+    ],
+    "mais-de-um-caractere": [
+      "E se o segundo ou o terceiro argumento tiver mais de uma letra?",
+      "O enunciado fala em trocar uma letra por outra. Se algum dos dois argumentos não tiver exatamente um caractere, a saída é só a quebra de linha.",
+      "Antes de percorrer a string, confira que cada um desses dois argumentos tem o primeiro caractere e que o segundo é o '\\0'. Se não for assim, escreva só a quebra de linha."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe um número de argumentos diferente do pedido?",
+      "O enunciado só pede o trabalho quando há exatamente três argumentos além do nome do programa, então o argc deve valer 4. Em qualquer outro caso, a saída é só a quebra de linha. O nome do programa também conta no argc.",
+      "Confira o argc logo no começo, antes de olhar qualquer posição do argv. Se o número não for o esperado, escreva só a quebra de linha e encerre sem tocar nos argumentos."
+    ],
+    "string-vazia": [
+      "O que acontece quando o argumento é uma string vazia?",
+      "Uma string vazia não tem nenhum caractere antes do '\\0'. Não há nada para processar, então a saída deve ser só a quebra de linha.",
+      "Faça o laço testar o '\\0' antes de ler ou de escrever qualquer caractere. Com a string vazia, ele não deve dar nenhuma volta, e a quebra de linha sai do mesmo jeito."
+    ],
+    "espacos": [
+      "Espaços e tabs podem ser a letra procurada ou a letra nova?",
+      "Aqui o espaço é um caractere como outro qualquer. Pode ser procurado, pode ser usado como substituto, e não separa palavras.",
+      "Não trate o espaço nem o tab de maneira especial: aplique neles a mesma comparação e a mesma troca que faria com uma letra."
+    ]
+  }
+}

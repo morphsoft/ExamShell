@@ -1,0 +1,90 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_putstr(\"Hello\")"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "basico",
+      "display": "ft_putstr(\"42 SP\")"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "string-vazia",
+      "display": "ft_putstr(\"\")"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "basico",
+      "display": "ft_putstr(\"a\")"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "caracteres-especiais",
+      "display": "ft_putstr(\"  tab\\there  \")"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "caracteres-especiais",
+      "display": "ft_putstr(\"100% %d %s \\\\ \\\"q\\\"\")"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "caracteres-especiais",
+      "display": "ft_putstr(\"line1\\nline2\")"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "string-longa",
+      "display": "ft_putstr(\"xxxx…xxxx\") /* 1500 caracteres */"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A sua função escreve a string inteira, até o fim, e mais nada?",
+      "A string termina no '\\0', e ele não deve ser escrito. Também não acrescente quebra de linha: quem chama a função é quem decide isso.",
+      "O write recebe o endereço do que vai escrever e quantos bytes. Faça um laço que anda até o '\\0' e chame o write para cada posição da string."
+    ],
+    "string-vazia": [
+      "O que a sua função faz com uma string vazia?",
+      "Uma string vazia só tem o '\\0'. Não existe nenhum caractere para escrever, então nada deve aparecer na saída.",
+      "Garanta que o laço teste o '\\0' antes de chamar o write. Assim, na string vazia, o write nunca é chamado."
+    ],
+    "caracteres-especiais": [
+      "Tabs, quebras de linha e símbolos como o '%' saem exatamente como estão?",
+      "A função não interpreta nada: cada byte da string é copiado para a saída do jeito que está. Se alguma função que formata texto entrou no meio, caracteres como o '%' viram problema. Aqui só o write é permitido.",
+      "Não faça caso especial para nenhum caractere. Escreva cada byte da string do jeito que ele vem, inclusive tabs e quebras de linha."
+    ],
+    "string-longa": [
+      "A sua função funciona com uma string de mais de mil caracteres?",
+      "O tamanho da string não pode ser limitado por nada no seu código. Copiar a string para um vetor de tamanho fixo, por exemplo, quebra com strings grandes.",
+      "Não copie a string para lugar nenhum e não limite o número de voltas do laço. A única condição para parar é encontrar o '\\0'."
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "abc"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "My horse is Amazing."
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "AkjhZ zLKIJz , 23y "
+      ],
+      "category": "maiusculas"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "abc",
+        "defg"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "mnMN"
+      ],
+      "category": "volta-ao-alfabeto"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "@[`{ 0123"
+      ],
+      "category": "nao-letras"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "Uryyb, Jbeyq!"
+      ],
+      "category": "basico"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada letra vai 13 posições à frente e, ao passar do 'z', volta ao começo do alfabeto?",
+      "O alfabeto tem 26 letras, exatamente o dobro de 13. Somar 13 funciona até a letra 'm'. Da 'n' em diante, o resultado passaria do 'z', então é preciso voltar ao início.",
+      "A ideia que resolve: cada metade do alfabeto vai para a outra. Em uma das metades você soma 13 e, na outra, subtrai 13. Isso vale igualmente para as maiúsculas."
+    ],
+    "maiusculas": [
+      "As maiúsculas são trocadas pela maiúscula correspondente?",
+      "As maiúsculas têm a sua própria faixa na tabela ASCII e precisam do mesmo tratamento das minúsculas, continuando maiúsculas na saída.",
+      "Repita a mesma lógica para as faixas de 'A' a 'M' e de 'N' a 'Z', sem converter a letra para minúscula nem de volta."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe um número de argumentos diferente do pedido?",
+      "O enunciado só pede a conversão quando há exatamente um argumento além do nome do programa. Em qualquer outro caso, a saída é só a quebra de linha. O nome do programa também conta no argc.",
+      "Confira o argc logo no começo, antes de olhar qualquer posição do argv. Se o número não for o esperado, escreva só a quebra de linha e encerre sem tocar nos argumentos."
+    ],
+    "string-vazia": [
+      "O que acontece quando o argumento é uma string vazia?",
+      "Uma string vazia não tem nenhum caractere antes do '\\0'. Não há nada para processar, então a saída deve ser só a quebra de linha.",
+      "Faça o laço testar o '\\0' antes de ler ou de escrever qualquer caractere. Com a string vazia, ele não deve dar nenhuma volta, e a quebra de linha sai do mesmo jeito."
+    ],
+    "volta-ao-alfabeto": [
+      "O que acontece com a letra 'n' e com a letra 'z'?",
+      "Somar 13 ao 'n' ou ao 'z' passa do fim do alfabeto e cai num caractere que não é letra, como a chave de abrir. O 'n' deve virar 'a', e o 'z' deve virar 'm'.",
+      "Descubra em qual metade do alfabeto a letra está antes de mexer nela: da 'n' em diante, nunca some 13."
+    ],
+    "nao-letras": [
+      "O que acontece com dígitos, espaços e símbolos?",
+      "Só as letras são transformadas. Todos os outros caracteres saem do jeito que entraram. Cuidado com símbolos como o colchete '[' e a crase '`': eles ficam colados nas letras na tabela ASCII e uma faixa mal escrita os confunde com letras.",
+      "Use as faixas exatas, de 'a' a 'z' e de 'A' a 'Z', para reconhecer uma letra. Se o caractere não cair em nenhuma delas, escreva-o sem alterar."
+    ]
+  }
+}

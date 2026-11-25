@@ -1,0 +1,90 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "ft_swap(&a, &b) /* a = 1, b = 2 */"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "negativos",
+      "display": "ft_swap(&a, &b) /* a = -42, b = 42 */"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "basico",
+      "display": "ft_swap(&a, &b) /* a = 0, b = 0 */"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "valores-extremos",
+      "display": "ft_swap(&a, &b) /* a = INT_MAX, b = INT_MIN */"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "basico",
+      "display": "ft_swap(&a, &b) /* a = 0, b = 5 */"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "mesmo-endereco",
+      "display": "ft_swap(&a, &a) /* a = 9 */"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "valores-extremos",
+      "display": "ft_swap(&a, &b) /* a = INT_MAX, b = 1 */"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "negativos",
+      "display": "ft_swap(&a, &b) /* a = -1, b = -2 */"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Depois da troca, o a tem o valor antigo do b e o b tem o valor antigo do a?",
+      "Se você escreve em um dos dois antes de guardar o valor que ele tinha, esse valor se perde e os dois acabam iguais.",
+      "Guarde o valor de um dos dois numa variável temporária antes de sobrescrevê-lo, e use a temporária para completar a troca."
+    ],
+    "negativos": [
+      "A troca funciona quando os valores são negativos?",
+      "Trocar não depende do sinal: é só mover valores de um lugar para o outro. Se a sua solução faz contas entre os dois números, o sinal pode atrapalhar.",
+      "Troque por cópia de valores, passando por uma variável temporária, sem somar, subtrair ou combinar os dois números."
+    ],
+    "valores-extremos": [
+      "A troca funciona com INT_MAX e INT_MIN?",
+      "Somar os dois números pode ultrapassar o limite do int. Como o resultado de uma conta assim não é confiável, uma troca baseada em somas pode dar valores errados.",
+      "Evite fazer contas com os dois valores. Copiar um deles para uma variável temporária nunca estoura, porque é só uma cópia."
+    ],
+    "mesmo-endereco": [
+      "E se os dois ponteiros apontarem para a mesma variável?",
+      "Trocar uma variável com ela mesma deve deixá-la como estava. Truques com XOR ou com soma e subtração apagam o valor nesse caso, porque o primeiro passo destrói o conteúdo que o segundo ainda precisava.",
+      "Use uma variável temporária: com ela, trocar uma variável com ela mesma apenas copia o valor para lá e de volta, e nada se perde."
+    ]
+  }
+}

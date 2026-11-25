@@ -1,0 +1,21 @@
+Nome do exercício  : ulstr
+Arquivos esperados : ulstr.c
+Funções permitidas : write
+--------------------------------------------------------------------------------
+
+Escreva um programa que recebe uma string e inverte as maiúsculas e minúsculas
+de todas as suas letras. Os outros caracteres permanecem inalterados.
+
+Você deve exibir o resultado seguido de uma quebra de linha.
+
+Se o número de argumentos não for 1, o programa exibe uma quebra de linha.
+
+Exemplos:
+
+$> ./ulstr "L'eSPrit nE peUt plUs pRogResSer" | cat -e
+l'EspRIT Ne PEuT PLuS PrOGrESsER$
+$> ./ulstr "SS 42Madrid" | cat -e
+ss 42mADRID$
+$> ./ulstr | cat -e
+$
+$>

@@ -1,0 +1,32 @@
+{
+  "t01": {
+    "stdout": "abbccc\n"
+  },
+  "t02": {
+    "stdout": "Alllllllllllleeeeexxxxxxxxxxxxxxxxxxxxxxxx.\n"
+  },
+  "t03": {
+    "stdout": "abbacccaddddabba 42!\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "\n"
+  },
+  "t07": {
+    "stdout": "azzzzzzzzzzzzzzzzzzzzzzzzzzAZZZZZZZZZZZZZZZZZZZZZZZZZZ\n"
+  },
+  "t08": {
+    "stdout": "@[`{\n"
+  },
+  "t09": {
+    "stdout": "  \t \n"
+  },
+  "t10": {
+    "stdout": "HHHHHHHHeeeeellllllllllllllllllllllllooooooooooooooo WWWWWWWWWWWWWWWWWWWWWWWooooooooooooooorrrrrrrrrrrrrrrrrrlllllllllllldddd\n"
+  }
+}

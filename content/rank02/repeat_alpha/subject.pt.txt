@@ -1,0 +1,28 @@
+Nome do exercício  : repeat_alpha
+Arquivos esperados : repeat_alpha.c
+Funções permitidas : write
+--------------------------------------------------------------------------------
+
+Escreva um programa chamado repeat_alpha que recebe uma string e a exibe,
+repetindo cada caractere alfabético tantas vezes quanto o seu índice no
+alfabeto, seguida de uma quebra de linha.
+
+'a' vira 'a', 'b' vira 'bb', 'e' vira 'eeeee', etc...
+
+As maiúsculas e minúsculas permanecem como estão.
+
+Se o número de argumentos não for 1, exiba apenas uma quebra de linha.
+
+Exemplos:
+
+$> ./repeat_alpha "abc"
+abbccc
+$> ./repeat_alpha "Alex." | cat -e
+Alllllllllllleeeeexxxxxxxxxxxxxxxxxxxxxxxx.$
+$> ./repeat_alpha 'abacadaba 42!' | cat -e
+abbacccaddddabba 42!$
+$> ./repeat_alpha | cat -e
+$
+$> ./repeat_alpha "" | cat -e
+$
+$>

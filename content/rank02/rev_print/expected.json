@@ -1,0 +1,26 @@
+{
+  "t01": {
+    "stdout": "zaz\n"
+  },
+  "t02": {
+    "stdout": "LIOP a 0bud\n"
+  },
+  "t03": {
+    "stdout": "\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "x\n"
+  },
+  "t07": {
+    "stdout": "  dc\tba  \n"
+  },
+  "t08": {
+    "stdout": "9876543210\n"
+  }
+}

@@ -1,0 +1,19 @@
+Nome do exercício  : ft_putstr
+Arquivos esperados : ft_putstr.c
+Funções permitidas : write
+--------------------------------------------------------------------------------
+
+Escreva uma função que exibe uma string na saída padrão.
+
+O ponteiro passado para a função contém o endereço do primeiro caractere da
+string.
+
+A sua função deve ser declarada assim:
+
+void	ft_putstr(char *str);
+
+Exemplos:
+
+ft_putstr("Hello") exibe Hello.
+ft_putstr("42 SP") exibe 42 SP.
+ft_putstr("") não exibe nada.
