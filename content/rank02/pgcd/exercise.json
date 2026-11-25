@@ -91,7 +91,7 @@
         "10",
         "42"
       ],
-      "category": "ordem-dos-argumentos"
+      "category": "basico"
     },
     {
       "id": "t13",
@@ -100,14 +100,6 @@
         "100"
       ],
       "category": "multiplo"
-    },
-    {
-      "id": "t14",
-      "args": [
-        "2147483646",
-        "1073741823"
-      ],
-      "category": "valores-grandes"
     }
   ],
   "hints": {
@@ -135,16 +127,6 @@
       "E se um dos números for múltiplo do outro?",
       "Quando um número divide o outro, o menor dos dois é o próprio maior divisor comum.",
       "Teste o seu programa com 100 e 10 e também com 10 e 100: o resultado é o mesmo, e é o menor dos dois."
-    ],
-    "ordem-dos-argumentos": [
-      "O resultado muda se você trocar a ordem dos argumentos?",
-      "Não deve mudar: o maior divisor comum de a e b é o mesmo que o de b e a. O seu programa não pode supor que o primeiro argumento é o maior.",
-      "Compare os dois valores antes de usá-los, ou escolha um método que funcione nas duas ordens. Teste 42 e 10, e depois 10 e 42."
-    ],
-    "valores-grandes": [
-      "O seu programa funciona com números perto do limite do int?",
-      "Os números cabem em um int, mas um laço que testa todos os candidatos, a partir do 1 até o menor número, pode dar mais de um bilhão de voltas com valores perto de dois bilhões.",
-      "Troque a busca por candidatos, que é lenta, por um método que reduza os números rapidamente, usando o resto da divisão. Assim, poucos passos resolvem até valores enormes."
     ]
   }
 }

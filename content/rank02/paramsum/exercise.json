@@ -175,7 +175,7 @@
     "basico": [
       "O número que você escreve é a quantidade de argumentos, sem contar o nome do programa?",
       "O argc conta também o nome do programa, que fica em argv na posição 0. Os argumentos de verdade são os que vêm depois dele.",
-      "O valor a mostrar é o argc menos 1. Lembre que o write escreve caracteres, então o número precisa virar o caractere do dígito antes de ser escrito."
+      "Conte só os argumentos de verdade, deixando o nome do programa de fora. E lembre que o write escreve caracteres: o número precisa virar o caractere do dígito antes de ser escrito."
     ],
     "sem-argumentos": [
       "O que o seu programa escreve quando não recebe nenhum argumento?",

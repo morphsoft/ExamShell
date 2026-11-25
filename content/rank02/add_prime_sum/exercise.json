@@ -80,7 +80,7 @@
   "hints": {
     "basico": [
       "Os números que você soma são todos os primos até o valor recebido, e só eles?",
-      "Um primo é um número maior que 1 que não tem outros divisores além de 1 e dele mesmo. Você precisa decidir, número por número, se ele é primo, e acumular a soma dos que forem. Como só write e exit são permitidas, a conversão da string em número também é com você.",
+      "Um primo é um número maior que 1 que não tem outros divisores além de 1 e dele mesmo. Você precisa decidir, número por número, se ele é primo, e acumular a soma dos que forem. Como só write e exit são permitidas, a conversão da string em número é com você, e a soma, que pode ter vários dígitos, precisa ser escrita caractere por caractere.",
       "A ideia decisiva é separar o problema: uma parte que responde 'este número é primo?' e outra que percorre os candidatos até o valor dado, somando os que passam no teste."
     ],
     "argumentos": [
@@ -104,9 +104,9 @@
       "Olhe a condição que decide até onde você testa candidatos: ela precisa aceitar o próprio valor do argumento, e não parar um antes dele."
     ],
     "soma-grande": [
-      "O seu programa escreve corretamente uma soma com vários dígitos, e termina rápido?",
-      "O write escreve caracteres, então um valor como 277050 precisa ser escrito dígito por dígito, do mais significativo para o menos. Além disso, testar divisores até o próprio número deixa tudo lento: se um número tem um divisor, ele tem também um divisor que não passa da raiz quadrada.",
-      "Para escrever, separe os dígitos com divisão e resto por 10 (a ordem inversa pode ser resolvida com recursão ou com um pequeno buffer). Para o teste de primalidade, pare de tentar divisores quando o divisor ao quadrado passar do candidato."
+      "O seu programa escreve corretamente uma soma grande, com mais de cinco dígitos?",
+      "O write escreve caracteres, então um valor como 277050 precisa ser escrito dígito por dígito, do mais significativo para o menos. Além disso, a variável que acumula a soma precisa guardar valores maiores que 65535, o que um short não faz.",
+      "Use int, ou um tipo maior, para acumular a soma, e confira que o seu código de escrita produz todos os dígitos do número, e não só alguns deles."
     ]
   }
 }

@@ -10,8 +10,8 @@ Os caracteres reconhecidos na entrada são: 0123456789abcdef
 Eles são, é claro, limitados de acordo com a base pedida. Por exemplo, a base
 4 reconhece "0123" e a base 16 reconhece "0123456789abcdef".
 
-Letras maiúsculas também devem ser reconhecidas: "12fdbA" é o mesmo que
-"12FDBA".
+Letras maiúsculas também devem ser reconhecidas: "12fdb3" é o mesmo que
+"12FDB3".
 
 O sinal de menos ('-') só é interpretado se for o primeiro caractere da
 string.

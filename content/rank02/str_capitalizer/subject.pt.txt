@@ -12,20 +12,19 @@ Uma palavra é uma parte da string delimitada por espaços/tabs, ou pelo
 início/fim da string. Se uma palavra tiver uma única letra, ela deve ficar em
 maiúscula.
 
-Uma letra é um caractere do conjunto [a-zA-Z].
-
 Se não houver parâmetros, exiba uma quebra de linha.
 
 Exemplos:
 
 $> ./str_capitalizer | cat -e
 $
-$> ./str_capitalizer "a FiRSt LiTTlE test" | cat -e
+$> ./str_capitalizer "a FiRSt LiTTlE TESt" | cat -e
 A First Little Test$
-$> ./str_capitalizer "SecONd teST A LITtle BiT   Bigger" \
-"   But... MORE    complex" "   Lorem ipsum dolor sit amet, consectetur   " \
+$> ./str_capitalizer "__SecONd teST A LITtle BiT   Moar comPLEX" \
+"   But... This iS not THAT COMPLEX" \
+"     Okay, this is the last 1239809147801 but not    the least    t" \
 | cat -e
-Second Test A Little Bit   Bigger$
-   But... More    Complex$
-   Lorem Ipsum Dolor Sit Amet, Consectetur   $
+__second Test A Little Bit   Moar Complex$
+   But... This Is Not That Complex$
+     Okay, This Is The Last 1239809147801 But Not    The Least    T$
 $>

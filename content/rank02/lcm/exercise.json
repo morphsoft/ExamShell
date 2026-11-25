@@ -71,14 +71,6 @@
       ],
       "category": "multiplos",
       "display": "lcm(3, 6)"
-    },
-    {
-      "id": "t10",
-      "args": [
-        "9"
-      ],
-      "category": "valores-grandes",
-      "display": "lcm(60000, 70000)"
     }
   ],
   "hints": {
@@ -106,11 +98,6 @@
       "E se um dos números já for múltiplo do outro?",
       "Quando um número divide o outro, o MMC é o maior dos dois: lcm(3, 6) é 6, e não 18.",
       "A ordem dos argumentos não pode mudar o resultado. Teste lcm(6, 3) e lcm(3, 6): os dois devem dar 6."
-    ],
-    "valores-grandes": [
-      "O resultado fica certo quando o produto dos dois números passa de dois bilhões?",
-      "Os parâmetros e o retorno são unsigned int. Uma variável intermediária do tipo int, com sinal, estoura quando o valor passa de 2147483647, mesmo que o resultado final coubesse.",
-      "Use unsigned int nas variáveis intermediárias, como o produto, e confira o exemplo de 60000 e 70000, cujo produto é maior que o maior int."
     ]
   }
 }

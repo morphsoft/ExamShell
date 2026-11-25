@@ -1,9 +1,9 @@
 {
   "t01": {
-    "stdout": "vous voyez c'est facile d'afficher la meme chose\n"
+    "stdout": "See? It's easy to print the same thing\n"
   },
   "t02": {
-    "stdout": "seulement la c'est plus dur\n"
+    "stdout": "this time it will be more complex .\n"
   },
   "t03": {
     "stdout": "\n"

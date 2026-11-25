@@ -85,7 +85,7 @@
     "basico": [
       "O vetor tem todos os valores do intervalo, incluindo os dois extremos?",
       "Os extremos entram no vetor. Por isso o tamanho é a distância entre start e end mais 1. A função devolve o ponteiro para o primeiro elemento do vetor que você alocou com malloc.",
-      "Calcule primeiro quantos elementos precisa, aloque esse tanto de ints e só depois preencha. Se você alocar só a distância, vai faltar espaço para um dos valores."
+      "Calcule primeiro quantos elementos precisa e use esse número ao alocar e ao preencher. Se o seu laço usar só a distância entre start e end, o último valor fica de fora."
     ],
     "inicio-igual-fim": [
       "O que a sua função devolve quando start é igual a end?",
@@ -104,8 +104,8 @@
     ],
     "intervalo-grande": [
       "A sua função funciona com um intervalo de mil elementos?",
-      "O malloc recebe o tamanho em bytes, e não em elementos. Cada elemento é um int, que ocupa mais de um byte. Uma alocação pequena demais corrompe a memória quando o vetor é grande.",
-      "Multiplique o número de elementos pelo tamanho de um int na hora de chamar o malloc."
+      "O tamanho do vetor precisa vir da distância entre start e end, e não de um valor fixo. Com mil elementos, um tamanho fixo pequeno não basta.",
+      "Calcule o número de elementos a partir de start e end e use esse valor, e não uma constante, ao alocar e ao preencher o vetor."
     ]
   }
 }

@@ -116,7 +116,7 @@
     "outras-bases": [
       "A sua função funciona com bases diferentes de 2, 10 e 16?",
       "A base é um parâmetro: o mesmo código precisa servir para a base 4, a 8 ou qualquer outra até 16, sem nenhum número de base fixo no código.",
-      "Procure no seu código algum 10, 2 ou 16 escrito direto e troque pelo parâmetro str_base."
+      "Procure no seu código algum 10, 2 ou 16 usado como base e troque pelo parâmetro str_base."
     ],
     "letras": [
       "Como a sua função transforma o caractere 'a' no número 10?",

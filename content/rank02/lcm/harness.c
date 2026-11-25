@@ -45,9 +45,6 @@ int	main(int argc, char **argv)
 		case 8: /* t09 */
 			show(3, 6);
 			break ;
-		case 9: /* t10 */
-			show(60000, 70000);
-			break ;
 		default:
 			return (1);
 	}

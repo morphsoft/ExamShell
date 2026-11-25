@@ -6,7 +6,7 @@
     "stdout": "A First Little Test\n"
   },
   "t03": {
-    "stdout": "Second Test A Little Bit   Bigger\n   But... More    Complex\n   Lorem Ipsum Dolor Sit Amet, Consectetur   \n"
+    "stdout": "__second Test A Little Bit   Moar Complex\n   But... This Is Not That Complex\n     Okay, This Is The Last 1239809147801 But Not    The Least    T\n"
   },
   "t04": {
     "stdout": "\n"

@@ -8,16 +8,16 @@
     {
       "id": "t02",
       "args": [
-        "a FiRSt LiTTlE test"
+        "a FiRSt LiTTlE TESt"
       ],
       "category": "basico"
     },
     {
       "id": "t03",
       "args": [
-        "SecONd teST A LITtle BiT   Bigger",
-        "   But... MORE    complex",
-        "   Lorem ipsum dolor sit amet, consectetur   "
+        "SecONd teST A LITtle BiT   Moar comPLEX",
+        "   But... This iS not THAT COMPLEX",
+        "     Okay, this is the last 1239809147801 but not    the least    t"
       ],
       "category": "varios-argumentos"
     },
@@ -122,7 +122,7 @@
     ],
     "nao-letra": [
       "E se a palavra terminar com um ponto, um dígito ou outro símbolo?",
-      "O enunciado só manda colocar em maiúscula o último caractere se ele for uma letra. Se a palavra termina em símbolo ou dígito, nenhuma letra dela fica em maiúscula.",
+      "Veja nos exemplos do enunciado: 'Okay,' vira 'okay,', sem nenhuma letra em maiúscula, porque a palavra termina numa vírgula. O mesmo vale para 'But...' e para qualquer palavra que termina em símbolo ou dígito.",
       "Só converta para maiúscula se o último caractere da palavra for uma letra de 'a' a 'z'. Não procure a última letra da palavra, procure o último caractere."
     ]
   }

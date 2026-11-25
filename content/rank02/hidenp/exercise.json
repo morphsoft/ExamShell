@@ -120,7 +120,7 @@
     ],
     "string-vazia": [
       "O que significa uma string vazia estar escondida em outra?",
-      "O enunciado diz que a string vazia está escondida em qualquer string, inclusive em outra vazia. O resultado é 1.",
+      "O enunciado diz que a string vazia está escondida em 'qualquer string', e isso inclui outra string vazia. O resultado é 1.",
       "Se s1 não tem caracteres, não há nada para procurar. Considere que s1 ter chegado ao fim é o que significa sucesso, sem depender de s2 ter conteúdo."
     ],
     "argumentos": [

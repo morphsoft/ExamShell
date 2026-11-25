@@ -3,22 +3,22 @@
     {
       "id": "t01",
       "args": [
-        "vous voyez c'est facile d'afficher la meme chose"
+        "See? It's easy to print the same thing"
       ],
       "category": "basico"
     },
     {
       "id": "t02",
       "args": [
-        "seulement          la c'est plus dur"
+        " this        time it      will     be    more complex  "
       ],
       "category": "espacos-extras"
     },
     {
       "id": "t03",
       "args": [
-        "comme c'est cocasse",
-        "vous avez entendu, Mathilde ?"
+        "No S*** Sherlock...",
+        "nAw S*** ShErLaWQ..."
       ],
       "category": "argumentos"
     },
@@ -84,8 +84,8 @@
       "O ponto decisivo é saber quando escrever os três espaços: só entre duas palavras, nunca no começo nem no fim. Pense em como o programa pode lembrar que já escreveu uma palavra."
     ],
     "espacos-extras": [
-      "Quando há vários espaços seguidos na entrada, o que a sua saída mostra entre as palavras?",
-      "Uma sequência de separadores vale por um só. O que importa para a saída é a quantidade de palavras, e não a quantidade de espaços que havia entre elas.",
+      "Quando há vários espaços seguidos, ou espaços nas pontas da string, o que a sua saída mostra?",
+      "Uma sequência de separadores vale por um só, e os do começo e do fim não valem nada. O que importa para a saída é a quantidade de palavras, e não a quantidade de espaços da entrada.",
       "Depois de escrever uma palavra, avance pelos separadores seguintes em bloco, sem escrever nenhum deles. Só então olhe o que veio: se for outra palavra, ela precisa do separador de saída antes dela, se for o fim da string, nada mais é escrito."
     ],
     "argumentos": [
