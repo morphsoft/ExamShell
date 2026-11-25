@@ -36,6 +36,8 @@ export function RandomScreen({ seed }: { seed?: number }) {
   const [pool] = useState(buildPool);
   const [session, setSession] = useState(() => initSession(pool, seed));
   const ref = useRef(session);
+  // Exercício que acabou de passar: a tela do próximo nível abre com um aviso (a anterior já desmontou).
+  const [passedId, setPassedId] = useState<string | null>(null);
 
   // Grava a sessão recém-criada (ou a retomada, sem mudança).
   useEffect(() => {
@@ -55,9 +57,15 @@ export function RandomScreen({ seed }: { seed?: number }) {
     saveSession(next);
   };
 
+  // Uma ação do cadete (dica, troca, pulo, encerrar) apaga o aviso de "passou".
+  const act = (action: RandomAction) => {
+    setPassedId(null);
+    dispatch(action);
+  };
+
   const finish = () => {
     if (window.confirm('Encerrar a sessão agora? Você vê o resumo do que fez até aqui.')) {
-      dispatch({ type: 'finish', now: Date.now() });
+      act({ type: 'finish', now: Date.now() });
     }
   };
 
@@ -93,8 +101,25 @@ export function RandomScreen({ seed }: { seed?: number }) {
       mode="random"
       initialFiles={session.drafts[id] ?? {}}
       onFilesChange={(files) => dispatch({ type: 'saveDraft', exerciseId: id, files })}
-      onGraded={(r) => dispatch({ type: 'attempt', passed: r.failure === null, now: Date.now() })}
-      onHintUsed={() => dispatch({ type: 'hint' })}
+      onGraded={(r) => {
+        const passed = r.failure === null;
+        setPassedId(passed ? id : null);
+        dispatch({ type: 'attempt', passed, now: Date.now() });
+      }}
+      onHintUsed={() => act({ type: 'hint' })}
+      notice={
+        passedId !== null && (
+          <div className="level-passed" data-testid="level-passed" role="status">
+            <span>
+              <span aria-hidden="true">✓ </span>
+              <b>{passedId}</b> passou — agora o nível {session.currentLevel}. Mandou bem!
+            </span>
+            <button type="button" className="chip" aria-label="fechar aviso" onClick={() => setPassedId(null)}>
+              ×
+            </button>
+          </div>
+        )
+      }
       statusItems={[
         { label: 'tempo', value: <Timer session={session} /> },
         { label: 'tentativas', value: String(run.attempts) },
@@ -104,7 +129,7 @@ export function RandomScreen({ seed }: { seed?: number }) {
       actions={
         <>
           {canSwap(session, pool) && (
-            <button type="button" className="chip" data-testid="swap" onClick={() => dispatch({ type: 'swap' })}>
+            <button type="button" className="chip" data-testid="swap" onClick={() => act({ type: 'swap' })}>
               sortear outro deste nível
             </button>
           )}
@@ -112,7 +137,7 @@ export function RandomScreen({ seed }: { seed?: number }) {
             type="button"
             className="chip"
             data-testid="skip"
-            onClick={() => dispatch({ type: 'skip', now: Date.now() })}
+            onClick={() => act({ type: 'skip', now: Date.now() })}
           >
             pular para o próximo nível
           </button>

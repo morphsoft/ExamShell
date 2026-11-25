@@ -244,3 +244,12 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
 .sum-stats { font-size: 12px; flex-basis: 100%; }
 .cheer { margin: 0 0 24px; padding: 8px 12px; border-left: 3px solid var(--cyan); background: var(--panel); }
 .sum-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.level-passed {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px 12px;
+  padding: 6px 12px 6px 16px; background: #0f2629;
+  border-left: 3px solid var(--cyan); border-bottom: 1px solid var(--border);
+  color: var(--cyan); font-size: 13px; font-weight: 600; overflow-wrap: anywhere;
+}
+.level-passed b { font-weight: 800; }
+.level-passed .chip { flex: none; color: var(--cyan); border-color: rgba(0, 186, 188, 0.4); }
+.level-passed .chip:hover { border-color: var(--cyan); }

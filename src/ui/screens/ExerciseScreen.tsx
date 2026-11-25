@@ -27,6 +27,8 @@ export interface ExerciseScreenProps {
   onHintUsed(): void;
   statusItems: { label: string; value: ReactNode }[];
   actions?: ReactNode;
+  /** Aviso logo abaixo da barra superior (ex.: o nível anterior passou). */
+  notice?: ReactNode;
 }
 
 // O CodeMirror vem num pedaço à parte: a home e a lista não precisam dele.
@@ -51,6 +53,7 @@ function Workspace({
   onHintUsed,
   statusItems,
   actions,
+  notice,
 }: ExerciseScreenProps) {
   const { engine, status, progress } = useEngine();
   const isFunction = exercise.kind === 'function';
@@ -229,6 +232,7 @@ function Workspace({
   return (
     <div className="exercise-screen">
       <TopBar left="examshell · rank 02" right={`nível ${exercise.level}/4 · ${exercise.id}`} />
+      {notice}
       <main className="exercise">
         <section className="pane pane-subject" aria-label="enunciado">
           <SubjectPane

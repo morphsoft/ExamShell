@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
 import { RANK02_CATALOG } from '../../src/content/rank02Catalog';
+import { startSession } from '../../src/state/randomSession';
 
 const LOAD = 110000; // 1ª carga do compilador num contexto novo
 
@@ -12,6 +13,65 @@ async function currentId(page: Page): Promise<string> {
   const m = text.match(/nível \d\/4\s*·\s*(\S+)/);
   return m ? m[1] : '';
 }
+
+async function setCode(page: Page, text: string) {
+  await page.locator('.cm-content').click();
+  await page.keyboard.press('Control+A');
+  await page.keyboard.insertText(text);
+}
+
+/** Soluções de alguns exercícios do nível 1 (ficam só nos testes, nunca vão para o site). */
+const LEVEL1_SOLUTIONS: Record<string, string> = {
+  ft_strlen: String.raw`int	ft_strlen(char *str)
+{
+    int i = 0;
+
+    while (str[i])
+        i++;
+    return (i);
+}
+`,
+  ft_putstr: String.raw`#include <unistd.h>
+
+void	ft_putstr(char *str)
+{
+    while (*str)
+        write(1, str++, 1);
+}
+`,
+};
+
+/** A menor semente cujo 1º sorteio cai num exercício que tem solução aqui. */
+function seedDrawingSolvable(): number {
+  const pool = { 1: idsOfLevel(1), 2: idsOfLevel(2), 3: idsOfLevel(3), 4: idsOfLevel(4) };
+  for (let seed = 1; seed < 10000; seed++) {
+    const id = startSession(pool, seed, 0).levels[0].exerciseId;
+    if (id !== null && id in LEVEL1_SOLUTIONS) return seed;
+  }
+  throw new Error('nenhuma semente sorteia um exercício com solução no teste');
+}
+
+test('modo aleatório: passar um nível avisa e sobe para o próximo', async ({ page }) => {
+  await page.goto(`./#/aleatorio?seed=${seedDrawingSolvable()}`);
+  await expect(page.locator('.topbar')).toContainText('nível 1/4');
+  const id = await currentId(page);
+  expect(Object.keys(LEVEL1_SOLUTIONS), `sorteou ${id}, sem solução no teste`).toContain(id);
+  await expect(page.getByTestId('level-passed')).toHaveCount(0);
+
+  await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
+  await setCode(page, LEVEL1_SOLUTIONS[id]);
+  await page.getByTestId('grademe').click();
+
+  const banner = page.getByTestId('level-passed');
+  await expect(banner).toContainText(`✓ ${id} passou`, { timeout: 60000 });
+  await expect(banner).toContainText('agora o nível 2');
+  await expect(page.locator('.topbar')).toContainText('nível 2/4');
+  expect(idsOfLevel(2)).toContain(await currentId(page));
+
+  await page.getByRole('button', { name: 'fechar aviso' }).click();
+  await expect(banner).toHaveCount(0);
+  await expect(page.locator('.topbar')).toContainText('nível 2/4');
+});
 
 test('modo aleatório: troca, pulo, retomada e resumo', async ({ page }) => {
   test.setTimeout(240000);
