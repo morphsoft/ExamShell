@@ -10,7 +10,7 @@ Sua função deve ser declarada da seguinte forma:
 
 void	print_bits(unsigned char octet);
 
-Exemplo: se você passar 2 para print_bits, ela exibirá "00000010".
+Exemplo: se você passar 2 para print_bits, ela exibirá "00000010"
 
 Exemplos:
 

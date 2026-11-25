@@ -41,5 +41,5 @@
       "Avance para o próximo elemento apenas quando o atual não foi removido. Depois de uma remoção, confira de novo o elemento que tomou o lugar do removido."
     ]
   },
-  "provided": {"ft_list.h":"typedef struct    s_list\n{\n    struct s_list *next;\n    void          *data;\n}                 t_list;\n"}
+  "provided": {"ft_list.h":"typedef struct      s_list\n{\n    struct s_list   *next;\n    void            *data;\n}                   t_list;\n"}
 }

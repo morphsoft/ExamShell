@@ -3,16 +3,16 @@
     "stdout": "PONY\n"
   },
   "t02": {
-    "stdout": "yes!\n"
+    "stdout": "not\n"
   },
   "t03": {
     "stdout": "\n"
   },
   "t04": {
-    "stdout": "lorem,ipsum\n"
+    "stdout": "\n"
   },
   "t05": {
-    "stdout": "\n"
+    "stdout": "lorem,ipsum\n"
   },
   "t06": {
     "stdout": "\n"
@@ -21,21 +21,21 @@
     "stdout": "\n"
   },
   "t08": {
-    "stdout": "\n"
-  },
-  "t09": {
     "stdout": "word\n"
   },
-  "t10": {
+  "t09": {
     "stdout": "b\n"
   },
-  "t11": {
+  "t10": {
     "stdout": "last\n"
   },
-  "t12": {
+  "t11": {
     "stdout": "three\n"
   },
-  "t13": {
+  "t12": {
     "stdout": "world\n"
+  },
+  "t13": {
+    "stdout": "\n"
   }
 }

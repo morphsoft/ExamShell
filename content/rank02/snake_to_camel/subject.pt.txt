@@ -6,8 +6,8 @@ Funções permitidas : malloc, realloc, write, free
 Escreva um programa que recebe uma única string em formato snake_case e a
 converte para uma string em formato lowerCamelCase.
 
-Uma string snake_case é uma string composta de letras minúsculas separadas por
-um underscore "_".
+Uma string snake_case é uma string em que cada palavra está em minúsculas,
+separadas por um underscore "_".
 
 Uma string lowerCamelCase é uma string em que cada palavra começa com letra
 maiúscula, exceto a primeira.

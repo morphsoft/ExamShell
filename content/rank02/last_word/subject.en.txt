@@ -16,12 +16,13 @@ Examples:
 
 $> ./last_word "FOR PONY" | cat -e
 PONY$
-$> ./last_word "this        ...       is sparta, then again, yes!" | cat -e
-yes!$
-$> ./last_word "not" "the first" "word" | cat -e
+$> ./last_word "this        ...       is sparta, then again, maybe    not" \
+   | cat -e
+not$
+$> ./last_word "   " | cat -e
+$
+$> ./last_word "a" "b" | cat -e
 $
 $> ./last_word "  lorem,ipsum  " | cat -e
 lorem,ipsum$
-$> ./last_word | cat -e
-$
 $>
