@@ -49,6 +49,7 @@ export interface RunSession {
 export interface Engine {
   compileObjects(sources: SourceFiles, headers: SourceFiles): Promise<CompileOutcome>;
   undefinedSymbols(objects: Record<string, Uint8Array>): Promise<string[]>;
+  definedSymbols(objects: Record<string, Uint8Array>): Promise<string[]>;
   link(objects: Record<string, Uint8Array>, extraSources: SourceFiles, headers: SourceFiles): Promise<LinkOutcome>;
   openRunSession(wasm: Uint8Array, programName: string): RunSession;
 }

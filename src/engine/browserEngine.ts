@@ -126,6 +126,7 @@ export function createBrowserEngine(opts: {
   return {
     compileObjects: (sources, headers) => call('compileObjects', [sources, headers]),
     undefinedSymbols: (objects) => call('undefinedSymbols', [objects]),
+    definedSymbols: (objects) => call('definedSymbols', [objects]),
     link: (objects, extraSources, headers) => call('link', [objects, extraSources, headers]),
     openRunSession,
     ready: () => readyPromise,

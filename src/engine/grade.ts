@@ -1,6 +1,6 @@
 import type { Engine, Failure, GradeResult, LoadedExercise, RunResult, SourceFiles } from './types';
 import { firstDiffIndex } from './compare';
-import { findForbidden } from './forbidden';
+import { definesMain, findForbidden } from './forbidden';
 import { classifyLinkError } from './clangErrors';
 
 export const TIMEOUT_MS = 2000;
@@ -28,6 +28,9 @@ async function build(
   const { sources, headers } = splitSources(ex, userFiles);
   const compiled = await engine.compileObjects(sources, headers);
   if (!compiled.ok) return { failure: { kind: 'compile', stderr: compiled.stderr } };
+  if (ex.kind === 'function' && definesMain(await engine.definedSymbols(compiled.objects))) {
+    return { failure: { kind: 'link', reason: 'duplicate-main', stderr: '' } };
+  }
   if (checkForbidden) {
     const symbols = await engine.undefinedSymbols(compiled.objects);
     const functions = findForbidden(symbols, ex.allowedFunctions, Object.values(sources));

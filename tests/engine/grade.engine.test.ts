@@ -57,3 +57,48 @@ describe('grade (motor real)', () => {
     expect(r.failure).toEqual({ kind: 'forbidden', functions: ['printf'] });
   });
 });
+
+describe('main do cadete em exercício de função (motor real)', () => {
+  const fnEx: LoadedExercise = {
+    id: 'ft_strlen',
+    level: 1,
+    kind: 'function',
+    expectedFiles: ['ft_strlen.c'],
+    allowedFunctions: [],
+    prototype: 'int ft_strlen(char *s);',
+    harness: `#include <stdio.h>
+int ft_strlen(char *s);
+int main(int argc, char **argv)
+{
+	(void)argc; (void)argv;
+	printf("%d\\n", ft_strlen("abc"));
+	return (0);
+}
+`,
+    tests: [{ id: 't01', args: ['0'], category: 'basico', display: 'ft_strlen("abc")' }],
+    hints: {},
+    subject: { en: '', pt: '' },
+    expected: { t01: { stdout: '3\n' } },
+  };
+  const fn = `int ft_strlen(char *s)
+{
+	int i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+`;
+  it('int main(void) é rejeitado', async () => {
+    const r = await grade(fnEx, { 'ft_strlen.c': fn + 'int main(void){ return (0); }\n' }, engine);
+    expect(r.failure).toMatchObject({ kind: 'link', reason: 'duplicate-main' });
+  });
+  it('int main(argc, argv) é rejeitado', async () => {
+    const src = fn + 'int main(int argc, char **argv){ (void)argc; (void)argv; return (0); }\n';
+    const r = await grade(fnEx, { 'ft_strlen.c': src }, engine);
+    expect(r.failure).toMatchObject({ kind: 'link', reason: 'duplicate-main' });
+  });
+  it('sem main passa', async () => {
+    const r = await grade(fnEx, { 'ft_strlen.c': fn }, engine);
+    expect(r.failure).toBeNull();
+  });
+});

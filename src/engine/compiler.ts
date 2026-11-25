@@ -1,5 +1,5 @@
 import type { Command, Tree } from '@yowasp/clang';
-import { parseNmUndefined } from './forbidden';
+import { parseNmDefined, parseNmUndefined } from './forbidden';
 import { PRELUDE, PRELUDE_HEADER, restoreLongInDiagnostics, rewriteLong } from './rewriteLong';
 import type { CompileOutcome, Engine, LinkOutcome, SourceFiles } from './types';
 
@@ -41,7 +41,7 @@ function rewriteAll(sources: SourceFiles): SourceFiles {
 const usesLongLong = (...groups: SourceFiles[]) =>
   groups.some((g) => Object.values(g).some((s) => /\blong\s+long\b/.test(s)));
 
-export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects' | 'undefinedSymbols' | 'link'> {
+export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects' | 'undefinedSymbols' | 'definedSymbols' | 'link'> {
   const quiet = { fetchProgress: () => {} };
 
   async function compileObjects(sources: SourceFiles, headers: SourceFiles): Promise<CompileOutcome> {
@@ -71,6 +71,12 @@ export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects
     return parseNmUndefined(out.text);
   }
 
+  async function definedSymbols(objects: Record<string, Uint8Array>): Promise<string[]> {
+    const out = collector();
+    await clang.runLLVM(['nm', '--defined-only', ...Object.keys(objects)], { ...objects }, { ...quiet, stdout: out.callback });
+    return parseNmDefined(out.text);
+  }
+
   async function link(
     objects: Record<string, Uint8Array>,
     extraSources: SourceFiles,
@@ -95,5 +101,5 @@ export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects
     return { ok: true, wasm, stderr };
   }
 
-  return { compileObjects, undefinedSymbols, link };
+  return { compileObjects, undefinedSymbols, definedSymbols, link };
 }

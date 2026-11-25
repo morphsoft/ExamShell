@@ -34,6 +34,9 @@ function fake(runs: RunResult[], over: Partial<Engine> = {}) {
     async undefinedSymbols() {
       return ['write'];
     },
+    async definedSymbols() {
+      return ['first_word'];
+    },
     async link(o, e, h) {
       calls.link(o, e, h);
       return { ok: true, wasm: new Uint8Array(), stderr: '' };
@@ -149,5 +152,32 @@ describe('runOnce', () => {
     const { engine } = fake([], { compileObjects: async () => ({ ok: false, stderr: 'e' }) });
     const r = await runOnce(makeEx(), files, { args: [] }, engine);
     expect(r.failure).toEqual({ kind: 'compile', stderr: 'e' });
+  });
+});
+
+describe('main definido pelo cadete em exercício de função', () => {
+  const fnEx = () =>
+    makeEx({ kind: 'function', expectedFiles: ['ft_strlen.c'], harness: 'int main(int c,char**v){return 0;}' });
+  const fnFiles = { 'ft_strlen.c': 'int x;' };
+  const dup = { definedSymbols: async () => ['ft_strlen', '__original_main'] };
+
+  it('grade: duplicate-main sem chamar link', async () => {
+    const { engine, calls } = fake([], dup);
+    const r = await grade(fnEx(), fnFiles, engine);
+    expect(r.failure).toMatchObject({ kind: 'link', reason: 'duplicate-main' });
+    expect(calls.link).not.toHaveBeenCalled();
+  });
+
+  it('grade: programa com __main_argc_argv segue normalmente', async () => {
+    const { engine } = fake([ok('a\n'), ok('b\n'), ok('c\n')], { definedSymbols: async () => ['__main_argc_argv'] });
+    const r = await grade(makeEx(), files, engine);
+    expect(r.failure).toBeNull();
+  });
+
+  it('runOnce: duplicate-main', async () => {
+    const { engine, calls } = fake([], dup);
+    const r = await runOnce(fnEx(), fnFiles, { mainC: 'int main(void){return 0;}', args: [] }, engine);
+    expect(r.failure).toMatchObject({ kind: 'link', reason: 'duplicate-main' });
+    expect(calls.link).not.toHaveBeenCalled();
   });
 });

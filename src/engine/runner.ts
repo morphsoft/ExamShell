@@ -31,7 +31,7 @@ export async function runWasm(
     collect,
     new ConsoleStdout(() => {}),
   ];
-  const wasi = new WASI([programName, ...test.args], [], fds);
+  const wasi = new WASI([programName, ...test.args], [], fds, { debug: false });
   const result = (r: Omit<RunResult, 'stdout' | 'truncated'>): RunResult =>
     truncated ? { stdout, truncated, ...r } : { stdout, ...r };
   try {
