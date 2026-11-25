@@ -16,8 +16,8 @@ Examples:
 
 $> ./rotone "abc"
 bcd
-$> ./rotone "Les stagiaires du staff ne sentendront jamais" | cat -e
-Mft tubhjbjsft ev tubgg of tfoufoespou kbnbjt$
+$> ./rotone "Les stagiaires du staff ne sentendront jamais." | cat -e
+Mft tubhjbjsft ev tubgg of tfoufoespou kbnbjt.$
 $> ./rotone "AkjhZ zLKIJz , 23y " | cat -e
 BlkiA aMLJKa , 23z $
 $> ./rotone | cat -e

@@ -16,11 +16,18 @@
     },
     {
       "id": "t03",
+      "args": [
+        "3:21 Ba  tOut  moUn ki Ka di KE m'en Ka fe fot"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t04",
       "args": [],
       "category": "argumentos"
     },
     {
-      "id": "t04",
+      "id": "t05",
       "args": [
         "a",
         "b"
@@ -28,35 +35,35 @@
       "category": "argumentos"
     },
     {
-      "id": "t05",
+      "id": "t06",
       "args": [
         ""
       ],
       "category": "string-vazia"
     },
     {
-      "id": "t06",
+      "id": "t07",
       "args": [
         "@[`{"
       ],
       "category": "nao-letras"
     },
     {
-      "id": "t07",
+      "id": "t08",
       "args": [
         "azAZ"
       ],
       "category": "limites-do-alfabeto"
     },
     {
-      "id": "t08",
+      "id": "t09",
       "args": [
         "123 !?\t"
       ],
       "category": "nao-letras"
     },
     {
-      "id": "t09",
+      "id": "t10",
       "args": [
         "aBc"
       ],

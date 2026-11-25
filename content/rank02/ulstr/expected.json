@@ -6,7 +6,7 @@
     "stdout": "ss 42mADRID\n"
   },
   "t03": {
-    "stdout": "\n"
+    "stdout": "3:21 bA  ToUT  MOuN KI kA DI ke M'EN kA FE FOT\n"
   },
   "t04": {
     "stdout": "\n"
@@ -15,15 +15,18 @@
     "stdout": "\n"
   },
   "t06": {
-    "stdout": "@[`{\n"
+    "stdout": "\n"
   },
   "t07": {
-    "stdout": "AZaz\n"
+    "stdout": "@[`{\n"
   },
   "t08": {
-    "stdout": "123 !?\t\n"
+    "stdout": "AZaz\n"
   },
   "t09": {
+    "stdout": "123 !?\t\n"
+  },
+  "t10": {
     "stdout": "AbC\n"
   }
 }

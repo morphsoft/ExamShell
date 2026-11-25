@@ -16,6 +16,8 @@ $> ./ulstr "L'eSPrit nE peUt plUs pRogResSer" | cat -e
 l'EspRIT Ne PEuT PLuS PrOGrESsER$
 $> ./ulstr "SS 42Madrid" | cat -e
 ss 42mADRID$
+$> ./ulstr "3:21 Ba  tOut  moUn ki Ka di KE m'en Ka fe fot" | cat -e
+3:21 bA  TOUT  MOuN KI kA DI ke M'EN kA FE FOT$
 $> ./ulstr | cat -e
 $
 $>

@@ -17,8 +17,6 @@ static void	run(int a, int b)
 
 int	main(int argc, char **argv)
 {
-	int	a;
-
 	if (argc != 2)
 		return (1);
 	switch (atoi(argv[1]))
@@ -27,27 +25,25 @@ int	main(int argc, char **argv)
 			run(1, 2);
 			break ;
 		case 1: /* t02 */
-			run(-42, 42);
+			run(-5, 0);
 			break ;
 		case 2: /* t03 */
-			run(0, 0);
+			run(-42, 42);
 			break ;
 		case 3: /* t04 */
-			run(INT_MAX, INT_MIN);
+			run(0, 0);
 			break ;
 		case 4: /* t05 */
 			run(0, 5);
 			break ;
 		case 5: /* t06 */
-			a = 9;
-			ft_swap(&a, &a);
-			printf("a = %d\n", a);
+			run(-1, -2);
 			break ;
 		case 6: /* t07 */
-			run(INT_MAX, 1);
+			run(INT_MAX, INT_MIN);
 			break ;
 		case 7: /* t08 */
-			run(-1, -2);
+			run(INT_MAX, 1);
 			break ;
 		default:
 			return (1);

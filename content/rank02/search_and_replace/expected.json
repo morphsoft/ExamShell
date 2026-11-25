@@ -3,19 +3,19 @@
     "stdout": "Popoche est un sobre\n"
   },
   "t02": {
-    "stdout": "zaz\n"
+    "stdout": "\n"
   },
   "t03": {
-    "stdout": "\n"
+    "stdout": "zaz\n"
   },
   "t04": {
     "stdout": "\n"
   },
   "t05": {
-    "stdout": "\n"
+    "stdout": "ZoZ eT Dorv\n"
   },
   "t06": {
-    "stdout": "MoM eT Dork\n"
+    "stdout": "eNcOre Un ExEmPle Pas Facile a Ecrire \n"
   },
   "t07": {
     "stdout": "\n"
@@ -24,15 +24,18 @@
     "stdout": "\n"
   },
   "t09": {
-    "stdout": "bbb\n"
+    "stdout": "\n"
   },
   "t10": {
-    "stdout": "a_b\tc\n"
+    "stdout": "bbb\n"
   },
   "t11": {
-    "stdout": "\n"
+    "stdout": "a_b\tc\n"
   },
   "t12": {
     "stdout": "abaaba\n"
+  },
+  "t13": {
+    "stdout": "ABC\n"
   }
 }

@@ -13,48 +13,46 @@
       "id": "t02",
       "args": [
         "zaz",
-        "r",
-        "u"
-      ],
-      "category": "letra-ausente"
-    },
-    {
-      "id": "t03",
-      "args": [
-        "zaz",
         "art",
         "zul"
       ],
       "category": "mais-de-um-caractere"
     },
     {
-      "id": "t04",
+      "id": "t03",
       "args": [
         "zaz",
-        "r"
+        "r",
+        "u"
+      ],
+      "category": "letra-ausente"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "jacob",
+        "a",
+        "b",
+        "c",
+        "e"
       ],
       "category": "argumentos"
     },
     {
       "id": "t05",
       "args": [
-        "jacob",
-        "a",
-        "b",
-        "c",
-        "e",
-        "i",
-        "o",
-        "u"
+        "ZoZ eT Dorv",
+        "z",
+        "M"
       ],
-      "category": "argumentos"
+      "category": "maiusculas-minusculas"
     },
     {
       "id": "t06",
       "args": [
-        "ZoZ eT Dork",
-        "Z",
-        "M"
+        "wNcOre Un ExEmPle Pas Facilw a Ecrire ",
+        "w",
+        "e"
       ],
       "category": "basico"
     },
@@ -66,6 +64,14 @@
     {
       "id": "t08",
       "args": [
+        "zaz",
+        "r"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t09",
+      "args": [
         "",
         "a",
         "b"
@@ -73,7 +79,7 @@
       "category": "string-vazia"
     },
     {
-      "id": "t09",
+      "id": "t10",
       "args": [
         "aaa",
         "a",
@@ -82,22 +88,13 @@
       "category": "basico"
     },
     {
-      "id": "t10",
+      "id": "t11",
       "args": [
         "a b\tc",
         " ",
         "_"
       ],
       "category": "espacos"
-    },
-    {
-      "id": "t11",
-      "args": [
-        "abc",
-        "a",
-        "xy"
-      ],
-      "category": "mais-de-um-caractere"
     },
     {
       "id": "t12",
@@ -107,13 +104,22 @@
         "a"
       ],
       "category": "basico"
+    },
+    {
+      "id": "t13",
+      "args": [
+        "ABC",
+        "a",
+        "x"
+      ],
+      "category": "maiusculas-minusculas"
     }
   ],
   "hints": {
     "basico": [
       "Todas as ocorrências da letra são trocadas, e o resto da string fica como estava?",
-      "Percorra a string uma única vez. Cada caractere é comparado com a letra procurada. Se for igual, sai a letra nova no lugar dele, e se não for, sai o próprio caractere.",
-      "Não pare na primeira ocorrência e não escreva nada a mais. Para cada posição da string, escreva exatamente um caractere, o novo ou o original, e a quebra de linha só no final."
+      "Trocar é uma decisão tomada caractere por caractere: cada um é comparado com a letra procurada, e o resto da string não muda.",
+      "Não procure a letra antes nem pare quando achá-la. Toda posição da string escreve alguma coisa, e o que muda de uma para outra é só qual caractere sai."
     ],
     "letra-ausente": [
       "O que sai quando a letra procurada não está na string?",
@@ -122,8 +128,8 @@
     ],
     "mais-de-um-caractere": [
       "E se o segundo ou o terceiro argumento tiver mais de uma letra?",
-      "O enunciado fala em trocar uma letra por outra. Se algum dos dois argumentos não tiver exatamente um caractere, a saída é só a quebra de linha.",
-      "Antes de percorrer a string, confira que cada um desses dois argumentos tem o primeiro caractere e que o segundo é o '\\0'. Se não for assim, escreva só a quebra de linha."
+      "O enunciado fala em trocar uma letra por outra, e o exemplo com \"art\" e \"zul\" mostra que, nesse caso, só a quebra de linha sai.",
+      "Antes de percorrer a string, confira que cada um desses dois argumentos tem um caractere só, ou seja, que o segundo caractere dele já é o '\\0'. Se não for assim, escreva só a quebra de linha."
     ],
     "argumentos": [
       "O que o seu programa faz quando recebe um número de argumentos diferente do pedido?",
@@ -134,6 +140,11 @@
       "O que acontece quando o argumento é uma string vazia?",
       "Uma string vazia não tem nenhum caractere antes do '\\0'. Não há nada para processar, então a saída deve ser só a quebra de linha.",
       "Faça o laço testar o '\\0' antes de ler ou de escrever qualquer caractere. Com a string vazia, ele não deve dar nenhuma volta, e a quebra de linha sai do mesmo jeito."
+    ],
+    "maiusculas-minusculas": [
+      "A busca diferencia maiúsculas de minúsculas?",
+      "Sim: 'z' e 'Z' são caracteres diferentes. Se a letra procurada só aparece na outra caixa, nada é trocado e a string sai igual.",
+      "Compare os caracteres diretamente, sem converter nenhum deles para maiúscula ou minúscula antes."
     ],
     "espacos": [
       "Espaços e tabs podem ser a letra procurada ou a letra nova?",

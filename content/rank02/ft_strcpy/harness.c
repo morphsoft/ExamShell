@@ -37,19 +37,19 @@ int	main(int argc, char **argv)
 			run("", src, 0);
 			break ;
 		case 1: /* t02 */
-			run("", (char []){"The quick brown fox"}, 0);
-			break ;
-		case 2: /* t03 */
-			run("", (char []){"x"}, 0);
-			break ;
-		case 3: /* t04 */
-			run("XXXXXXXXXXXX", (char []){"ab"}, 0);
-			break ;
-		case 4: /* t05 */
 			run("ABCDEFGHIJ", (char []){""}, 0);
 			break ;
+		case 2: /* t03 */
+			run("", (char []){"The quick brown fox"}, 0);
+			break ;
+		case 3: /* t04 */
+			run("", (char []){"x"}, 0);
+			break ;
+		case 4: /* t05 */
+			run("XXXXXXXXXXXX", (char []){"ab"}, 0);
+			break ;
 		case 5: /* t06 */
-			run("", (char []){"  \t  "}, 0);
+			run("", (char []){"  	  "}, 0);
 			break ;
 		case 6: /* t07 */
 			strcpy(src, "Hello");

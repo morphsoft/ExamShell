@@ -69,7 +69,7 @@
     "basico": [
       "A sua função escreve a string inteira, até o fim, e mais nada?",
       "A string termina no '\\0', e ele não deve ser escrito. Também não acrescente quebra de linha: quem chama a função é quem decide isso.",
-      "O write recebe o endereço do que vai escrever e quantos bytes. Faça um laço que anda até o '\\0' e chame o write para cada posição da string."
+      "O write escreve bytes a partir de um endereço, e a própria string diz onde termina: no '\\0'. Combine essas duas coisas para decidir o que escrever e quando parar."
     ],
     "string-vazia": [
       "O que a sua função faz com uma string vazia?",

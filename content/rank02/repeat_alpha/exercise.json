@@ -29,17 +29,17 @@
     {
       "id": "t05",
       "args": [
-        "abc",
         ""
       ],
-      "category": "argumentos"
+      "category": "string-vazia"
     },
     {
       "id": "t06",
       "args": [
+        "abc",
         ""
       ],
-      "category": "string-vazia"
+      "category": "argumentos"
     },
     {
       "id": "t07",

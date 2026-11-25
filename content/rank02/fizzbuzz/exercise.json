@@ -48,11 +48,11 @@
     "basico": [
       "Cada linha tem o número certo, ou fizz, buzz ou fizzbuzz no lugar dele?",
       "Os números vão de 1 a 100, um por linha. Múltiplos de 3 viram fizz, múltiplos de 5 viram buzz, e os que são os dois ao mesmo tempo viram fizzbuzz. Com só o write, você precisa transformar cada número em caracteres.",
-      "A ordem das verificações é a chave: o caso dos dois ao mesmo tempo precisa ser decidido antes dos outros, senão o fizz ou o buzz sozinho \"ganha\". E o 100 tem três dígitos, então escrever um caractere só não basta."
+      "A ordem das verificações é a chave: o caso dos dois ao mesmo tempo precisa ser decidido antes dos outros, senão o fizz ou o buzz sozinho \"ganha\". E a partir do 10 os números têm dois dígitos, então escrever um caractere só não basta."
     ],
     "argumentos": [
       "O resultado do seu programa muda quando ele recebe argumentos?",
-      "O enunciado não usa argumentos: a saída é sempre a mesma, com ou sem eles. Se o programa depende do argc ou lê o argv, passar parâmetros pode mudar o resultado.",
+      "O programa não tem nenhuma entrada: a saída é sempre a mesma, então passar argumentos não deve mudar nada. Se o programa depende do argc ou lê o argv, o resultado pode mudar quando eles aparecem.",
       "Não use o argc nem o argv em lugar nenhum. O main pode até ser declarado sem parâmetros."
     ]
   }

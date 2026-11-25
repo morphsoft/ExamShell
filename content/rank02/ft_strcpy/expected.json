@@ -3,16 +3,16 @@
     "stdout": "Hello\n"
   },
   "t02": {
-    "stdout": "The quick brown fox\n"
+    "stdout": "\n"
   },
   "t03": {
-    "stdout": "x\n"
+    "stdout": "The quick brown fox\n"
   },
   "t04": {
-    "stdout": "ab\n"
+    "stdout": "x\n"
   },
   "t05": {
-    "stdout": "\n"
+    "stdout": "ab\n"
   },
   "t06": {
     "stdout": "  \t  \n"

@@ -24,4 +24,6 @@ $> ./rot_13 "abc" "defg" | cat -e
 $
 $> ./rot_13 | cat -e
 $
+$> ./rot_13 "" | cat -e
+$
 $>
