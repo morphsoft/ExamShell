@@ -16,7 +16,13 @@ export interface ExerciseScreenProps {
   exercise: LoadedExercise;
   mode: 'practice' | 'random';
   initialFiles: SourceFiles;
+  /**
+   * Os arquivos do exercício, com debounce de 500 ms. Pode ser chamada mais uma vez quando a tela
+   * desmonta (o rascunho pendente é gravado), já depois de o pai trocar de exercício: o pai deve
+   * fixar o id do exercício na própria closure, não ler o "exercício atual".
+   */
   onFilesChange(files: SourceFiles): void;
+  /** Só é chamada se a tela ainda estiver montada quando o grademe termina. */
   onGraded(r: GradeResult): void;
   onHintUsed(): void;
   statusItems: { label: string; value: string }[];
@@ -65,6 +71,16 @@ function Workspace({
   const [busy, setBusy] = useState(false);
   const busyRef = useRef(false); // trava síncrona: um duplo clique não dispara duas execuções
   const nextId = useRef(1);
+
+  // Falso depois que a tela desmonta. Como o Workspace tem key={exercise.id}, trocar de exercício
+  // também desmonta: um grademe/rodar que termine depois disso não vale mais para nada.
+  const alive = useRef(true);
+  useEffect(() => {
+    alive.current = true;
+    return () => {
+      alive.current = false;
+    };
+  }, []);
 
   // As callbacks do pai mais recentes, sem recriar handlers.
   const parent = useRef({ onFilesChange, onGraded, onHintUsed });
@@ -119,15 +135,16 @@ function Workspace({
     append({ kind: 'grade', id, state: 'running', done: 0, total: exercise.tests.length, hintsShown: 0 });
     try {
       const result = await grade(exercise, { ...files.current }, engine, {
-        onProgress: (done) => patch(id, { done }),
+        onProgress: (done) => alive.current && patch(id, { done }),
       });
+      if (!alive.current) return; // a tela fechou: sem tentativa, sem onGraded
       patch(id, { state: 'done', result });
       if (mode === 'practice') markAttempt(exercise.id, result.failure === null);
       parent.current.onGraded(result);
     } catch (e) {
-      patch(id, { state: 'done', error: errorMessage(e) });
+      if (alive.current) patch(id, { state: 'done', error: errorMessage(e) });
     } finally {
-      end();
+      if (alive.current) end();
     }
   };
 
@@ -156,11 +173,12 @@ function Workspace({
     try {
       const mainC = isFunction ? files.current[SCRATCH_TAB.key] : undefined;
       const outcome = await runOnce(exercise, { ...files.current }, { mainC, args }, engine);
-      patch(id, { state: 'done', outcome });
+      if (alive.current) patch(id, { state: 'done', outcome });
     } catch (e) {
-      patch(id, { state: 'done', error: `algo deu errado ao rodar (${errorMessage(e)}). Tente de novo.` });
+      if (alive.current)
+        patch(id, { state: 'done', error: `algo deu errado ao rodar (${errorMessage(e)}). Tente de novo.` });
     } finally {
-      end();
+      if (alive.current) end();
     }
   };
 

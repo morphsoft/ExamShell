@@ -9,7 +9,7 @@ export interface ClangModule {
 }
 
 export const COMPILE_FLAGS = ['-std=gnu17', '-O0', '-g', '-Wall', '-Wextra', '-Werror',
-  '-Wno-deprecated-non-prototype', '-fno-color-diagnostics',
+  '-Wno-deprecated-non-prototype', '-Wno-empty-body', '-fno-color-diagnostics',
   '-fsanitize=null,bounds', '-fsanitize-trap=all', '-include', PRELUDE_HEADER];
 export const LINK_FLAGS = ['-Wl,-z,stack-size=8388608', '-Wl,--stack-first'];
 

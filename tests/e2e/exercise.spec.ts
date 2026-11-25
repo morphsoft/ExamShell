@@ -46,11 +46,9 @@ int	main(void)
 }
 `;
 
-// o ';' em outra linha: na mesma linha o -Wempty-body (com -Werror) reprovaria a compilação
 const FIRST_WORD_LOOP = String.raw`int	main(void)
 {
-    while (1)
-        ;
+    while (1);
     return (0);
 }
 `;
@@ -264,6 +262,21 @@ test('laço infinito dá tempo esgotado', async ({ page }) => {
   const result = await grademe(page);
   await expect(result).toContainText('✗ teste 1/8');
   await expect(result).toContainText('tempo esgotado');
+});
+
+test('grademe que termina depois de sair da tela não conta tentativa', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, FIRST_WORD_LOOP);
+  await page.getByTestId('grademe').click();
+  await expect(page.getByTestId('grade-result')).toHaveAttribute('data-state', 'running');
+  await page.getByRole('link', { name: 'voltar à lista' }).click();
+  await expect(page.getByTestId('ex-first_word')).toBeVisible();
+  // compilar + 2 s de tempo esgotado: depois disso o grademe abandonado já terminou
+  await page.waitForTimeout(4000);
+  const progress = await page.evaluate(() => localStorage.getItem('examshell:v1:progress'));
+  expect(progress ?? '').not.toContain('first_word');
+  await page.reload(); // a lista só lê o progresso ao renderizar
+  await expect(page.getByTestId('ex-first_word')).toHaveAttribute('data-status', 'untried');
 });
 
 test('idioma do enunciado alterna, e o vim fica ligado depois do reload', async ({ page }) => {

@@ -49,6 +49,14 @@ describe('engine (Clang real)', () => {
     expect(c.stderr).toContain("unused variable 'x'");
   });
 
+  it('laço de corpo vazio (`while (cond);`) compila, como no gcc', async () => {
+    const src = 'int main(void){ int i = 0; char *s = "abc"; while (s[i++]); return (i == 4 ? 0 : 1); }';
+    const c = await engine.compileObjects({ 'main.c': src }, {});
+    expect(c.ok).toBe(true);
+    const r = await build(src);
+    expect(r).toMatchObject({ outcome: 'exit', exitCode: 0 });
+  });
+
   it('NULL vira crash', async () => {
     const r = await build('int main(void){ char *p = 0; p[0] = \'x\'; return 0; }');
     expect(r.outcome).toBe('crash');
