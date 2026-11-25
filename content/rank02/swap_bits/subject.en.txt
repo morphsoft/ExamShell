@@ -21,6 +21,6 @@ _____________
 
 Examples:
 
-swap_bits(65) returns 20 (01000001 becomes 00010100).
-swap_bits(15) returns 240 (00001111 becomes 11110000).
-swap_bits(0) returns 0.
+swap_bits(65) returns 20 (0x14).
+swap_bits(15) returns 240 (0xF0).
+swap_bits(0) returns 0 (0x00).

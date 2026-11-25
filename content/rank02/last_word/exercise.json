@@ -10,19 +10,40 @@
     {
       "id": "t02",
       "args": [
-        "this        ...       is sparta, then again, yes   !"
+        "this        ...       is sparta, then again, yes!"
       ],
       "category": "basico"
     },
     {
       "id": "t03",
       "args": [
+        "not",
+        "the first",
+        "word"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "  lorem,ipsum  "
+      ],
+      "category": "espacos-no-fim"
+    },
+    {
+      "id": "t05",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
         "   "
       ],
       "category": "so-espacos"
     },
     {
-      "id": "t04",
+      "id": "t07",
       "args": [
         "a",
         "b"
@@ -30,54 +51,42 @@
       "category": "argumentos"
     },
     {
-      "id": "t05",
-      "args": [
-        "  lorem,ipsum  "
-      ],
-      "category": "espacos-no-fim"
-    },
-    {
-      "id": "t06",
-      "args": [],
-      "category": "argumentos"
-    },
-    {
-      "id": "t07",
+      "id": "t08",
       "args": [
         ""
       ],
       "category": "string-vazia"
     },
     {
-      "id": "t08",
+      "id": "t09",
       "args": [
         "word"
       ],
       "category": "uma-palavra"
     },
     {
-      "id": "t09",
+      "id": "t10",
       "args": [
         "a b\t"
       ],
       "category": "tabs"
     },
     {
-      "id": "t10",
+      "id": "t11",
       "args": [
         "\tlast"
       ],
       "category": "tabs"
     },
     {
-      "id": "t11",
+      "id": "t12",
       "args": [
         "one two\tthree"
       ],
       "category": "tabs"
     },
     {
-      "id": "t12",
+      "id": "t13",
       "args": [
         "hello world   "
       ],

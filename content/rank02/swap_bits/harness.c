@@ -1,7 +1,7 @@
 /*
 ** main de teste do ExamShell para swap_bits.
 ** Chama a sua função com o caso de número argv[1] e imprime o byte devolvido
-** em decimal, seguido dos seus 8 bits entre parênteses.
+** em decimal, seguido do valor em hexadecimal entre parênteses.
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,17 +10,7 @@ unsigned char	swap_bits(unsigned char octet);
 
 static void	show(unsigned char r)
 {
-	char	s[9];
-	int		i;
-
-	i = 0;
-	while (i < 8)
-	{
-		s[i] = ((r >> (7 - i)) & 1) + '0';
-		i++;
-	}
-	s[8] = '\0';
-	printf("%u (%s)\n", r, s);
+	printf("%u (0x%02X)\n", r, r);
 }
 
 int	main(int argc, char **argv)
@@ -33,25 +23,25 @@ int	main(int argc, char **argv)
 			show(swap_bits(65));
 			break ;
 		case 1: /* t02 */
-			show(swap_bits(18));
-			break ;
-		case 2: /* t03 */
-			show(swap_bits(171));
-			break ;
-		case 3: /* t04 */
 			show(swap_bits(15));
 			break ;
+		case 2: /* t03 */
+			show(swap_bits(0));
+			break ;
+		case 3: /* t04 */
+			show(swap_bits(18));
+			break ;
 		case 4: /* t05 */
-			show(swap_bits(240));
+			show(swap_bits(171));
 			break ;
 		case 5: /* t06 */
-			show(swap_bits(1));
+			show(swap_bits(240));
 			break ;
 		case 6: /* t07 */
-			show(swap_bits(128));
+			show(swap_bits(1));
 			break ;
 		case 7: /* t08 */
-			show(swap_bits(0));
+			show(swap_bits(128));
 			break ;
 		case 8: /* t09 */
 			show(swap_bits(255));

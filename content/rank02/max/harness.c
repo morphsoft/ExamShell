@@ -30,14 +30,14 @@ int	main(int argc, char **argv)
 			break ;
 		case 2: /* t03 */
 			{
-				int tab[] = {5};
-				printf("%d\n", max(tab, 1));
+				int tab[] = {-7};
+				printf("%d\n", max(tab, 0));
 			}
 			break ;
 		case 3: /* t04 */
 			{
-				int tab[] = {-7};
-				printf("%d\n", max(tab, 0));
+				int tab[] = {5};
+				printf("%d\n", max(tab, 1));
 			}
 			break ;
 		case 4: /* t05 */

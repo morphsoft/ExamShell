@@ -21,16 +21,16 @@
       "args": [
         "2"
       ],
-      "category": "um-elemento",
-      "display": "max({5}, 1)"
+      "category": "vazio",
+      "display": "max({}, 0)"
     },
     {
       "id": "t04",
       "args": [
         "3"
       ],
-      "category": "vazio",
-      "display": "max({-7}, 0)"
+      "category": "um-elemento",
+      "display": "max({5}, 1)"
     },
     {
       "id": "t05",
@@ -92,7 +92,7 @@
   "hints": {
     "basico": [
       "A sua função compara todos os elementos e guarda o maior que viu até agora?",
-      "Basta percorrer o array uma única vez, lembrando do maior valor visto. Cada elemento só substitui o guardado se for maior que ele.",
+      "Pense em guardar o melhor candidato visto até agora, e em como cada elemento do array pode desafiar esse candidato.",
       "A ideia decisiva é o ponto de partida do maior guardado: ele precisa fazer sentido para qualquer array. Pense em de onde tirar um valor inicial que nunca atrapalhe a comparação."
     ],
     "negativos": [

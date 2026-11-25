@@ -39,18 +39,15 @@ int	main(int argc, char **argv)
 			printf("%d\n", is_power_of_2(2147483648u));
 			break ;
 		case 8: /* t09 */
-			printf("%d\n", is_power_of_2(4294967295u));
-			break ;
-		case 9: /* t10 */
 			printf("%d\n", is_power_of_2(6u));
 			break ;
-		case 10: /* t11 */
+		case 9: /* t10 */
 			printf("%d\n", is_power_of_2(1000u));
 			break ;
-		case 11: /* t12 */
+		case 10: /* t11 */
 			printf("%d\n", is_power_of_2(2147483647u));
 			break ;
-		case 12: /* t13 */
+		case 11: /* t12 */
 			printf("%d\n", is_power_of_2(17u));
 			break ;
 		default:

@@ -6,23 +6,23 @@
         "0"
       ],
       "category": "basico",
-      "display": "reverse_bits(65)"
+      "display": "reverse_bits(38)"
     },
     {
       "id": "t02",
       "args": [
         "1"
       ],
-      "category": "basico",
-      "display": "reverse_bits(15)"
+      "category": "bits-baixos",
+      "display": "reverse_bits(1)"
     },
     {
       "id": "t03",
       "args": [
         "2"
       ],
-      "category": "basico",
-      "display": "reverse_bits(240)"
+      "category": "extremos",
+      "display": "reverse_bits(0)"
     },
     {
       "id": "t04",
@@ -30,47 +30,47 @@
         "3"
       ],
       "category": "basico",
-      "display": "reverse_bits(170)"
+      "display": "reverse_bits(65)"
     },
     {
       "id": "t05",
       "args": [
         "4"
       ],
-      "category": "bits-baixos",
-      "display": "reverse_bits(1)"
+      "category": "basico",
+      "display": "reverse_bits(15)"
     },
     {
       "id": "t06",
       "args": [
         "5"
       ],
-      "category": "bits-baixos",
-      "display": "reverse_bits(2)"
+      "category": "basico",
+      "display": "reverse_bits(240)"
     },
     {
       "id": "t07",
       "args": [
         "6"
       ],
-      "category": "bits-baixos",
-      "display": "reverse_bits(6)"
+      "category": "basico",
+      "display": "reverse_bits(170)"
     },
     {
       "id": "t08",
       "args": [
         "7"
       ],
-      "category": "extremos",
-      "display": "reverse_bits(128)"
+      "category": "bits-baixos",
+      "display": "reverse_bits(2)"
     },
     {
       "id": "t09",
       "args": [
         "8"
       ],
-      "category": "extremos",
-      "display": "reverse_bits(255)"
+      "category": "bits-baixos",
+      "display": "reverse_bits(6)"
     },
     {
       "id": "t10",
@@ -78,7 +78,15 @@
         "9"
       ],
       "category": "extremos",
-      "display": "reverse_bits(0)"
+      "display": "reverse_bits(128)"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "10"
+      ],
+      "category": "extremos",
+      "display": "reverse_bits(255)"
     }
   ],
   "hints": {

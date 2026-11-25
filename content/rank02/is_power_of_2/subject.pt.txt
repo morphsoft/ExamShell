@@ -8,8 +8,6 @@ Escreva uma função que determina se um número dado é uma potência de 2.
 Essa função devolve 1 se o número dado é uma potência de 2, caso contrário
 devolve 0.
 
-Considere que 0 não é uma potência de 2.
-
 Sua função deve ser declarada da seguinte forma:
 
 int	is_power_of_2(unsigned int n);

@@ -24,27 +24,27 @@ int	main(int argc, char **argv)
 			printf("\n");
 			break ;
 		case 2: /* t03 */
-			print_bits(15);
+			print_bits(255);
 			printf("\n");
 			break ;
 		case 3: /* t04 */
-			print_bits(65);
+			print_bits(15);
 			printf("\n");
 			break ;
 		case 4: /* t05 */
-			print_bits(170);
+			print_bits(65);
 			printf("\n");
 			break ;
 		case 5: /* t06 */
-			print_bits(240);
+			print_bits(170);
 			printf("\n");
 			break ;
 		case 6: /* t07 */
-			print_bits(128);
+			print_bits(240);
 			printf("\n");
 			break ;
 		case 7: /* t08 */
-			print_bits(255);
+			print_bits(128);
 			printf("\n");
 			break ;
 		case 8: /* t09 */

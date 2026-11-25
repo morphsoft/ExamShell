@@ -13,32 +13,32 @@
       "args": [
         "1"
       ],
-      "category": "basico",
-      "display": "swap_bits(18)"
+      "category": "metades",
+      "display": "swap_bits(15)"
     },
     {
       "id": "t03",
       "args": [
         "2"
       ],
-      "category": "basico",
-      "display": "swap_bits(171)"
+      "category": "invariantes",
+      "display": "swap_bits(0)"
     },
     {
       "id": "t04",
       "args": [
         "3"
       ],
-      "category": "metades",
-      "display": "swap_bits(15)"
+      "category": "basico",
+      "display": "swap_bits(18)"
     },
     {
       "id": "t05",
       "args": [
         "4"
       ],
-      "category": "metades",
-      "display": "swap_bits(240)"
+      "category": "basico",
+      "display": "swap_bits(171)"
     },
     {
       "id": "t06",
@@ -46,7 +46,7 @@
         "5"
       ],
       "category": "metades",
-      "display": "swap_bits(1)"
+      "display": "swap_bits(240)"
     },
     {
       "id": "t07",
@@ -54,15 +54,15 @@
         "6"
       ],
       "category": "metades",
-      "display": "swap_bits(128)"
+      "display": "swap_bits(1)"
     },
     {
       "id": "t08",
       "args": [
         "7"
       ],
-      "category": "invariantes",
-      "display": "swap_bits(0)"
+      "category": "metades",
+      "display": "swap_bits(128)"
     },
     {
       "id": "t09",

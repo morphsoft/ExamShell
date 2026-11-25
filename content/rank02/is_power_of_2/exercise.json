@@ -69,8 +69,8 @@
       "args": [
         "8"
       ],
-      "category": "limites-unsigned",
-      "display": "is_power_of_2(4294967295)"
+      "category": "nao-potencias",
+      "display": "is_power_of_2(6)"
     },
     {
       "id": "t10",
@@ -78,28 +78,20 @@
         "9"
       ],
       "category": "nao-potencias",
-      "display": "is_power_of_2(6)"
+      "display": "is_power_of_2(1000)"
     },
     {
       "id": "t11",
       "args": [
         "10"
       ],
-      "category": "nao-potencias",
-      "display": "is_power_of_2(1000)"
+      "category": "limites-unsigned",
+      "display": "is_power_of_2(2147483647)"
     },
     {
       "id": "t12",
       "args": [
         "11"
-      ],
-      "category": "limites-unsigned",
-      "display": "is_power_of_2(2147483647)"
-    },
-    {
-      "id": "t13",
-      "args": [
-        "12"
       ],
       "category": "nao-potencias",
       "display": "is_power_of_2(17)"
@@ -114,11 +106,11 @@
     "nao-potencias": [
       "Todo número par é uma potência de 2?",
       "Ser par só diz que o último bit é zero. Números como 6 e 12 são pares, mas têm mais de um bit ligado. Ímpares maiores que 1, como 3 e 17, também não são potências.",
-      "Se você divide por 2 enquanto o número for par, o que sobra no final precisa ser exatamente 1. Se sobrar outro valor, houve um fator diferente de 2 e a resposta é 0. (Com bits, a ideia é conferir que só um bit está ligado.)"
+      "Um número que tem algum fator ímpar maior que 1 (como o 3 em 6 e em 12, ou o 125 em 1000) nunca é potência de 2. Pense em como descobrir se existe um fator assim, ou se há mais de um bit ligado."
     ],
     "zero": [
       "O que a sua função devolve para 0?",
-      "O enunciado diz que 0 não é potência de 2. Truques com bits que dão zero para as potências de 2 também dão zero para o próprio 0, e isso o faria passar por potência.",
+      "O 0 não é potência de 2: nenhuma potência de 2 vale 0. Truques com bits que dão zero para as potências de 2 também dão zero para o próprio 0, e isso o faria passar por potência.",
       "Trate o 0 como caso à parte, antes de qualquer outra conta, devolvendo 0 para ele."
     ],
     "um": [
@@ -127,9 +119,9 @@
       "Confira o que acontece com n valendo 1 logo no começo: a resposta precisa ser 1. Um teste de paridade ou um laço que só roda para n maior que 1 pode tratá-lo mal."
     ],
     "limites-unsigned": [
-      "A função funciona para números muito grandes, como 2 elevado a 31 e o maior unsigned?",
-      "O parâmetro é unsigned int, que vai até 4294967295. Se você guarda n em um int, ou multiplica uma potência por 2 até passar de n, a conta estoura (2 elevado a 31 já não cabe em um int com sinal).",
-      "Faça todas as contas com unsigned, ou melhor, prefira dividir n por 2 em vez de multiplicar uma potência, que nunca estoura. Assim 2147483648 devolve 1 e 4294967295 devolve 0."
+      "A função funciona para números grandes, como 2 elevado a 31?",
+      "O parâmetro é unsigned int. Se você guarda n em um int, ou multiplica uma potência por 2 até passar de n, a conta pode estourar: 2 elevado a 31 já não cabe em um int com sinal e vira negativo.",
+      "Mantenha n e as variáveis auxiliares como unsigned, ou prefira dividir n por 2 em vez de multiplicar potências, o que nunca estoura."
     ]
   }
 }

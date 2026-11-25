@@ -21,16 +21,16 @@
       "args": [
         "2"
       ],
-      "category": "zeros-a-esquerda",
-      "display": "print_bits(15)"
+      "category": "extremos",
+      "display": "print_bits(255)"
     },
     {
       "id": "t04",
       "args": [
         "3"
       ],
-      "category": "ordem-dos-bits",
-      "display": "print_bits(65)"
+      "category": "zeros-a-esquerda",
+      "display": "print_bits(15)"
     },
     {
       "id": "t05",
@@ -38,7 +38,7 @@
         "4"
       ],
       "category": "ordem-dos-bits",
-      "display": "print_bits(170)"
+      "display": "print_bits(65)"
     },
     {
       "id": "t06",
@@ -46,15 +46,15 @@
         "5"
       ],
       "category": "ordem-dos-bits",
-      "display": "print_bits(240)"
+      "display": "print_bits(170)"
     },
     {
       "id": "t07",
       "args": [
         "6"
       ],
-      "category": "extremos",
-      "display": "print_bits(128)"
+      "category": "ordem-dos-bits",
+      "display": "print_bits(240)"
     },
     {
       "id": "t08",
@@ -62,7 +62,7 @@
         "7"
       ],
       "category": "extremos",
-      "display": "print_bits(255)"
+      "display": "print_bits(128)"
     },
     {
       "id": "t09",
