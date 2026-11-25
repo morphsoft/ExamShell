@@ -376,3 +376,20 @@ test('header fornecido aparece como aba somente leitura e entra na compilação'
   await setCode(page, SORT_LIST_OK);
   await expect(await grademe(page)).toContainText('✓ passou');
 });
+
+test('se o editor não carregar, aparece um aviso com "recarregar" em vez de tela em branco', async ({ page }) => {
+  // ex.: um deploy novo trocou o nome do pedaço do editor, ou a conexão caiu
+  const editorChunk = '**/assets/CodeEditor-*.js';
+  await page.route(editorChunk, (r) => r.abort());
+  await page.goto('./#/treino/first_word');
+  const fallback = page.getByTestId('error-fallback');
+  await expect(fallback).toContainText(
+    'Algo deu errado ao carregar esta parte do site. Recarregue a página para continuar.',
+  );
+  await expect(page.getByTestId('subject')).toContainText('Assignment name'); // o resto da tela segue de pé
+
+  await page.unroute(editorChunk);
+  await page.getByRole('button', { name: 'recarregar' }).click();
+  await expect(page.locator('.cm-content')).toBeVisible();
+  await expect(fallback).toHaveCount(0);
+});

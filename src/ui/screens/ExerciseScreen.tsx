@@ -5,6 +5,7 @@ import type { GradeResult, LoadedExercise, SourceFiles } from '../../engine/type
 import { getSettings, markAttempt, saveSettings, type Settings } from '../../state/progress';
 import { CompilerLoader } from '../components/CompilerLoader';
 import { EDITOR_PANEL_ID, EditorTabs, providedTab, SCRATCH_TAB, tabId, type EditorTab } from '../components/EditorTabs';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import { LogPane, type LogEntry } from '../components/LogPane';
 import { RunBar } from '../components/RunBar';
 import { StatusBar } from '../components/StatusBar';
@@ -247,25 +248,28 @@ function Workspace({
         <section className="pane pane-work" aria-label="editor e terminal">
           <EditorTabs tabs={tabs} active={active} onSelect={setActive} extra={vimToggle} />
           <div className="editor" role="tabpanel" id={EDITOR_PANEL_ID} aria-labelledby={tabId(activeTab.key)}>
-            <Suspense fallback={<p className="editor-loading">carregando o editor…</p>}>
-              <CodeEditor
-                docKey={activeTab.key}
-                doc={
-                  activeTab.readOnly
-                    ? (exercise.provided?.[activeTab.key.slice('provided/'.length)] ?? '')
-                    : (files.current[activeTab.key] ?? '')
-                }
-                readOnly={activeTab.readOnly}
-                vim={settings.vim}
-                label={`editor: ${activeTab.label}`}
-                placeholder={
-                  activeTab.key === SCRATCH_TAB.key && isFunction
-                    ? '// escreva aqui um main que chama a sua função, e use "rodar" para testar'
-                    : undefined
-                }
-                onChange={onEdit}
-              />
-            </Suspense>
+            {/* se o pedaço do editor não baixar, o aviso fica só aqui: o enunciado e o log seguem de pé */}
+            <ErrorBoundary variant="inline">
+              <Suspense fallback={<p className="editor-loading">carregando o editor…</p>}>
+                <CodeEditor
+                  docKey={activeTab.key}
+                  doc={
+                    activeTab.readOnly
+                      ? (exercise.provided?.[activeTab.key.slice('provided/'.length)] ?? '')
+                      : (files.current[activeTab.key] ?? '')
+                  }
+                  readOnly={activeTab.readOnly}
+                  vim={settings.vim}
+                  label={`editor: ${activeTab.label}`}
+                  placeholder={
+                    activeTab.key === SCRATCH_TAB.key && isFunction
+                      ? '// escreva aqui um main que chama a sua função, e use "rodar" para testar'
+                      : undefined
+                  }
+                  onChange={onEdit}
+                />
+              </Suspense>
+            </ErrorBoundary>
           </div>
           <RunBar
             program={`./${exercise.id}`}
