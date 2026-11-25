@@ -33,7 +33,7 @@ def available_ids():
     return sorted(p.name for p in CONTENT.iterdir() if (p / 'exercise.json').is_file())
 
 
-def build(ex_id, tmp):
+def build(ex_id, tmp, provided):
     ref = REFERENCE / ex_id
     sources = sorted(ref.glob('*.c'))
     if not sources:
@@ -42,7 +42,15 @@ def build(ex_id, tmp):
     if harness.is_file():
         sources.append(harness)
     binary = Path(tmp) / ex_id
-    cmd = ['gcc', *CFLAGS, '-I', str(ref), '-o', str(binary), *map(str, sources)]
+    # headers fornecidos pelo exame: o -I deles vem antes do da referência
+    includes = []
+    if provided:
+        inc = Path(tmp) / 'provided'
+        inc.mkdir()
+        for name, text in provided.items():
+            (inc / name).write_text(text, encoding='utf-8', newline='\n')
+        includes = ['-I', str(inc)]
+    cmd = ['gcc', *CFLAGS, *includes, '-I', str(ref), '-o', str(binary), *map(str, sources)]
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
         raise GenError(f'{ex_id}: o gcc falhou\n{" ".join(cmd)}\n{r.stderr}')
@@ -69,7 +77,7 @@ def run_tests(ex_id, tmp, tests):
 def generate(ex_id):
     exercise = json.loads((CONTENT / ex_id / 'exercise.json').read_text(encoding='utf-8'))
     with tempfile.TemporaryDirectory(prefix=f'examshell-{ex_id}-') as tmp:
-        build(ex_id, tmp)
+        build(ex_id, tmp, exercise.get('provided', {}))
         expected = run_tests(ex_id, tmp, exercise['tests'])
     return json.dumps(expected, sort_keys=True, indent=2, ensure_ascii=True) + '\n'
 

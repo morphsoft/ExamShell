@@ -1,6 +1,13 @@
 import { useRef, type KeyboardEvent, type ReactNode } from 'react';
 
-export type EditorTab = { key: string; label: string };
+export type EditorTab = { key: string; label: string; readOnly?: boolean };
+
+/** Aba de um header fornecido pelo exame: somente leitura, nunca salva nem entregue. */
+export const providedTab = (name: string): EditorTab => ({
+  key: `provided/${name}`,
+  label: `${name} (fornecido)`,
+  readOnly: true,
+});
 
 /** A aba de rascunho dos exercícios de função: o main do cadete para "rodar"; o grademe a ignora. */
 export const SCRATCH_TAB: EditorTab = { key: 'main.c', label: 'main.c (rascunho)' };

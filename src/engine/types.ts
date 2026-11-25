@@ -21,6 +21,7 @@ export interface ExerciseContent {
   tests: TestCase[];
   hints: Record<string, HintLadder>; // por category
   starter?: SourceFiles; // conteúdo inicial de algum expectedFile (ex.: struct do subject)
+  provided?: SourceFiles; // headers que o exame fornece: abas somente leitura, só vão ao compilador
 }
 export interface LoadedExercise extends CatalogEntry, ExerciseContent {
   subject: { en: string; pt: string };

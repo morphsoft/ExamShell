@@ -4,7 +4,7 @@ import { parseArgs, ParseArgsError } from '../../engine/parseArgs';
 import type { GradeResult, LoadedExercise, SourceFiles } from '../../engine/types';
 import { getSettings, markAttempt, saveSettings, type Settings } from '../../state/progress';
 import { CompilerLoader } from '../components/CompilerLoader';
-import { EDITOR_PANEL_ID, EditorTabs, SCRATCH_TAB, tabId, type EditorTab } from '../components/EditorTabs';
+import { EDITOR_PANEL_ID, EditorTabs, providedTab, SCRATCH_TAB, tabId, type EditorTab } from '../components/EditorTabs';
 import { LogPane, type LogEntry } from '../components/LogPane';
 import { RunBar } from '../components/RunBar';
 import { StatusBar } from '../components/StatusBar';
@@ -56,13 +56,19 @@ function Workspace({
   const isFunction = exercise.kind === 'function';
 
   const tabs = useMemo<EditorTab[]>(
-    () => [...exercise.expectedFiles.map((f) => ({ key: f, label: f })), ...(isFunction ? [SCRATCH_TAB] : [])],
+    () => [
+      ...exercise.expectedFiles.map((f) => ({ key: f, label: f })),
+      ...Object.keys(exercise.provided ?? {}).map(providedTab),
+      ...(isFunction ? [SCRATCH_TAB] : []),
+    ],
     [exercise, isFunction],
   );
 
   // Conteúdo dos arquivos: um ref (o editor muda a cada tecla), não estado.
   const files = useRef<SourceFiles>(
-    Object.fromEntries(tabs.map((t) => [t.key, initialFiles[t.key] ?? exercise.starter?.[t.key] ?? ''])),
+    Object.fromEntries(
+      tabs.filter((t) => !t.readOnly).map((t) => [t.key, initialFiles[t.key] ?? exercise.starter?.[t.key] ?? '']),
+    ),
   );
   const [active, setActive] = useState(tabs[0].key);
   const [scratchEmpty, setScratchEmpty] = useState(() => (files.current[SCRATCH_TAB.key] ?? '').trim() === '');
@@ -240,7 +246,12 @@ function Workspace({
             <Suspense fallback={<p className="editor-loading">carregando o editor…</p>}>
               <CodeEditor
                 docKey={activeTab.key}
-                doc={files.current[activeTab.key] ?? ''}
+                doc={
+                  activeTab.readOnly
+                    ? (exercise.provided?.[activeTab.key.slice('provided/'.length)] ?? '')
+                    : (files.current[activeTab.key] ?? '')
+                }
+                readOnly={activeTab.readOnly}
                 vim={settings.vim}
                 label={`editor: ${activeTab.label}`}
                 placeholder={

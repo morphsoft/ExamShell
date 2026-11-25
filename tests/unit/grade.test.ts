@@ -215,4 +215,34 @@ describe('programa sem main', () => {
     expect(r.failure).toBeNull();
     expect(calls.link).toHaveBeenCalled();
   });
+  describe('headers fornecidos pelo exame', () => {
+    const fn = (over: Partial<LoadedExercise> = {}) =>
+      makeEx({ kind: 'function', expectedFiles: ['sort_list.c'], harness: 'int main(void){return 0;}', ...over });
+    const run = { definedSymbols: async () => ['sort_list'] };
+
+    it('compileObjects e link recebem ex.provided', async () => {
+      const { engine, calls } = fake([ok('a\n'), ok('b\n'), ok('c\n')], run);
+      const r = await grade(fn({ provided: { 'list.h': 'X' } }), { 'sort_list.c': 'int x;' }, engine);
+      expect(r.failure).toBeNull();
+      expect(calls.compile.mock.calls[0][1]).toEqual({ 'list.h': 'X' });
+      expect(calls.link.mock.calls[0][2]).toEqual({ 'list.h': 'X' });
+    });
+
+    it('um list.h do cadete fora de expectedFiles é ignorado', async () => {
+      const { engine, calls } = fake([ok('a\n'), ok('b\n'), ok('c\n')], run);
+      await grade(fn({ provided: { 'list.h': 'X' } }), { 'sort_list.c': 'int x;', 'list.h': 'CADETE' }, engine);
+      expect(calls.compile.mock.calls[0][1]).toEqual({ 'list.h': 'X' });
+      expect(calls.compile.mock.calls[0][0]).toEqual({ 'sort_list.c': 'int x;' });
+    });
+
+    it('provided vence um header de mesmo nome em expectedFiles (grade e runOnce)', async () => {
+      const ex = fn({ expectedFiles: ['sort_list.c', 'list.h'], provided: { 'list.h': 'X' } });
+      const a = fake([ok('a\n'), ok('b\n'), ok('c\n')], run);
+      await grade(ex, { 'sort_list.c': 'int x;', 'list.h': 'CADETE' }, a.engine);
+      expect(a.calls.compile.mock.calls[0][1]).toEqual({ 'list.h': 'X' });
+      const b = fake([ok('')], run);
+      await runOnce(ex, { 'sort_list.c': 'int x;', 'list.h': 'CADETE' }, { mainC: 'int main(void){}', args: [] }, b.engine);
+      expect(b.calls.link.mock.calls[0][2]).toEqual({ 'list.h': 'X' });
+    });
+  });
 });

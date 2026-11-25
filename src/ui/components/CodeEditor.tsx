@@ -72,6 +72,7 @@ export function CodeEditor({
   vim,
   label,
   placeholder,
+  readOnly = false,
   onChange,
 }: {
   docKey: string;
@@ -79,6 +80,7 @@ export function CodeEditor({
   vim: boolean;
   label: string;
   placeholder?: string;
+  readOnly?: boolean;
   onChange(key: string, text: string): void;
 }) {
   const host = useRef<HTMLDivElement>(null);
@@ -96,7 +98,7 @@ export function CodeEditor({
     else v.dispatch({ effects: vimConf.current.reconfigure(vimExt()) });
   };
 
-  const makeState = (text: string, hint: string | undefined, ariaLabel: string) =>
+  const makeState = (text: string, hint: string | undefined, ariaLabel: string, ro: boolean) =>
     EditorState.create({
       doc: text,
       extensions: [
@@ -118,13 +120,14 @@ export function CodeEditor({
         EditorView.updateListener.of((u) => {
           if (u.docChanged) current.current.onChange(current.current.key, u.state.doc.toString());
         }),
+        ro ? [EditorState.readOnly.of(true), EditorView.editable.of(false)] : [],
         examTheme,
       ],
     });
 
   // O EditorView é criado uma vez; trocas de arquivo e de vim vêm pelos efeitos abaixo.
   useEffect(() => {
-    const v = new EditorView({ state: makeState(doc, placeholder, label), parent: host.current! });
+    const v = new EditorView({ state: makeState(doc, placeholder, label, readOnly), parent: host.current! });
     view.current = v;
     applyVim();
     return () => {
@@ -138,7 +141,7 @@ export function CodeEditor({
     if (!v || current.current.key === docKey) return;
     states.current.set(current.current.key, v.state);
     current.current.key = docKey;
-    v.setState(states.current.get(docKey) ?? makeState(doc, placeholder, label));
+    v.setState(states.current.get(docKey) ?? makeState(doc, placeholder, label, readOnly));
     applyVim(); // o estado guardado pode ter sido criado com o vim em outra posição
   }, [docKey]);
 

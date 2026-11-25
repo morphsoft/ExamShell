@@ -330,3 +330,49 @@ test('sem rolagem horizontal em 375px, com falha e dica no log', async ({ page }
   const sw = await page.evaluate(() => document.scrollingElement!.scrollWidth);
   expect(sw).toBeLessThanOrEqual(375);
 });
+
+const SORT_LIST_OK = String.raw`#include "list.h"
+
+t_list	*sort_list(t_list *lst, int (*cmp)(int, int))
+{
+    t_list	*a;
+    t_list	*b;
+    int		tmp;
+
+    a = lst;
+    while (a)
+    {
+        b = a->next;
+        while (b)
+        {
+            if (!cmp(a->data, b->data))
+            {
+                tmp = a->data;
+                a->data = b->data;
+                b->data = tmp;
+            }
+            b = b->next;
+        }
+        a = a->next;
+    }
+    return (lst);
+}
+`;
+
+test('header fornecido aparece como aba somente leitura e entra na compilação', async ({ page }) => {
+  await open(page, 'sort_list');
+  await expect(page.getByRole('tab', { name: 'list.h', exact: true })).toHaveCount(0);
+  const tab = page.getByRole('tab', { name: 'list.h (fornecido)' });
+  await expect(tab).toBeVisible();
+  await tab.click();
+  const content = page.locator('.cm-content');
+  await expect(content).toContainText('struct s_list');
+  const before = await content.innerText();
+  await content.click();
+  await page.keyboard.type('lixo');
+  await page.keyboard.insertText('lixo');
+  expect(await content.innerText()).toBe(before);
+  await page.getByRole('tab', { name: 'sort_list.c' }).click();
+  await setCode(page, SORT_LIST_OK);
+  await expect(await grademe(page)).toContainText('✓ passou');
+});

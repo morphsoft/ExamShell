@@ -1,5 +1,5 @@
 Nome do exercício  : sort_list
-Arquivos esperados : sort_list.c, list.h
+Arquivos esperados : sort_list.c
 Funções permitidas :
 --------------------------------------------------------------------------------
 
@@ -16,7 +16,8 @@ As duplicatas devem permanecer.
 As entradas sempre serão consistentes.
 
 Você deve usar o tipo t_list descrito no arquivo list.h que é fornecido a você.
-Você deve incluir esse arquivo (#include "list.h").
+Você deve incluir esse arquivo (#include "list.h"), mas não deve entregá-lo.
+Usaremos o nosso próprio para compilar o seu exercício.
 
 As funções passadas como cmp sempre devolverão um valor diferente de 0 se a e
 b estiverem na ordem certa, e 0 caso contrário.

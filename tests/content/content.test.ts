@@ -104,6 +104,20 @@ describe.each(exercises.map((ex) => [ex.id, ex] as [string, LoadedExercise]))('%
       allowedFunctions: ex.allowedFunctions,
     });
     for (const name of Object.keys(ex.starter ?? {})) expect(ex.expectedFiles).toContain(name);
+    for (const name of Object.keys(ex.provided ?? {})) {
+      expect(name, 'provided só tem headers').toMatch(/\.h$/);
+      expect(ex.expectedFiles, `${name} é fornecido, não entregue`).not.toContain(name);
+      expect(ex.starter ?? {}, `${name} não pode ser starter`).not.toHaveProperty(name);
+    }
+  });
+
+  it('1b. headers fornecidos: só sort_list e ft_list_remove_if, e o subject os cita', () => {
+    const withProvided = ['sort_list', 'ft_list_remove_if'];
+    expect(ex.provided !== undefined).toBe(withProvided.includes(id));
+    for (const name of Object.keys(ex.provided ?? {})) {
+      expect(ex.subject.en).toContain(name);
+      expect(ex.subject.en.split('\n')[1]).not.toContain(name);
+    }
   });
 
   it('2. subject.en no formato da prova e subject.pt traduzido', () => {

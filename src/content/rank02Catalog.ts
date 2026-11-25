@@ -55,12 +55,12 @@ const ROWS: Row[] = [
   [4, 'fprime', 'P', 'fprime.c', 'printf, atoi'],
   [4, 'ft_itoa', 'F', 'ft_itoa.c', 'malloc', 'char *ft_itoa(int nbr);'],
   [4, 'ft_list_foreach', 'F', 'ft_list_foreach.c, ft_list.h', '', 'void ft_list_foreach(t_list *begin_list, void (*f)(void *));'],
-  [4, 'ft_list_remove_if', 'F', 'ft_list_remove_if.c, ft_list.h', 'free', 'void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());'],
+  [4, 'ft_list_remove_if', 'F', 'ft_list_remove_if.c', 'free', 'void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());'],
   [4, 'ft_split', 'F', 'ft_split.c', 'malloc', 'char **ft_split(char *str);'],
   [4, 'rev_wstr', 'P', 'rev_wstr.c', 'write, malloc, free'],
   [4, 'rostring', 'P', 'rostring.c', 'write, malloc, free'],
   [4, 'sort_int_tab', 'F', 'sort_int_tab.c', '', 'void sort_int_tab(int *tab, unsigned int size);'],
-  [4, 'sort_list', 'F', 'sort_list.c, list.h', '', 't_list *sort_list(t_list* lst, int (*cmp)(int, int));'],
+  [4, 'sort_list', 'F', 'sort_list.c', '', 't_list *sort_list(t_list* lst, int (*cmp)(int, int));'],
 ];
 
 const list = (s: string) => (s === '' ? [] : s.split(', '));

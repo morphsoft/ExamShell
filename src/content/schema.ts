@@ -21,6 +21,7 @@ export const exerciseContentSchema = z
     tests: z.array(testCaseSchema).min(1),
     hints: z.record(kebab, z.tuple([hint, hint, hint])),
     starter: z.record(z.string(), z.string()).optional(),
+    provided: z.record(z.string().regex(/\.h$/, 'só headers (.h)'), z.string()).optional(),
   })
   .strict();
 

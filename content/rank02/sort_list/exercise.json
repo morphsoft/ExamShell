@@ -36,5 +36,5 @@
       "Entregue sempre os valores com sinal para cmp e confie na resposta dela, sem corrigir nem tratar os negativos de um jeito especial."
     ]
   },
-  "starter": {"list.h":"typedef struct s_list t_list;\n\nstruct s_list\n{\n    int    data;\n    t_list *next;\n};\n"}
+  "provided": {"list.h":"typedef struct s_list t_list;\n\nstruct s_list\n{\n    int    data;\n    t_list *next;\n};\n"}
 }

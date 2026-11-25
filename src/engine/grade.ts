@@ -13,6 +13,8 @@ function splitSources(ex: LoadedExercise, userFiles: SourceFiles): { sources: So
     if (name.endsWith('.h')) headers[name] = content;
     else if (name.endsWith('.c')) sources[name] = content;
   }
+  // O exame usa os próprios headers: o fornecido vence um header do cadete com o mesmo nome.
+  Object.assign(headers, ex.provided);
   return { sources, headers };
 }
 
