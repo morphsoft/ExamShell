@@ -1,0 +1,19 @@
+Nome do exercício  : print_bits
+Arquivos esperados : print_bits.c
+Funções permitidas : write
+--------------------------------------------------------------------------------
+
+Escreva uma função que recebe um byte e o exibe em binário SEM QUEBRA DE LINHA
+NO FINAL.
+
+Sua função deve ser declarada da seguinte forma:
+
+void	print_bits(unsigned char octet);
+
+Exemplo: se você passar 2 para print_bits, ela exibirá "00000010".
+
+Exemplos:
+
+print_bits(2) exibe 00000010.
+print_bits(1) exibe 00000001.
+print_bits(255) exibe 11111111.

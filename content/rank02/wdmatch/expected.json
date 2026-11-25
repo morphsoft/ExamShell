@@ -1,0 +1,41 @@
+{
+  "t01": {
+    "stdout": "faya\n"
+  },
+  "t02": {
+    "stdout": "\n"
+  },
+  "t03": {
+    "stdout": "quarante deux\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "\n"
+  },
+  "t07": {
+    "stdout": "\n"
+  },
+  "t08": {
+    "stdout": "\n"
+  },
+  "t09": {
+    "stdout": "abc\n"
+  },
+  "t10": {
+    "stdout": "\n"
+  },
+  "t11": {
+    "stdout": "\n"
+  },
+  "t12": {
+    "stdout": "aa\n"
+  },
+  "t13": {
+    "stdout": "a b\n"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "here_is_a_snake_case_word"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "hello_world"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "hello"
+      ],
+      "category": "uma-palavra"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "a_b_c"
+      ],
+      "category": "letras-soltas"
+    },
+    {
+      "id": "t06",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "z_a_z"
+      ],
+      "category": "letras-soltas"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "zebra"
+      ],
+      "category": "uma-palavra"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "alpha_beta_gamma_delta_epsilon_zeta_eta_theta_iota_kappa_lambda_mu_alpha_beta_gamma_delta_epsilon_zeta_eta_theta_iota_kappa_lambda_mu_alpha_beta_gamma_delta_epsilon_zeta_eta_theta_iota_kappa_lambda_mu_alpha_beta_gamma_delta_epsilon_zeta_eta_theta_iota_kappa_lambda_mu"
+      ],
+      "category": "string-longa"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Cada palavra depois da primeira começa com maiúscula e os '_' desaparecem?",
+      "Cada '_' some e faz o caractere seguinte virar maiúsculo. Todo o resto fica igual, então o resultado é mais curto que a entrada. No final vem a quebra de linha.",
+      "A ideia decisiva: a letra maiúscula fica a uma distância fixa da minúscula na tabela ASCII, e o '_' só serve de aviso de que o próximo caractere deve ser convertido."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando não recebe nenhum argumento?",
+      "Sem argumentos, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira o argc antes de olhar o argv. Se não houver exatamente uma string, escreva só a quebra de linha e encerre."
+    ],
+    "uma-palavra": [
+      "E se a string não tiver nenhum '_'?",
+      "Então a saída é igual à entrada: só o caractere logo depois de um '_' é convertido. O primeiro caractere da string nunca vira maiúsculo.",
+      "Converta um caractere apenas se o anterior for '_'. Para o primeiro caractere, não existe anterior, então ele passa sem mudar."
+    ],
+    "letras-soltas": [
+      "E palavras de uma letra só, como em a_b_c?",
+      "Aqui cada letra vem depois de um '_' e é a única da sua palavra, e logo depois vem outro '_'. Se, ao converter um caractere, você pula o seguinte sem olhar, pode perder a conversão da próxima palavra. O resultado de 'a_b_c' é 'aBC'.",
+      "Depois de tratar um '_', examine o caractere seguinte normalmente: ele pode ser uma letra comum, e o caractere depois dela pode ser outro '_'."
+    ],
+    "string-vazia": [
+      "O que acontece com a string vazia?",
+      "Uma string vazia não tem nada para converter, e a saída é só a quebra de linha. Se você lê ou aloca como se existisse pelo menos um caractere, pode usar o '\\0' como se fosse letra.",
+      "Teste o fim da string antes de cada leitura, e escreva a quebra de linha sempre, mesmo quando nada foi escrito."
+    ],
+    "string-longa": [
+      "O programa funciona com strings bem compridas?",
+      "Se você guarda o resultado num espaço de tamanho fixo e pequeno, uma entrada longa estoura esse espaço. O resultado nunca é maior que a entrada.",
+      "Escreva cada caractere assim que o decidir, sem guardar nada. Se preferir um buffer, aloque o tamanho da entrada (mais um) com malloc."
+    ]
+  }
+}

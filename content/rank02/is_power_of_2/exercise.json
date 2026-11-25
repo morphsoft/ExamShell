@@ -1,0 +1,135 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "is_power_of_2(16)"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "nao-potencias",
+      "display": "is_power_of_2(12)"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "zero",
+      "display": "is_power_of_2(0)"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "um",
+      "display": "is_power_of_2(1)"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "basico",
+      "display": "is_power_of_2(2)"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "basico",
+      "display": "is_power_of_2(1024)"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "nao-potencias",
+      "display": "is_power_of_2(3)"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "limites-unsigned",
+      "display": "is_power_of_2(2147483648)"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "limites-unsigned",
+      "display": "is_power_of_2(4294967295)"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "nao-potencias",
+      "display": "is_power_of_2(6)"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "10"
+      ],
+      "category": "nao-potencias",
+      "display": "is_power_of_2(1000)"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "11"
+      ],
+      "category": "limites-unsigned",
+      "display": "is_power_of_2(2147483647)"
+    },
+    {
+      "id": "t13",
+      "args": [
+        "12"
+      ],
+      "category": "nao-potencias",
+      "display": "is_power_of_2(17)"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Que característica dos bits de um número distingue as potências de 2 de todos os outros números?",
+      "Uma potência de 2 tem exatamente um bit ligado na representação binária (1, 10, 100, 1000...). Dá para descobrir isso dividindo por 2 repetidamente, ou olhando os bits diretamente.",
+      "Uma ideia que resolve: subtrair 1 de uma potência de 2 desliga o único bit ligado e liga todos os de baixo. Pense no que o E bit a bit entre n e n menos 1 faz nesse caso, e nos outros."
+    ],
+    "nao-potencias": [
+      "Todo número par é uma potência de 2?",
+      "Ser par só diz que o último bit é zero. Números como 6 e 12 são pares, mas têm mais de um bit ligado. Ímpares maiores que 1, como 3 e 17, também não são potências.",
+      "Se você divide por 2 enquanto o número for par, o que sobra no final precisa ser exatamente 1. Se sobrar outro valor, houve um fator diferente de 2 e a resposta é 0. (Com bits, a ideia é conferir que só um bit está ligado.)"
+    ],
+    "zero": [
+      "O que a sua função devolve para 0?",
+      "O enunciado diz que 0 não é potência de 2. Truques com bits que dão zero para as potências de 2 também dão zero para o próprio 0, e isso o faria passar por potência.",
+      "Trate o 0 como caso à parte, antes de qualquer outra conta, devolvendo 0 para ele."
+    ],
+    "um": [
+      "O número 1 é uma potência de 2?",
+      "Sim: 1 é 2 elevado a 0. Se a sua função começa exigindo um número par, ou só aceita n maior que 1, o 1 fica de fora.",
+      "Confira o que acontece com n valendo 1 logo no começo: a resposta precisa ser 1. Um teste de paridade ou um laço que só roda para n maior que 1 pode tratá-lo mal."
+    ],
+    "limites-unsigned": [
+      "A função funciona para números muito grandes, como 2 elevado a 31 e o maior unsigned?",
+      "O parâmetro é unsigned int, que vai até 4294967295. Se você guarda n em um int, ou multiplica uma potência por 2 até passar de n, a conta estoura (2 elevado a 31 já não cabe em um int com sinal).",
+      "Faça todas as contas com unsigned, ou melhor, prefira dividir n por 2 em vez de multiplicar uma potência, que nunca estoura. Assim 2147483648 devolve 1 e 4294967295 devolve 0."
+    ]
+  }
+}

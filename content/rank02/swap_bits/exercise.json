@@ -1,0 +1,101 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "swap_bits(65)"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "basico",
+      "display": "swap_bits(18)"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "basico",
+      "display": "swap_bits(171)"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "metades",
+      "display": "swap_bits(15)"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "metades",
+      "display": "swap_bits(240)"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "metades",
+      "display": "swap_bits(1)"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "metades",
+      "display": "swap_bits(128)"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "invariantes",
+      "display": "swap_bits(0)"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "invariantes",
+      "display": "swap_bits(255)"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "invariantes",
+      "display": "swap_bits(170)"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O resultado tem a metade de cima do byte original embaixo, e a de baixo em cima?",
+      "Um byte tem duas metades de 4 bits. Trocar as metades leva os 4 bits de cima para baixo e os 4 de baixo para cima, mas sem mudar a ordem dos bits dentro de cada metade (isso seria inverter o byte).",
+      "Pense em dois deslocamentos de 4 bits, um em cada sentido, e em como juntar os dois pedaços num só byte."
+    ],
+    "metades": [
+      "Uma metade que está sozinha ligada vai inteira para o outro lado?",
+      "O 15 só tem a metade de baixo ligada e vira 240. O 240 só tem a de cima e vira 15. Se o seu deslocamento não for de exatamente 4 posições, os bits caem no lugar errado.",
+      "Desloque exatamente 4 bits em cada sentido: é metade do tamanho de um byte."
+    ],
+    "invariantes": [
+      "Quando as duas metades são iguais, o byte muda?",
+      "Se as metades são iguais (como em 0, 255 e 170), trocá-las não muda nada: a saída precisa ser igual à entrada. Se sair outro valor, bits estão sendo perdidos ou duplicados.",
+      "Verifique que cada metade é copiada inteira, sem bits a mais nem a menos, e que as duas partes são juntadas por uma operação que não deixa uma interferir na outra."
+    ]
+  }
+}

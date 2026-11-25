@@ -1,0 +1,101 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "reverse_bits(65)"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "basico",
+      "display": "reverse_bits(15)"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "basico",
+      "display": "reverse_bits(240)"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "basico",
+      "display": "reverse_bits(170)"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "bits-baixos",
+      "display": "reverse_bits(1)"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "bits-baixos",
+      "display": "reverse_bits(2)"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "bits-baixos",
+      "display": "reverse_bits(6)"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "extremos",
+      "display": "reverse_bits(128)"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "extremos",
+      "display": "reverse_bits(255)"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "extremos",
+      "display": "reverse_bits(0)"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O seu resultado é o byte lido da direita para a esquerda, bit a bit?",
+      "O bit da posição 0 deve ir para a posição 7, o da 1 para a 6, e assim por diante: o bit da posição i vai para a posição 7 menos i. Isso não é trocar as duas metades do byte, é inverter a ordem de todos os 8 bits.",
+      "Uma ideia que ajuda: construa o resultado em outra variável, tirando bits de um lado do byte original e colocando-os do lado oposto no resultado, em vez de tentar trocar tudo dentro do mesmo byte."
+    ],
+    "bits-baixos": [
+      "O byte 1 vira 128?",
+      "A inversão sempre usa as 8 posições. Se o seu laço para quando o byte original fica zerado, os bits baixos não chegam até a ponta oposta e o resultado fica deslocado para baixo.",
+      "Faça exatamente 8 voltas, independentemente do valor do byte, em vez de parar quando não restarem bits ligados."
+    ],
+    "extremos": [
+      "A função funciona com 128, 255 e 0?",
+      "O 128 (bit mais alto) vira 1, e o 255 e o 0 continuam iguais. Se a primeira ou a última posição ficar fora da troca (por exemplo, com 7 voltas em vez de 8), um desses casos falha.",
+      "Confira que as 8 posições entram, da 0 até a 7, inclusive as duas pontas."
+    ]
+  }
+}

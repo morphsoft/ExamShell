@@ -1,0 +1,143 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "faya",
+        "fgvvfdxcacpolhyghbreda"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "faya",
+        "fgvvfdxcacpolhyghbred"
+      ],
+      "category": "falha-no-fim"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "quarante deux",
+        "qfqfsudf arzgsayns tsregfdgs sjytdekuoixq "
+      ],
+      "category": "espacos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "error",
+        "rrerrrfiiljdfxjyuifrrvcoojh"
+      ],
+      "category": "falha-no-fim"
+    },
+    {
+      "id": "t05",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "a",
+        "b",
+        "c"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "",
+        "abc"
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "abc",
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "abc",
+        "abc"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "abc",
+        "cba"
+      ],
+      "category": "ordem"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "aa",
+        "a"
+      ],
+      "category": "letras-repetidas"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "aa",
+        "aba"
+      ],
+      "category": "letras-repetidas"
+    },
+    {
+      "id": "t13",
+      "args": [
+        "a b",
+        "axx bx"
+      ],
+      "category": "espacos"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "Você percorre a segunda string uma única vez, procurando os caracteres da primeira na ordem?",
+      "Cada caractere da primeira string precisa aparecer na segunda depois do ponto onde o anterior foi achado. Se todos foram achados, a primeira string é escrita, seguida da quebra de linha.",
+      "A ideia decisiva: use um único percurso pela segunda string e um índice na primeira, que só avança quando o caractere atual da segunda combina com o que você está procurando."
+    ],
+    "falha-no-fim": [
+      "O seu programa escreve algo quando só uma parte da primeira string foi encontrada?",
+      "Se algum caractere da primeira string não é achado na segunda, não se escreve nada além da quebra de linha, mesmo que os primeiros caracteres tenham sido encontrados.",
+      "Só escreva a primeira string depois de confirmar que todos os seus caracteres foram encontrados, isto é, que você chegou ao fim dela. Se a segunda string acabar antes, escreva só a quebra de linha."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando não recebe exatamente duas strings?",
+      "Com qualquer número de argumentos diferente de 2, a saída é só a quebra de linha. O nome do programa também entra na contagem do argc.",
+      "Antes de qualquer coisa, confira se o argc vale 3: o nome do programa mais as duas strings. Em qualquer outro caso, não toque no argv, escreva só a quebra de linha e encerre."
+    ],
+    "string-vazia": [
+      "E se uma das duas strings estiver vazia?",
+      "Se a segunda string é vazia e a primeira não, não há como formar a primeira, e sai só a quebra de linha. Se a primeira é vazia, também não há nada a escrever além da quebra de linha.",
+      "Teste o '\\0' em cada laço antes de ler o caractere, e deixe a decisão de escrever a primeira string para depois de confirmar o resultado."
+    ],
+    "ordem": [
+      "A ordem dos caracteres na segunda string importa?",
+      "Achar cada caractere em qualquer lugar da segunda string não basta: cada um precisa vir depois do anterior. A palavra 'abc' não pode ser escrita com 'cba'.",
+      "Nunca volte ao começo da segunda string para procurar o próximo caractere. Continue de onde parou."
+    ],
+    "letras-repetidas": [
+      "E se a primeira string tiver o mesmo caractere duas vezes?",
+      "Cada ocorrência na primeira string precisa de uma ocorrência própria na segunda, em posições diferentes. Contar a mesma posição duas vezes dá resposta errada.",
+      "Depois de usar uma posição da segunda string para um caractere, a busca do próximo começa na posição seguinte."
+    ],
+    "espacos": [
+      "Espaços também contam como caracteres?",
+      "Sim: um espaço na primeira string precisa ser encontrado na segunda, como qualquer outro caractere. Espaços sobrando na segunda string são ignorados.",
+      "Não trate espaços de forma especial nem os pule: aplique a eles a mesma busca que você aplica às letras."
+    ]
+  }
+}

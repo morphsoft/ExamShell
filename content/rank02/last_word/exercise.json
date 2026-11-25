@@ -1,0 +1,124 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "FOR PONY"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "this        ...       is sparta, then again, yes   !"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "   "
+      ],
+      "category": "so-espacos"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "a",
+        "b"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "  lorem,ipsum  "
+      ],
+      "category": "espacos-no-fim"
+    },
+    {
+      "id": "t06",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t07",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "word"
+      ],
+      "category": "uma-palavra"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "a b\t"
+      ],
+      "category": "tabs"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "\tlast"
+      ],
+      "category": "tabs"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "one two\tthree"
+      ],
+      "category": "tabs"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "hello world   "
+      ],
+      "category": "espacos-no-fim"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "O seu programa encontra onde começa a última palavra e escreve só ela?",
+      "A última palavra é o trecho final da string sem espaços nem tabs. Só dá para saber qual palavra é a última olhando a string toda, ou então olhando a partir do fim.",
+      "Uma ideia que ajuda: percorrer a string de trás para frente evita ter que guardar a palavra anterior a cada passo. Quando você encontra o fim e o começo da palavra, é só escrever o trecho entre eles."
+    ],
+    "espacos-no-fim": [
+      "E se a string terminar com espaços ou tabs?",
+      "Separadores no fim da string não fazem parte de nenhuma palavra. Se você parte do último caractere e já começa a escrever, vai escrever espaços (ou nada) em vez da palavra.",
+      "Ao andar para trás, primeiro passe por cima dos separadores que estão no fim. Só depois do primeiro caractere de palavra é que você começa a procurar o início dela."
+    ],
+    "so-espacos": [
+      "E se a string tiver só espaços, sem nenhuma palavra?",
+      "Ao passar por cima dos separadores do fim, você pode chegar ao início da string sem ter encontrado palavra alguma, e continuar lendo antes dela.",
+      "A cada passo para trás, confira que a posição ainda está dentro da string. Se acabar a string sem achar nenhum caractere de palavra, escreva só a quebra de linha."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe zero argumentos, ou dois?",
+      "O enunciado só pede a palavra quando há exatamente um parâmetro. Em qualquer outro caso, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira se o argc vale exatamente 2 antes de olhar a string. Se não valer, não toque no argv e vá direto para a parte que escreve a quebra de linha."
+    ],
+    "string-vazia": [
+      "O que acontece quando o argumento é uma string vazia?",
+      "Uma string vazia não tem nenhum caractere antes do '\\0', então não existe um último caractere para olhar. Se você começa pelo tamanho menos 1, essa posição fica antes do início.",
+      "Trate o tamanho zero antes de recuar pela string. Sem caracteres não há palavra, e a saída é só a quebra de linha."
+    ],
+    "uma-palavra": [
+      "E se a string tiver uma palavra só, sem nenhum separador antes dela?",
+      "Nesse caso, andando para trás você nunca encontra um espaço: o recuo termina porque chegou ao começo da string, e a palavra começa na primeira posição.",
+      "Quando o recuo parar por ter chegado ao início, e não por ter achado um separador, a palavra começa no primeiro caractere. Cuidado para não ler uma posição antes da string."
+    ],
+    "tabs": [
+      "O seu programa trata o tab do mesmo jeito que o espaço?",
+      "Para o enunciado, tabs também separam palavras. O tab ('\\t') é um caractere diferente do espaço, então precisa ser reconhecido à parte, tanto no fim da string quanto antes da última palavra.",
+      "Em todo lugar onde o seu código pergunta se o caractere é um espaço, pergunte também se é um tab. Isso vale para o trecho que pula os separadores do fim e para o que decide onde a palavra começa."
+    ]
+  }
+}

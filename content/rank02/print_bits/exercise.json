@@ -1,0 +1,111 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "print_bits(2)"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "zeros-a-esquerda",
+      "display": "print_bits(1)"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "zeros-a-esquerda",
+      "display": "print_bits(15)"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "ordem-dos-bits",
+      "display": "print_bits(65)"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "ordem-dos-bits",
+      "display": "print_bits(170)"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "ordem-dos-bits",
+      "display": "print_bits(240)"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "extremos",
+      "display": "print_bits(128)"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "extremos",
+      "display": "print_bits(255)"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "zero",
+      "display": "print_bits(0)"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "ordem-dos-bits",
+      "display": "print_bits(85)"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A sua função escreve os 8 bits do byte, do mais significativo para o menos, sem nenhuma quebra de linha?",
+      "Um byte tem 8 bits, e a função escreve um caractere '0' ou '1' para cada um. A quebra de linha não é responsabilidade da função: quem chama decide se haverá uma, e o enunciado diz que não deve haver.",
+      "A ideia decisiva: para saber se o bit de uma posição está ligado, desloque o byte até essa posição e isole o último bit com uma máscara de valor 1. O write recebe o endereço de um char, então guarde o caractere numa variável antes."
+    ],
+    "zeros-a-esquerda": [
+      "O número 1 sai como 00000001, com todos os zeros da esquerda?",
+      "A saída tem sempre 8 caracteres. Se o seu código começa a escrever só a partir do primeiro bit ligado, os zeros da esquerda se perdem.",
+      "Escreva sempre as 8 posições, da posição 7 até a 0, mesmo quando o bit for zero e mesmo quando todos os bits à esquerda forem zero."
+    ],
+    "ordem-dos-bits": [
+      "Os bits saem na ordem certa, o mais significativo primeiro?",
+      "Em binário, o bit de maior valor (o de 128) fica à esquerda e é o primeiro a ser escrito. Dividir por 2 e escrever os restos produz os bits de trás para frente.",
+      "Comece pelo bit da posição 7 e vá descendo até o da posição 0. Se preferir ir de baixo para cima, vai precisar de um jeito de escrever depois, na ordem invertida."
+    ],
+    "extremos": [
+      "A função funciona com 128 e com 255?",
+      "O 128 só tem o bit mais significativo ligado e o 255 tem todos. Se o laço começa uma posição abaixo da 7, ou termina antes da 0, algum bit fica fora da saída.",
+      "Confira o intervalo: são exatamente 8 posições, e as duas pontas (7 e 0) precisam entrar."
+    ],
+    "zero": [
+      "O que sai para o byte 0?",
+      "Zero também tem 8 bits, todos desligados: a saída deve ser 00000000. Um laço que só roda enquanto o valor for maior que zero nunca roda para ele.",
+      "Garanta que o número de caracteres escritos seja sempre 8, sem depender do valor do byte para decidir quantas voltas dar."
+    ]
+  }
+}

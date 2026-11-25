@@ -1,0 +1,29 @@
+{
+  "t01": {
+    "stdout": "hereIsASnakeCaseWord\n"
+  },
+  "t02": {
+    "stdout": "helloWorld\n"
+  },
+  "t03": {
+    "stdout": "\n"
+  },
+  "t04": {
+    "stdout": "hello\n"
+  },
+  "t05": {
+    "stdout": "aBC\n"
+  },
+  "t06": {
+    "stdout": "\n"
+  },
+  "t07": {
+    "stdout": "zAZ\n"
+  },
+  "t08": {
+    "stdout": "zebra\n"
+  },
+  "t09": {
+    "stdout": "alphaBetaGammaDeltaEpsilonZetaEtaThetaIotaKappaLambdaMuAlphaBetaGammaDeltaEpsilonZetaEtaThetaIotaKappaLambdaMuAlphaBetaGammaDeltaEpsilonZetaEtaThetaIotaKappaLambdaMuAlphaBetaGammaDeltaEpsilonZetaEtaThetaIotaKappaLambdaMu\n"
+  }
+}

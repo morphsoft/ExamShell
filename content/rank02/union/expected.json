@@ -1,0 +1,38 @@
+{
+  "t01": {
+    "stdout": "zpadintoqefwjy\n"
+  },
+  "t02": {
+    "stdout": "df6vewg4thras\n"
+  },
+  "t03": {
+    "stdout": "rienct phas\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "\n"
+  },
+  "t07": {
+    "stdout": "\n"
+  },
+  "t08": {
+    "stdout": "abc\n"
+  },
+  "t09": {
+    "stdout": "abc\n"
+  },
+  "t10": {
+    "stdout": "ab\n"
+  },
+  "t11": {
+    "stdout": "abc\n"
+  },
+  "t12": {
+    "stdout": "a b\tc\n"
+  }
+}

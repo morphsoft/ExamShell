@@ -1,0 +1,129 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "0"
+      ],
+      "category": "basico",
+      "display": "max({3, 7, 2}, 3)"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "1"
+      ],
+      "category": "negativos",
+      "display": "max({-5, -2, -9}, 3)"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "2"
+      ],
+      "category": "um-elemento",
+      "display": "max({5}, 1)"
+    },
+    {
+      "id": "t04",
+      "args": [
+        "3"
+      ],
+      "category": "vazio",
+      "display": "max({-7}, 0)"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "4"
+      ],
+      "category": "maximo-no-fim",
+      "display": "max({1, 2, 3, 4, 5}, 5)"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "5"
+      ],
+      "category": "basico",
+      "display": "max({9, 1, 2}, 3)"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "6"
+      ],
+      "category": "extremos",
+      "display": "max({INT_MIN}, 1)"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "7"
+      ],
+      "category": "extremos",
+      "display": "max({INT_MAX, 0, INT_MIN}, 3)"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "8"
+      ],
+      "category": "basico",
+      "display": "max({4, 4, 4}, 3)"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "9"
+      ],
+      "category": "limite-len",
+      "display": "max({5, 9, 100}, 2)"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "10"
+      ],
+      "category": "negativos",
+      "display": "max({INT_MIN, -3, INT_MIN}, 3)"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A sua função compara todos os elementos e guarda o maior que viu até agora?",
+      "Basta percorrer o array uma única vez, lembrando do maior valor visto. Cada elemento só substitui o guardado se for maior que ele.",
+      "A ideia decisiva é o ponto de partida do maior guardado: ele precisa fazer sentido para qualquer array. Pense em de onde tirar um valor inicial que nunca atrapalhe a comparação."
+    ],
+    "negativos": [
+      "E se todos os números do array forem negativos?",
+      "Se o maior guardado começa em 0, um array só de negativos nunca o supera, e a função devolve 0 mesmo que o 0 nem esteja no array.",
+      "Em vez de começar de uma constante, comece com o primeiro elemento do array como o maior guardado, e compare os demais com ele."
+    ],
+    "um-elemento": [
+      "E se o array tiver um único elemento?",
+      "Nesse caso o maior é o próprio elemento. Um laço que compara cada elemento com o seguinte pode ler uma posição que não pertence ao array.",
+      "Garanta que toda leitura fique entre as posições 0 e len menos 1, e que um array de tamanho 1 devolva o seu único elemento."
+    ],
+    "vazio": [
+      "O que a sua função devolve quando len é 0?",
+      "O enunciado diz que, para um array vazio, a função devolve 0. Se você lê o primeiro elemento antes de olhar o tamanho, está lendo algo que não existe. Cuidado também: len é unsigned, então len menos 1 com len zero vira um número gigante.",
+      "Confira o valor de len antes de ler qualquer posição do array. Se for zero, devolva 0 direto."
+    ],
+    "maximo-no-fim": [
+      "O último elemento do array também é considerado?",
+      "Se o limite do laço está uma posição antes do fim, o último elemento nunca é comparado, e um maior valor que esteja ali passa despercebido.",
+      "Confira o limite do laço: o último índice válido é len menos 1, e ele precisa entrar na comparação."
+    ],
+    "extremos": [
+      "A função funciona com INT_MIN e INT_MAX?",
+      "INT_MIN é o menor int possível e precisa poder ser devolvido. Qualquer valor fixo escolhido para começar, como -1 ou -2147483647, pode ser maior que um elemento do array e ser devolvido no lugar dele.",
+      "Parta sempre de um elemento do próprio array, e não de uma constante. Assim nenhum valor do tipo int fica de fora."
+    ],
+    "limite-len": [
+      "A sua função olha só os len primeiros elementos?",
+      "O que existe na memória depois da posição len menos 1 não faz parte do array. Só os len primeiros elementos contam, mesmo que haja valores maiores logo depois.",
+      "Faça o laço parar exatamente em len, sem olhar nenhuma posição além."
+    ]
+  }
+}

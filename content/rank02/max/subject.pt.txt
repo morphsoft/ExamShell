@@ -1,0 +1,21 @@
+Nome do exercício  : max
+Arquivos esperados : max.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva a seguinte função:
+
+int	max(int* tab, unsigned int len);
+
+O primeiro parâmetro é um array de int, o segundo é o número de elementos do
+array.
+
+A função devolve o maior número encontrado no array.
+
+Se o array estiver vazio, a função devolve 0.
+
+Exemplos:
+
+max({3, 7, 2}, 3) devolve 7.
+max({-5, -2, -9}, 3) devolve -2.
+max({}, 0) devolve 0.

@@ -1,0 +1,124 @@
+{
+  "tests": [
+    {
+      "id": "t01",
+      "args": [
+        "zpadinton",
+        "paqefwtdjetyiytjneytjoeyjnejeyj"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t02",
+      "args": [
+        "ddf6vewg64f",
+        "gtwthgdwthdwfteewhrtag6h4ffdhsd"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t03",
+      "args": [
+        "rien",
+        "cette phrase ne cache rien"
+      ],
+      "category": "basico"
+    },
+    {
+      "id": "t04",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        "rien"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t06",
+      "args": [
+        "a",
+        "b",
+        "c"
+      ],
+      "category": "argumentos"
+    },
+    {
+      "id": "t07",
+      "args": [
+        "",
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t08",
+      "args": [
+        "abc",
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t09",
+      "args": [
+        "",
+        "abc"
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t10",
+      "args": [
+        "aaa",
+        "aab"
+      ],
+      "category": "repetidos"
+    },
+    {
+      "id": "t11",
+      "args": [
+        "abc",
+        "abc"
+      ],
+      "category": "repetidos"
+    },
+    {
+      "id": "t12",
+      "args": [
+        "a b",
+        "b\tc"
+      ],
+      "category": "espacos"
+    }
+  ],
+  "hints": {
+    "basico": [
+      "A sua saída tem cada caractere de qualquer das duas strings uma só vez, na ordem em que aparece?",
+      "Pense nas duas strings, uma depois da outra, como uma sequência só. Um caractere é escrito quando aparece pela primeira vez nessa sequência, e as aparições seguintes são ignoradas. No final vem a quebra de linha.",
+      "A ideia decisiva é saber se um caractere já saiu. Você pode procurá-lo nas posições anteriores da sequência, ou manter uma tabela de marcas com um registro para cada caractere possível."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando não recebe exatamente duas strings?",
+      "Com qualquer número de argumentos diferente de 2, a saída é só a quebra de linha. O nome do programa também entra na contagem do argc.",
+      "Antes de qualquer coisa, confira se o argc vale 3: o nome do programa mais as duas strings. Em qualquer outro caso, não toque no argv, escreva só a quebra de linha e encerre."
+    ],
+    "string-vazia": [
+      "E se uma das duas strings for vazia?",
+      "A união de uma string com uma vazia é a própria string, sem repetidos. Se as duas são vazias, só sai a quebra de linha.",
+      "Garanta que cada laço teste o '\\0' antes de ler o caractere, e que uma string vazia não impeça a outra de ser escrita."
+    ],
+    "repetidos": [
+      "E se o mesmo caractere aparece várias vezes na mesma string?",
+      "A regra de não repetir vale para a saída inteira, e não só para caracteres que aparecem nas duas strings. Em 'aaa' e 'aab', o 'a' sai uma única vez.",
+      "O teste de 'já saiu' precisa valer também dentro de uma mesma string, e não apenas na passagem da primeira para a segunda."
+    ],
+    "espacos": [
+      "Espaços e tabs também contam como caracteres neste exercício?",
+      "Aqui não existe a ideia de palavra: espaço e tab são caracteres como quaisquer outros. Eles aparecem na saída na ordem em que surgem, e também sem repetir.",
+      "Não trate espaços nem tabs de um jeito especial. Aplique a eles as mesmas regras das letras."
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+Nome do exercício  : swap_bits
+Arquivos esperados : swap_bits.c
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva uma função que recebe um byte, troca as suas metades (como no exemplo)
+e devolve o resultado.
+
+Sua função deve ser declarada da seguinte forma:
+
+unsigned char	swap_bits(unsigned char octet);
+
+Exemplo:
+
+  1 byte
+_____________
+ 0100 | 0001
+     \ /
+     / \
+ 0001 | 0100
+
+Exemplos:
+
+swap_bits(65) devolve 20 (01000001 vira 00010100).
+swap_bits(15) devolve 240 (00001111 vira 11110000).
+swap_bits(0) devolve 0.

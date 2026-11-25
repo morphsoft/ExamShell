@@ -1,0 +1,26 @@
+Assignment name  : reverse_bits
+Expected files   : reverse_bits.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write a function that takes a byte, reverses it, bit by bit (like the
+example) and returns the result.
+
+Your function must be declared as follows:
+
+unsigned char	reverse_bits(unsigned char octet);
+
+Example:
+
+  1 byte
+_____________
+ 0100  0001
+     ||
+     \/
+ 1000  0010
+
+Examples:
+
+reverse_bits(65) returns 130 (01000001 becomes 10000010).
+reverse_bits(1) returns 128 (00000001 becomes 10000000).
+reverse_bits(0) returns 0.
