@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>examshell — engine check</title>
+  </head>
+  <body>
+    <p>status: <span id="status">loading</span> <span id="progress"></span></p>
+    <div id="error" hidden>
+      <pre id="error-message"></pre>
+      <button id="retry" type="button">tentar de novo</button>
+    </div>
+    <p>ready em (ms): <span id="timing"></span></p>
+    <pre id="result"></pre>
+    <script type="module" src="/src/engine-check.ts"></script>
+  </body>
+</html>
