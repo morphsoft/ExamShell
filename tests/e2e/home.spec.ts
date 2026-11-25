@@ -19,6 +19,9 @@ test('sem progresso, a home não mostra ✓ nos níveis', async ({ page }) => {
 test('lista de treino e navegação ao exercício', async ({ page }) => {
   await page.getByTestId('mode-practice').click();
   for (const n of [1, 2, 3, 4]) await expect(page.getByText(`Nível ${n}`).first()).toBeVisible();
+  const legend = page.getByTestId('legend');
+  await expect(legend).toHaveText(/^✓ passou\s+~ tentado\s+· não tentado$/);
+  await expect(legend).not.toContainText('· ·');
   await expect(page.getByTestId('ex-first_word')).toHaveAttribute('data-status', 'untried');
   await page.getByTestId('ex-first_word').click();
   expect(page.url()).toMatch(/#\/treino\/first_word$/);

@@ -39,7 +39,7 @@ export const GENERIC_HINTS: Record<GenericHintKey, HintLadder> = {
   ],
   crash: [
     'O programa travou no meio da execução. Em que momento ele pode estar lendo ou escrevendo onde não deveria?',
-    'Travamentos (segfault) costumam vir de acessar memória fora do que existe: passar do fim de uma string, usar um ponteiro nulo ou não reservar espaço suficiente. Entradas vazias ou sem argumentos são suspeitas clássicas.',
+    'Travamentos (segfault) costumam vir de acessar memória fora do que existe: passar do fim de uma string, usar um ponteiro nulo ou não reservar espaço suficiente. Entradas vazias ou sem argumentos são suspeitas clássicas. Na prova, ler ou escrever fora da memória que é sua pode derrubar o programa mesmo quando aqui ele segue rodando, então trate como aviso todo acesso que possa passar do limite, não só o que travou agora.',
     'Olhe a entrada que causou o travamento e simule o seu código com ela, passo a passo, anotando o valor de cada índice e ponteiro. Confira se algum deles sai dos limites ou fica nulo. Esse tipo de bug é um ótimo treino!',
   ],
   timeout: [

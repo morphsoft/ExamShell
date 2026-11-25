@@ -9,9 +9,15 @@ const SETTINGS_KEY = `${KEY_PREFIX}settings`;
 const draftKey = (id: string) => `${KEY_PREFIX}draft:${id}`;
 const DEFAULT_SETTINGS: Settings = { vim: false, subjectLang: 'en' };
 
+const STATUSES: readonly unknown[] = ['untried', 'tried', 'passed'] satisfies ExerciseStatus[];
+
+/** Status por exercício; entradas com valor desconhecido (mexidas à mão, de outra versão) são ignoradas. */
 export function getProgress(): Record<string, ExerciseStatus> {
-  const p = readJson<Record<string, ExerciseStatus> | null>(PROGRESS_KEY, {});
-  return p && typeof p === 'object' && !Array.isArray(p) ? p : {};
+  const p = readJson<unknown>(PROGRESS_KEY, {});
+  if (!p || typeof p !== 'object' || Array.isArray(p)) return {};
+  return Object.fromEntries(
+    Object.entries(p).filter((e): e is [string, ExerciseStatus] => STATUSES.includes(e[1])),
+  );
 }
 
 export function markAttempt(id: string, passed: boolean): void {

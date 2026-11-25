@@ -50,4 +50,8 @@ describe('looksLikeCode', () => {
       }
     }
   });
+  it('travou: avisa que, na prova, acessos fora da memória que aqui passam podem derrubar o programa', () => {
+    const [, concept, direct] = GENERIC_HINTS.crash;
+    expect(`${concept} ${direct}`).toMatch(/na prova.*aqui/i);
+  });
 });

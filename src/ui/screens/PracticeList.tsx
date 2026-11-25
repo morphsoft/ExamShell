@@ -20,8 +20,17 @@ export function PracticeList() {
       <TopBar left="examshell · rank 02" right={<a href="#/">início</a>} />
       <main className="page">
         <h1>Treino livre</h1>
-        <p className="lead">
-          <span className="mark-passed">✓</span> passou · <span className="mark-tried">~</span> tentado · · não tentado
+        {/* sem "·" como separador: ele já é a marca de "não tentado" */}
+        <p className="lead legend" data-testid="legend">
+          <span>
+            <span className="mark-passed">✓</span> passou
+          </span>{' '}
+          <span>
+            <span className="mark-tried">~</span> tentado
+          </span>{' '}
+          <span>
+            <span className="mark-untried">·</span> não tentado
+          </span>
         </p>
         {LEVELS.map((level) => {
           const total = RANK02_CATALOG.filter((e) => e.level === level).length;

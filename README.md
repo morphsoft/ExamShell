@@ -44,10 +44,22 @@ O catálogo (`src/content/rank02Catalog.ts`) já lista os 57 exercícios do Rank
    (em Linux/macOS: `npm run gen:expected -- <id>`).
 4. Validar: `npm run test:content`.
 
+### Headers que a prova fornece (`provided`)
+
+Quando o enunciado real entrega um header pronto (ex.: o `list.h` de `sort_list` e de `ft_list_remove_if`), ele vai em `provided` no `exercise.json`, de nome do arquivo para conteúdo:
+
+```json
+"provided": { "list.h": "typedef struct s_list t_list;\n..." }
+```
+
+O site mostra cada um como uma aba somente leitura (`list.h (fornecido)`) e o passa ao compilador junto com os arquivos do cadete; se o cadete tiver um arquivo com o mesmo nome, vale o fornecido, como na prova. Só aceita headers (`.h`), e eles ficam fora de `expectedFiles` no catálogo: o cadete não entrega esses arquivos.
+
 ### Regras das dicas
 
-- Sempre 3 passos, do mais vago ao mais concreto.
-- Cada passo começa com uma pergunta.
+- Sempre 3 passos, do mais vago ao mais concreto:
+  1. uma pergunta que aponta onde olhar;
+  2. o conceito por trás do problema;
+  3. a orientação direta, ainda sem código.
 - Nunca mostrar código.
 - No nível `basico`, o passo 3 dá a ideia decisiva, não a receita.
 
@@ -57,7 +69,7 @@ O catálogo (`src/content/rank02Catalog.ts`) já lista os 57 exercícios do Rank
 
 ## Como publicar
 
-O workflow `.github/workflows/deploy.yml` testa, builda e publica no GitHub Pages a cada push em `main` (ou manualmente via *workflow_dispatch*).
+O workflow `.github/workflows/deploy.yml` testa, builda e publica no GitHub Pages a cada push em `main` (ou manualmente via *workflow_dispatch*). Em pull requests ele só testa e builda, sem publicar.
 
 1. Suba o repositório para o GitHub.
 2. Em **Settings → Pages → Source**, escolha **GitHub Actions**.

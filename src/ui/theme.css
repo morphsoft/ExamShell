@@ -75,6 +75,8 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
 }
 .link-btn:hover { color: var(--red); }
 
+.legend { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.legend [class^='mark-'] { font-weight: 800; } /* como as marcas da lista */
 .level h2 { margin-top: 28px; }
 .exlist { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border); }
 .exlist li + li { border-top: 1px solid var(--border); }

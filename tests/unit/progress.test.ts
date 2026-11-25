@@ -15,6 +15,15 @@ describe('progress', () => {
     markAttempt('a', false);
     expect(getProgress().a).toBe('passed');
   });
+  it('ignora entradas com estado desconhecido (localStorage mexido à mão ou de outra versão)', () => {
+    localStorage.setItem(
+      'examshell:v1:progress',
+      JSON.stringify({ a: 'passed', b: 'tried', c: 'untried', d: 'feito', e: 1, f: null, g: { x: 1 } }),
+    );
+    expect(getProgress()).toEqual({ a: 'passed', b: 'tried', c: 'untried' });
+    markAttempt('d', false);
+    expect(getProgress()).toEqual({ a: 'passed', b: 'tried', c: 'untried', d: 'tried' });
+  });
   it('draft ida e volta', () => {
     expect(loadDraft('a')).toBeNull();
     saveDraft('a', { 'a.c': 'int x;' });
