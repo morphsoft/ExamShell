@@ -1,6 +1,6 @@
 Nome do exercício  : camel_to_snake
 Arquivos esperados : camel_to_snake.c
-Funções permitidas : malloc, realloc, write, free
+Funções permitidas : malloc, realloc, write
 --------------------------------------------------------------------------------
 Escreva um programa que recebe uma única string no formato lowerCamelCase
 e a converte para o formato snake_case.
