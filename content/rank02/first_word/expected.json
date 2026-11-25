@@ -1,0 +1,26 @@
+{
+  "t01": {
+    "stdout": "FOR\n"
+  },
+  "t02": {
+    "stdout": "this\n"
+  },
+  "t03": {
+    "stdout": "lorem,ipsum\n"
+  },
+  "t04": {
+    "stdout": "lorem\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "\n"
+  },
+  "t07": {
+    "stdout": "\n"
+  },
+  "t08": {
+    "stdout": "\n"
+  }
+}

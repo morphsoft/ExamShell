@@ -1,0 +1,17 @@
+Nome do exercício  : ft_itoa
+Arquivos esperados : ft_itoa.c
+Funções permitidas : malloc
+--------------------------------------------------------------------------------
+
+Escreva uma função que recebe um int e o converte numa string terminada em
+'\0'. A função devolve o resultado num vetor de char que você deve alocar.
+
+A sua função deve ser declarada assim:
+
+char	*ft_itoa(int nbr);
+
+Exemplos:
+
+ft_itoa(42) devolve "42".
+ft_itoa(-42) devolve "-42".
+ft_itoa(0) devolve "0".

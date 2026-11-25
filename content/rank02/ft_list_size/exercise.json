@@ -1,0 +1,36 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_list_size([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL)" },
+    { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_list_size([\"a\"] -> NULL)" },
+    { "id": "t03", "args": ["2"], "category": "basico", "display": "ft_list_size([\"1\"] -> [\"2\"] -> [\"3\"] -> [\"4\"] -> [\"5\"] -> NULL)" },
+    { "id": "t04", "args": ["3"], "category": "lista-vazia", "display": "ft_list_size(NULL)" },
+    { "id": "t05", "args": ["4"], "category": "dados-nulos", "display": "ft_list_size([NULL] -> [NULL] -> [NULL] -> NULL)" },
+    { "id": "t06", "args": ["5"], "category": "dados-nulos", "display": "ft_list_size([\"a\"] -> [NULL] -> [\"c\"] -> NULL)" },
+    { "id": "t07", "args": ["6"], "category": "lista-longa", "display": "ft_list_size([\"x\"] -> [\"x\"] -> … -> [\"x\"] -> NULL) /* 1000 elementos */" }
+  ],
+  "hints": {
+    "basico": [
+      "A sua função conta todos os elementos da lista, do primeiro ao último?",
+      "Uma lista ligada é uma corrente: cada elemento aponta para o próximo pelo campo next, e o último aponta para NULL. O tamanho é quantos elementos existem nessa corrente, contando o primeiro.",
+      "Comece com um contador em zero e um ponteiro no primeiro elemento. Enquanto o ponteiro não for NULL, some um ao contador e passe o ponteiro para o elemento seguinte. Quando ele virar NULL, o contador tem o tamanho."
+    ],
+    "lista-vazia": [
+      "O que a sua função devolve quando recebe NULL?",
+      "Uma lista vazia é representada pelo ponteiro NULL: não existe nenhum elemento, então o tamanho é zero. E não dá para ler o campo next de um ponteiro nulo.",
+      "Verifique se o ponteiro é NULL antes de acessar qualquer campo dele. Com o contador começando em zero e essa verificação vindo primeiro, a lista vazia dá zero sem precisar de nenhum caso especial."
+    ],
+    "dados-nulos": [
+      "O conteúdo de um elemento muda o tamanho da lista?",
+      "O campo data é só a carga que cada elemento carrega, e pode até ser NULL. Quem diz se a lista continua é o campo next.",
+      "Na condição de parada, olhe só para o ponteiro do elemento atual e ignore completamente o campo data. Um elemento com data nulo continua sendo um elemento e precisa ser contado."
+    ],
+    "lista-longa": [
+      "A sua contagem continua certa numa lista com mil elementos?",
+      "O contador precisa de um tipo que aguente valores grandes. Um char, por exemplo, só vai até 127, e depois disso o valor dá a volta e fica negativo.",
+      "Use um int para o contador, o mesmo tipo que a função devolve, e confira que ele aumenta exatamente uma vez por elemento visitado."
+    ]
+  },
+  "starter": {
+    "ft_list.h": "typedef struct    s_list\n{\n    struct s_list *next;\n    void          *data;\n}                 t_list;\n"
+  }
+}

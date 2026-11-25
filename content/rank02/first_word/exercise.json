@@ -1,0 +1,44 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["FOR PONY"], "category": "basico" },
+    { "id": "t02", "args": ["this        ...       is sparta, then again, yes!"], "category": "basico" },
+    { "id": "t03", "args": ["   lorem,ipsum   "], "category": "espacos-no-inicio" },
+    { "id": "t04", "args": ["\t \tlorem"], "category": "tabs" },
+    { "id": "t05", "args": [], "category": "argumentos" },
+    { "id": "t06", "args": ["a", "b"], "category": "argumentos" },
+    { "id": "t07", "args": [""], "category": "string-vazia" },
+    { "id": "t08", "args": ["      "], "category": "so-espacos" }
+  ],
+  "hints": {
+    "basico": [
+      "O seu programa mostra a primeira palavra inteira e para exatamente onde ela acaba?",
+      "Uma palavra termina no primeiro espaço ou tab que aparece depois dela, ou no fim da string. Tudo o que vem depois fica de fora da saída, e no final vem a quebra de linha.",
+      "Percorra a string escrevendo um caractere por vez e pare assim que encontrar um espaço, um tab ou o fim da string ('\\0'). Depois, escreva a quebra de linha e encerre o programa."
+    ],
+    "espacos-no-inicio": [
+      "E se a string já começar com espaços?",
+      "Antes de imprimir, o seu laço precisa passar por cima dos separadores que vêm antes da primeira palavra. Eles não fazem parte dela.",
+      "Primeiro avance pela string, sem escrever nada, enquanto o caractere for espaço ou tab. Só quando chegar ao primeiro caractere que não é separador comece a escrever a palavra."
+    ],
+    "tabs": [
+      "O seu programa trata o tab do mesmo jeito que o espaço?",
+      "Para o enunciado, tabs também separam palavras. O tab ('\\t') é um caractere diferente do espaço, então precisa ser reconhecido à parte, tanto no começo da string quanto no fim da palavra.",
+      "Em todo lugar onde o seu código pergunta se o caractere é um espaço, pergunte também se é um tab. Isso vale para o trecho que pula os separadores do início e para o que decide onde a palavra acaba."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando recebe zero argumentos, ou dois?",
+      "O enunciado só pede a palavra quando há exatamente um parâmetro. Em qualquer outro caso, a saída é só a quebra de linha. Lembre que o nome do programa também conta no argc.",
+      "Confira se o argc vale exatamente 2 antes de olhar a string. Se não valer, não toque no argv e vá direto para a parte que escreve a quebra de linha."
+    ],
+    "string-vazia": [
+      "O que acontece quando o argumento é uma string vazia?",
+      "Uma string vazia não tem nenhum caractere antes do '\\0'. Não há palavra, então a saída deve ser só a quebra de linha.",
+      "Faça cada laço testar se chegou ao '\\0' antes de escrever ou de avançar. Com a string vazia, nenhum laço deve dar sequer uma volta, e o programa escreve apenas a quebra de linha."
+    ],
+    "so-espacos": [
+      "E se a string tiver só espaços, sem nenhuma palavra?",
+      "Depois de pular todos os espaços, o seu código chega ao fim da string. Não há palavra para escrever, e qualquer leitura depois do '\\0' pega lixo da memória.",
+      "No laço que escreve a palavra, pare também ao encontrar o '\\0', e não só ao encontrar um separador. Assim, uma string só de espaços termina sem escrever nada além da quebra de linha."
+    ]
+  }
+}

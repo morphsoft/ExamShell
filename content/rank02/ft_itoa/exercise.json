@@ -1,0 +1,48 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_itoa(42)" },
+    { "id": "t02", "args": ["1"], "category": "negativos", "display": "ft_itoa(-42)" },
+    { "id": "t03", "args": ["2"], "category": "zero", "display": "ft_itoa(0)" },
+    { "id": "t04", "args": ["3"], "category": "basico", "display": "ft_itoa(7)" },
+    { "id": "t05", "args": ["4"], "category": "basico", "display": "ft_itoa(123456789)" },
+    { "id": "t06", "args": ["5"], "category": "negativos", "display": "ft_itoa(-7)" },
+    { "id": "t07", "args": ["6"], "category": "zeros-no-numero", "display": "ft_itoa(10)" },
+    { "id": "t08", "args": ["7"], "category": "zeros-no-numero", "display": "ft_itoa(1000000000)" },
+    { "id": "t09", "args": ["8"], "category": "zeros-no-numero", "display": "ft_itoa(-2005)" },
+    { "id": "t10", "args": ["9"], "category": "int-max", "display": "ft_itoa(2147483647)" },
+    { "id": "t11", "args": ["10"], "category": "int-min", "display": "ft_itoa(-2147483648)" },
+    { "id": "t12", "args": ["11"], "category": "negativos", "display": "ft_itoa(-2147483647)" }
+  ],
+  "hints": {
+    "basico": [
+      "A string devolvida tem todos os dígitos, na ordem certa, e termina com o '\\0'?",
+      "Dividir por 10 e pegar o resto separa os dígitos, mas eles saem de trás para frente: primeiro as unidades. E a string alocada precisa de espaço para todos os dígitos e mais o '\\0' do final.",
+      "Primeiro conte quantos dígitos o número tem. Aloque esse tamanho mais um, coloque o '\\0' na última posição e preencha a string do fim para o começo, escrevendo em cada posição o resto da divisão por 10 convertido em caractere."
+    ],
+    "negativos": [
+      "E se o número for negativo?",
+      "Um número negativo precisa do sinal de menos na frente, e isso ocupa uma posição a mais na string. Os dígitos são os mesmos do valor positivo correspondente.",
+      "Quando o número for negativo, reserve uma posição a mais, escreva o sinal de menos na primeira posição e gere os dígitos a partir do valor positivo correspondente, sem deixar que eles sobrescrevam o sinal."
+    ],
+    "zero": [
+      "O que a sua função devolve para o número 0?",
+      "O zero é um caso traiçoeiro: o laço que divide por 10 nem chega a rodar, então nenhum dígito é escrito. Mas a resposta certa é a string com o caractere '0'.",
+      "Garanta que o zero conte como um número de um dígito na hora de calcular o tamanho, e que o caractere '0' seja escrito mesmo quando o laço não roda nenhuma vez."
+    ],
+    "zeros-no-numero": [
+      "Os zeros no meio ou no fim do número aparecem na sua string?",
+      "Em números como 10, 2005 ou 1000000000, alguns dígitos são zero. Se a contagem de dígitos ou o laço que escreve dependem do dígito atual, e não do número que sobra, esses zeros se perdem.",
+      "Faça o laço continuar enquanto o número que sobra depois de cada divisão por 10 não for zero. Um resto zero é um dígito como os outros e deve virar o caractere '0' na posição dele."
+    ],
+    "int-max": [
+      "A sua função funciona com o maior int possível, 2147483647?",
+      "O INT_MAX tem 10 dígitos. Se o seu código calcula uma potência de 10 maior que o número, ou multiplica algo por 10 perto desse limite, a conta estoura o int.",
+      "Conte os dígitos dividindo uma cópia do número por 10 até ela zerar, em vez de multiplicar uma potência de 10 até passar dele. Dividir nunca estoura, e assim os 10 dígitos cabem certinho."
+    ],
+    "int-min": [
+      "O que acontece com -2147483648 quando você tira o sinal dele?",
+      "No int, o menor valor é -2147483648, mas o maior é só 2147483647. Por isso, inverter o sinal do INT_MIN não cabe num int: o resultado estoura e continua negativo.",
+      "Copie o número para um tipo maior, como o long, antes de inverter o sinal, e faça as contas com essa cópia. Outra saída é gerar os dígitos com restos negativos, sem nunca inverter o sinal. Assim o INT_MIN sai certinho."
+    ]
+  }
+}

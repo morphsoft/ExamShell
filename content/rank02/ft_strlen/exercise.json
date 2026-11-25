@@ -1,0 +1,34 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_strlen(\"Hello\")" },
+    { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_strlen(\"abcdefghijklmnopqrstuvwxyz\")" },
+    { "id": "t03", "args": ["2"], "category": "basico", "display": "ft_strlen(\"a\")" },
+    { "id": "t04", "args": ["3"], "category": "string-vazia", "display": "ft_strlen(\"\")" },
+    { "id": "t05", "args": ["4"], "category": "caracteres-invisiveis", "display": "ft_strlen(\"The quick brown fox jumps over the lazy dog\")" },
+    { "id": "t06", "args": ["5"], "category": "caracteres-invisiveis", "display": "ft_strlen(\"   \")" },
+    { "id": "t07", "args": ["6"], "category": "caracteres-invisiveis", "display": "ft_strlen(\"\\tHello World\\n\")" },
+    { "id": "t08", "args": ["7"], "category": "string-longa", "display": "ft_strlen(\"xx…xx\") /* 1000 vezes 'x' */" }
+  ],
+  "hints": {
+    "basico": [
+      "A sua função conta todos os caracteres da string, nem um a mais, nem um a menos?",
+      "Toda string em C termina com o caractere nulo ('\\0'). Ele marca o fim, mas não faz parte do tamanho: \"Hello\" tem 5 caracteres e ocupa 6 posições na memória.",
+      "Comece um contador em zero e avance pela string somando um a cada caractere, parando ao encontrar o '\\0' sem contá-lo. O valor do contador nesse momento é o tamanho que a função deve devolver."
+    ],
+    "string-vazia": [
+      "Qual é o tamanho de uma string vazia? E o que a sua função devolve para ela?",
+      "Numa string vazia, o '\\0' já está na primeira posição. Se o seu laço avança antes de olhar o caractere, ele pula o fim e começa a ler memória que não é da string.",
+      "Olhe o caractere atual antes de avançar e antes de somar no contador. Com a string vazia, essa verificação já encerra tudo logo de cara, e a função devolve zero."
+    ],
+    "caracteres-invisiveis": [
+      "Espaços, tabs e quebras de linha também contam como caracteres?",
+      "Para o tamanho de uma string, todo caractere conta, inclusive os invisíveis, como espaço, tab e quebra de linha. Só o '\\0' marca o fim.",
+      "Confira a condição de parada do seu laço: ela deve olhar apenas se o caractere é o '\\0'. Qualquer outra comparação, como parar no espaço, faz a contagem acabar antes da hora."
+    ],
+    "string-longa": [
+      "A variável que guarda a contagem consegue chegar até 1000?",
+      "Cada tipo inteiro tem um limite. Um char, por exemplo, só vai até 127, e depois disso o valor dá a volta e fica negativo. Strings podem ser bem maiores que isso.",
+      "Use um int para o contador, o mesmo tipo que a função devolve. Assim a contagem funciona também para strings bem compridas."
+    ]
+  }
+}

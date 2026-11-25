@@ -1,0 +1,27 @@
+Nome do exercício  : ft_list_size
+Arquivos esperados : ft_list_size.c, ft_list.h
+Funções permitidas :
+--------------------------------------------------------------------------------
+
+Escreva uma função que devolve o número de elementos da lista ligada que ela
+recebe.
+
+Ela deve ser declarada assim:
+
+int	ft_list_size(t_list *begin_list);
+
+Você deve usar a estrutura abaixo e entregá-la num arquivo chamado ft_list.h:
+
+typedef struct    s_list
+{
+    struct s_list *next;
+    void          *data;
+}                 t_list;
+
+Exemplos:
+
+Nestes exemplos, ["a"] é um elemento cujo data aponta para a string "a".
+
+ft_list_size(["a"] -> ["b"] -> ["c"] -> NULL) devolve 3.
+ft_list_size(["a"] -> NULL) devolve 1.
+ft_list_size(NULL) devolve 0 (uma lista vazia não tem elementos).

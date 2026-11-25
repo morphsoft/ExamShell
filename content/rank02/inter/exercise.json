@@ -1,0 +1,49 @@
+{
+  "tests": [
+    { "id": "t01", "args": ["padinton", "paqefwtdjetyiytjneytjoeyjnejeyj"], "category": "basico" },
+    { "id": "t02", "args": ["ddf6vewg64f", "gtwthgdwthdwfteewhrtag6h4ffdhsd"], "category": "basico" },
+    { "id": "t03", "args": ["rien", "cette phrase ne cache rien"], "category": "basico" },
+    { "id": "t04", "args": [], "category": "argumentos" },
+    { "id": "t05", "args": ["padinton"], "category": "argumentos" },
+    { "id": "t06", "args": ["abc", "abc", "abc"], "category": "argumentos" },
+    { "id": "t07", "args": ["", "abc"], "category": "string-vazia" },
+    { "id": "t08", "args": ["abc", ""], "category": "string-vazia" },
+    { "id": "t09", "args": ["aaaaa", "a"], "category": "repetidos" },
+    { "id": "t10", "args": ["abcabc", "cba"], "category": "repetidos" },
+    { "id": "t11", "args": ["xyz", "abc"], "category": "nada-em-comum" },
+    { "id": "t12", "args": ["a b\tc", "c\t b"], "category": "espacos" },
+    { "id": "t13", "args": ["   ", " "], "category": "espacos" }
+  ],
+  "hints": {
+    "basico": [
+      "A sua saída tem só os caracteres que aparecem nas duas strings, sem repetir nenhum e na ordem da primeira?",
+      "São três regras ao mesmo tempo: o caractere precisa existir na segunda string, não pode ter sido mostrado antes, e a ordem da saída é a da primeira string. No final vem a quebra de linha.",
+      "Percorra a primeira string do começo ao fim. Para cada caractere, verifique se ele aparece em algum lugar da segunda string e se ainda não apareceu antes na própria primeira string. Só escreva o caractere quando as duas condições forem atendidas."
+    ],
+    "argumentos": [
+      "O que o seu programa faz quando não recebe exatamente duas strings?",
+      "Com qualquer número de argumentos diferente de 2, a saída é só a quebra de linha. O nome do programa também entra na contagem do argc.",
+      "Antes de qualquer coisa, confira se o argc vale 3: o nome do programa mais as duas strings. Em qualquer outro caso, não toque no argv, escreva só a quebra de linha e encerre."
+    ],
+    "string-vazia": [
+      "E se uma das duas strings for vazia?",
+      "Se a primeira string é vazia, não há o que percorrer. Se a segunda é vazia, nenhum caractere pode estar nela. Nos dois casos, a resposta é só a quebra de linha.",
+      "Garanta que cada laço teste o '\\0' antes de olhar o caractere, tanto o que percorre a primeira string quanto o que procura na segunda. A quebra de linha deve sair mesmo quando nada mais foi escrito."
+    ],
+    "repetidos": [
+      "Se a primeira string repete o mesmo caractere várias vezes, quantas vezes ele deve aparecer na saída?",
+      "Cada caractere comum aparece uma única vez, na posição da primeira ocorrência dele na primeira string. As ocorrências seguintes são ignoradas, mesmo que estejam na segunda string.",
+      "Antes de escrever um caractere, procure-o nas posições anteriores da primeira string. Se ele já apareceu antes, pule-o: ou ele já foi escrito, ou não está na segunda string."
+    ],
+    "nada-em-comum": [
+      "Quando as duas strings não têm nenhum caractere em comum, o que deve sair?",
+      "Nenhum caractere da primeira aparece na segunda, então nada deve ser escrito além da quebra de linha. Se saiu algo, a busca na segunda string está aceitando caracteres que não estão lá.",
+      "Revise a busca na segunda string: ela deve ir até o '\\0' e só dar o caractere como encontrado quando achar um igual. Se chegar ao fim sem achar, o caractere fica de fora da saída."
+    ],
+    "espacos": [
+      "Espaços e tabs também contam como caracteres neste exercício?",
+      "Aqui não existe a ideia de palavra: espaço e tab são caracteres como quaisquer outros. Se aparecem nas duas strings, entram na saída, também sem repetir.",
+      "Não trate espaços nem tabs de um jeito especial. Aplique a eles as mesmas regras das letras: precisam estar na segunda string e não podem ter aparecido antes na primeira."
+    ]
+  }
+}

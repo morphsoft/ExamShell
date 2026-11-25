@@ -1,0 +1,41 @@
+{
+  "t01": {
+    "stdout": "padinto\n"
+  },
+  "t02": {
+    "stdout": "df6ewg4\n"
+  },
+  "t03": {
+    "stdout": "rien\n"
+  },
+  "t04": {
+    "stdout": "\n"
+  },
+  "t05": {
+    "stdout": "\n"
+  },
+  "t06": {
+    "stdout": "\n"
+  },
+  "t07": {
+    "stdout": "\n"
+  },
+  "t08": {
+    "stdout": "\n"
+  },
+  "t09": {
+    "stdout": "a\n"
+  },
+  "t10": {
+    "stdout": "abc\n"
+  },
+  "t11": {
+    "stdout": "\n"
+  },
+  "t12": {
+    "stdout": " b\tc\n"
+  },
+  "t13": {
+    "stdout": " \n"
+  }
+}
