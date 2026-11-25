@@ -1,17 +1,27 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+import { RANK02_CATALOG } from '../../src/content/rank02Catalog';
 
 const LOAD = 110000; // 1ª carga do compilador num contexto novo
+
+const idsOfLevel = (level: number) => RANK02_CATALOG.filter((e) => e.level === level).map((e) => e.id);
+
+// Lê o id do exercício atual na barra superior ("nível 1/4 · <id>").
+async function currentId(page: Page): Promise<string> {
+  const text = await page.locator('.topbar-right').innerText();
+  const m = text.match(/nível \d\/4\s*·\s*(\S+)/);
+  return m ? m[1] : '';
+}
 
 test('modo aleatório: troca, pulo, retomada e resumo', async ({ page }) => {
   test.setTimeout(240000);
   await page.goto('./#/aleatorio?seed=7');
 
-  // 1. nível 1, first_word ou ft_strlen, sem troca ainda
+  // 1. nível 1, um exercício do nível 1, sem troca ainda
   await expect(page.locator('.topbar')).toContainText('nível 1/4');
-  await expect(page.locator('.topbar')).toContainText(/first_word|ft_strlen/);
   await expect(page.getByTestId('swap')).toBeHidden();
-  const first = (await page.locator('.topbar-right').innerText()).includes('first_word') ? 'first_word' : 'ft_strlen';
-  const other = first === 'first_word' ? 'ft_strlen' : 'first_word';
+  const first = await currentId(page);
+  expect(idsOfLevel(1)).toContain(first);
 
   // 2. grademe com o código inicial falha e libera a troca
   await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
@@ -20,22 +30,26 @@ test('modo aleatório: troca, pulo, retomada e resumo', async ({ page }) => {
   await expect(page.getByTestId('swap')).toBeVisible();
   await expect(page.getByTestId('swap')).toHaveText(/sortear outro deste nível/);
   await page.getByTestId('swap').click();
-  await expect(page.locator('.topbar')).toContainText(other);
+  await expect.poll(() => currentId(page)).not.toBe(first);
+  expect(idsOfLevel(1)).toContain(await currentId(page));
+  await expect(page.locator('.topbar')).toContainText('nível 1/4');
   await expect(page.getByTestId('swap')).toBeHidden();
 
   // 3. pular para o nível 2
   await page.getByTestId('skip').click();
   await expect(page.locator('.topbar')).toContainText('nível 2/4');
-  await expect(page.locator('.topbar')).toContainText('inter');
+  const second = await currentId(page);
+  expect(idsOfLevel(2)).toContain(second);
 
   // 4. recarregar continua; a home oferece continuar
   await page.reload();
   await expect(page.locator('.topbar')).toContainText('nível 2/4');
-  await expect(page.locator('.topbar')).toContainText('inter');
+  expect(await currentId(page)).toBe(second);
   await page.goto('./#/');
   await expect(page.getByTestId('continue-random')).toBeVisible();
   await page.getByTestId('continue-random').click();
   await expect(page.locator('.topbar')).toContainText('nível 2/4');
+  expect(await currentId(page)).toBe(second);
 
   // 5. encerrar com confirmação
   page.once('dialog', (d) => void d.accept());
