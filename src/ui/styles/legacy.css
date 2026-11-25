@@ -1,17 +1,12 @@
-@import '@fontsource/jetbrains-mono/400.css';
-@import '@fontsource/jetbrains-mono/600.css';
-@import '@fontsource/jetbrains-mono/800.css';
-
+/* Telas antigas: apelidos dos nomes antigos para os tokens novos (tokens.css). Sai junto com a última tela antiga. */
 :root {
-  --bg: #0e1621;
-  --text: #d8e1e8;
-  --cyan: #00babc;
-  --amber: #f2b84b;
-  --red: #ff6b6b;
-  --label: #8397aa; /* #5F7488 do mockup, clareado para contraste AA sobre o fundo */
-  --panel: #13202e;
-  --border: #1f2c3b;
-  color-scheme: dark;
+  --text: var(--ink);
+  --cyan: var(--accent);
+  --amber: var(--warn);
+  --red: var(--bad);
+  --label: var(--muted);
+  --panel: var(--surface);
+  --border: var(--line);
 }
 
 * { box-sizing: border-box; }

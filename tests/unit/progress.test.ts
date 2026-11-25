@@ -35,8 +35,19 @@ describe('progress', () => {
     expect(getProgress()).toEqual({});
   });
   it('settings padrão e persistência', () => {
-    expect(getSettings()).toEqual({ vim: false, subjectLang: 'en' });
-    saveSettings({ vim: true, subjectLang: 'pt' });
-    expect(getSettings()).toEqual({ vim: true, subjectLang: 'pt' });
+    expect(getSettings()).toEqual({ vim: false, subjectLang: 'en', theme: 'system' });
+    saveSettings({ vim: true, subjectLang: 'pt', theme: 'dark' });
+    expect(getSettings()).toEqual({ vim: true, subjectLang: 'pt', theme: 'dark' });
+  });
+});
+
+describe('settings.theme', () => {
+  it('configurações antigas, sem theme, ficam como estavam e o tema vira system', () => {
+    localStorage.setItem('examshell:v1:settings', JSON.stringify({ vim: true, subjectLang: 'pt' }));
+    expect(getSettings()).toEqual({ vim: true, subjectLang: 'pt', theme: 'system' });
+  });
+  it('tema inválido vira system', () => {
+    localStorage.setItem('examshell:v1:settings', JSON.stringify({ theme: 'blue' }));
+    expect(getSettings().theme).toBe('system');
   });
 });

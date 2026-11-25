@@ -2,12 +2,13 @@ import type { SourceFiles } from '../engine/types';
 import { KEY_PREFIX, readJson, removeAll, writeJson } from './storage';
 
 export type ExerciseStatus = 'untried' | 'tried' | 'passed';
-export type Settings = { vim: boolean; subjectLang: 'en' | 'pt' };
+export type Theme = 'system' | 'light' | 'dark';
+export type Settings = { vim: boolean; subjectLang: 'en' | 'pt'; theme: Theme };
 
 const PROGRESS_KEY = `${KEY_PREFIX}progress`;
 const SETTINGS_KEY = `${KEY_PREFIX}settings`;
 const draftKey = (id: string) => `${KEY_PREFIX}draft:${id}`;
-const DEFAULT_SETTINGS: Settings = { vim: false, subjectLang: 'en' };
+const DEFAULT_SETTINGS: Settings = { vim: false, subjectLang: 'en', theme: 'system' };
 
 const STATUSES: readonly unknown[] = ['untried', 'tried', 'passed'] satisfies ExerciseStatus[];
 
@@ -45,6 +46,7 @@ export function getSettings(): Settings {
   return {
     vim: typeof s?.vim === 'boolean' ? s.vim : DEFAULT_SETTINGS.vim,
     subjectLang: s?.subjectLang === 'pt' || s?.subjectLang === 'en' ? s.subjectLang : DEFAULT_SETTINGS.subjectLang,
+    theme: s?.theme === 'light' || s?.theme === 'dark' || s?.theme === 'system' ? s.theme : DEFAULT_SETTINGS.theme,
   };
 }
 

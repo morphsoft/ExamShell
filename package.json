@@ -26,6 +26,7 @@
     "@codemirror/state": "^6.7.6",
     "@codemirror/view": "^6.44.0",
     "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
     "@lezer/highlight": "^1.2.5",
     "@replit/codemirror-vim": "^6.4.0",
     "@yowasp/clang": "^22.0.0-git20695-13",
