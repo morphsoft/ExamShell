@@ -143,6 +143,22 @@ int main(void)
     expect(classifyLinkError(l.stderr).reason).toBe('duplicate-main');
   });
 
+  it('long em header do cadete também vira 64 bits', async () => {
+    const c = await engine.compileObjects(
+      {
+        'main.c':
+          '#include <unistd.h>\n#include "x.h"\nlong twice(long n) { return (n * 2); }\n' +
+          "int main(void){ char c = (char)('0' + (int)sizeof(twice(1))); write(1, &c, 1); return 0; }",
+      },
+      { 'x.h': 'long twice(long n);\n' },
+    );
+    if (!c.ok) throw new Error(c.stderr);
+    const l = await engine.link(c.objects, {}, { 'x.h': 'long twice(long n);\n' });
+    if (!l.ok) throw new Error(l.stderr);
+    const r = await engine.openRunSession(l.wasm, './prog').run({ args: [] }, 10000);
+    expect(r.stdout).toBe('8');
+  });
+
   it('ponteiro de função sem protótipo', async () => {
     const c = await engine.compileObjects(
       {

@@ -45,7 +45,7 @@ export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects
   const quiet = { fetchProgress: () => {} };
 
   async function compileObjects(sources: SourceFiles, headers: SourceFiles): Promise<CompileOutcome> {
-    const tree: Tree = { ...headers, ...rewriteAll(sources), [PRELUDE_HEADER]: PRELUDE };
+    const tree: Tree = { ...rewriteAll(headers), ...rewriteAll(sources), [PRELUDE_HEADER]: PRELUDE };
     const err = collector();
     let out: Tree | undefined;
     try {
@@ -56,7 +56,7 @@ export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects
     } catch (e) {
       if (!isExit(e)) throw e;
     }
-    const stderr = restoreLongInDiagnostics(err.text, usesLongLong(sources));
+    const stderr = restoreLongInDiagnostics(err.text, usesLongLong(sources, headers));
     if (!out) return { ok: false, stderr };
     const objects: Record<string, Uint8Array> = {};
     for (const [name, value] of Object.entries(out)) {
@@ -76,7 +76,7 @@ export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects
     extraSources: SourceFiles,
     headers: SourceFiles,
   ): Promise<LinkOutcome> {
-    const tree: Tree = { ...headers, ...objects, ...rewriteAll(extraSources), [PRELUDE_HEADER]: PRELUDE };
+    const tree: Tree = { ...rewriteAll(headers), ...objects, ...rewriteAll(extraSources), [PRELUDE_HEADER]: PRELUDE };
     const err = collector();
     let out: Tree | undefined;
     try {
@@ -89,7 +89,7 @@ export function createCompiler(clang: ClangModule): Pick<Engine, 'compileObjects
     } catch (e) {
       if (!isExit(e)) throw e;
     }
-    const stderr = restoreLongInDiagnostics(err.text, usesLongLong(extraSources));
+    const stderr = restoreLongInDiagnostics(err.text, usesLongLong(extraSources, headers));
     const wasm = out?.['a.out'];
     if (!(wasm instanceof Uint8Array)) return { ok: false, stderr };
     return { ok: true, wasm, stderr };
