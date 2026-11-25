@@ -231,3 +231,16 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- modo aleatório e resumo ---------- */
+.timer-over { color: var(--amber); }
+.sum-levels { list-style: none; margin: 0 0 20px; padding: 0; border: 1px solid var(--border); }
+.sum-level {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 10px 14px;
+  background: var(--panel);
+}
+.sum-level + .sum-level { border-top: 1px solid var(--border); }
+.sum-level .k { min-width: 6ch; }
+.sum-stats { font-size: 12px; flex-basis: 100%; }
+.cheer { margin: 0 0 24px; padding: 8px 12px; border-left: 3px solid var(--cyan); background: var(--panel); }
+.sum-actions { display: flex; gap: 12px; flex-wrap: wrap; }

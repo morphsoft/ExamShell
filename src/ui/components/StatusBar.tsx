@@ -1,4 +1,6 @@
-export function StatusBar({ items }: { items: { label: string; value: string }[] }) {
+import type { ReactNode } from 'react';
+
+export function StatusBar({ items }: { items: { label: string; value: ReactNode }[] }) {
   return (
     <footer className="statusbar">
       {items.map((it) => (

@@ -5,6 +5,8 @@ import { useRoute } from './router';
 import { Home } from './screens/Home';
 import { PracticeList } from './screens/PracticeList';
 import { ExerciseScreen } from './screens/ExerciseScreen';
+import { RandomScreen } from './screens/RandomScreen';
+import { SummaryScreen } from './screens/SummaryScreen';
 import { TopBar } from './components/TopBar';
 import { StatusBar } from './components/StatusBar';
 
@@ -70,8 +72,8 @@ export function App() {
     case 'exercise':
       return <PracticeExercise key={route.id} id={route.id} />;
     case 'random':
-      return <Placeholder title="Modo aleatório" />;
+      return <RandomScreen seed={route.seed} />;
     case 'summary':
-      return <Placeholder title="Resumo da sessão" />;
+      return <SummaryScreen />;
   }
 }

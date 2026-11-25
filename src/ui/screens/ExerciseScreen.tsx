@@ -25,7 +25,7 @@ export interface ExerciseScreenProps {
   /** Só é chamada se a tela ainda estiver montada quando o grademe termina. */
   onGraded(r: GradeResult): void;
   onHintUsed(): void;
-  statusItems: { label: string; value: string }[];
+  statusItems: { label: string; value: ReactNode }[];
   actions?: ReactNode;
 }
 
