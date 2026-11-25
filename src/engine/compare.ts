@@ -13,12 +13,16 @@ export function onlyNewlineDiff(expected: string, actual: string): boolean {
   return expected.replace(/\n+$/, '') === actual.replace(/\n+$/, '');
 }
 
-function catChar(c: number): string {
-  if (c === 10) return '$\n';
+function caret(c: number): string {
   if (c < 32) return '^' + String.fromCharCode(c + 64); // inclui TAB como ^I (estilo cat -A)
   if (c === 127) return '^?';
-  if (c >= 128 && c <= 255) return 'M-' + catChar(c - 128);
   return String.fromCharCode(c);
+}
+
+function catChar(c: number): string {
+  if (c === 10) return '$\n';
+  if (c >= 128 && c <= 255) return 'M-' + caret(c - 128); // sem o ramo de \n: 138 -> M-^J
+  return caret(c);
 }
 
 /** Torna caracteres invisíveis visíveis (estilo `cat -A`: TAB vira ^I). */

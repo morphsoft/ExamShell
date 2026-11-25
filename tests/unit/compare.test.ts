@@ -19,5 +19,10 @@ describe('compare', () => {
     expect(catE('\0')).toBe('^@');
     expect(catE('\x7f')).toBe('^?');
     expect(catE('é')).toBe('M-i');
+    expect(catE('\x8a')).toBe('M-^J');
+    expect(catE('\x80')).toBe('M-^@');
+    expect(catE('\x9f')).toBe('M-^_');
+    expect(catE('\xff')).toBe('M-^?');
+    expect(catE('\xa0')).toBe('M- ');
   });
 });
