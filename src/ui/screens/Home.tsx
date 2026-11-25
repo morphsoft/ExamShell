@@ -65,7 +65,7 @@ export function Home() {
             return (
               <li key={level}>
                 <span className="k">nível {level}</span> · <b>{passed}/{entries.length}</b>{' '}
-                <span className="ok">✓</span>
+                {passed === entries.length && <span className="ok">✓</span>}
               </li>
             );
           })}

@@ -11,6 +11,11 @@ test('home mostra os dois modos', async ({ page }) => {
   await expect(page.getByTestId('mode-random')).toContainText('Modo aleatório');
 });
 
+test('sem progresso, a home não mostra ✓ nos níveis', async ({ page }) => {
+  await expect(page.locator('.levels li')).toHaveCount(4);
+  await expect(page.locator('.levels')).not.toContainText('✓');
+});
+
 test('lista de treino e navegação ao exercício', async ({ page }) => {
   await page.getByTestId('mode-practice').click();
   for (const n of [1, 2, 3, 4]) await expect(page.getByText(`Nível ${n}`).first()).toBeVisible();
