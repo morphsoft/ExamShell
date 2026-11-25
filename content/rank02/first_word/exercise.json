@@ -1,13 +1,13 @@
 {
   "tests": [
     { "id": "t01", "args": ["FOR PONY"], "category": "basico" },
-    { "id": "t02", "args": ["this        ...       is sparta, then again, yes!"], "category": "basico" },
-    { "id": "t03", "args": ["   lorem,ipsum   "], "category": "espacos-no-inicio" },
-    { "id": "t04", "args": ["\t \tlorem"], "category": "tabs" },
-    { "id": "t05", "args": [], "category": "argumentos" },
-    { "id": "t06", "args": ["a", "b"], "category": "argumentos" },
-    { "id": "t07", "args": [""], "category": "string-vazia" },
-    { "id": "t08", "args": ["      "], "category": "so-espacos" }
+    { "id": "t02", "args": ["this        ...    is sparta, then again, maybe    not"], "category": "basico" },
+    { "id": "t03", "args": ["   "], "category": "so-espacos" },
+    { "id": "t04", "args": ["a", "b"], "category": "argumentos" },
+    { "id": "t05", "args": ["  lorem,ipsum  "], "category": "espacos-no-inicio" },
+    { "id": "t06", "args": ["\t \tlorem"], "category": "tabs" },
+    { "id": "t07", "args": [], "category": "argumentos" },
+    { "id": "t08", "args": [""], "category": "string-vazia" }
   ],
   "hints": {
     "basico": [

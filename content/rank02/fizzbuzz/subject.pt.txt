@@ -3,7 +3,7 @@ Arquivos esperados : fizzbuzz.c
 Funções permitidas : write
 --------------------------------------------------------------------------------
 
-Escreva um programa que imprime os números de 1 a 100, cada um seguido de uma
+Escreva um programa que imprime os números de 1 a 100, cada um separado por uma
 quebra de linha.
 
 Mas, para os múltiplos de 3, ele imprime "fizz" no lugar do número.
@@ -30,4 +30,8 @@ fizz
 14
 fizzbuzz
 [...]
+97
+98
+fizz
+buzz
 $>

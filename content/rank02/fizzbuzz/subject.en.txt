@@ -3,7 +3,7 @@ Expected files   : fizzbuzz.c
 Allowed functions: write
 --------------------------------------------------------------------------------
 
-Write a program that prints the numbers from 1 to 100, each followed by a
+Write a program that prints the numbers from 1 to 100, each separated by a
 newline.
 
 But for multiples of 3, it prints "fizz" instead of the number.
@@ -29,4 +29,8 @@ fizz
 14
 fizzbuzz
 [...]
+97
+98
+fizz
+buzz
 $>

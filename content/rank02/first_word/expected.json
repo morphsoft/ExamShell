@@ -6,16 +6,16 @@
     "stdout": "this\n"
   },
   "t03": {
-    "stdout": "lorem,ipsum\n"
+    "stdout": "\n"
   },
   "t04": {
-    "stdout": "lorem\n"
+    "stdout": "\n"
   },
   "t05": {
-    "stdout": "\n"
+    "stdout": "lorem,ipsum\n"
   },
   "t06": {
-    "stdout": "\n"
+    "stdout": "lorem\n"
   },
   "t07": {
     "stdout": "\n"

@@ -23,23 +23,23 @@
     },
     {
       "id": "t04",
+      "args": [],
+      "category": "argumentos"
+    },
+    {
+      "id": "t05",
+      "args": [
+        ""
+      ],
+      "category": "string-vazia"
+    },
+    {
+      "id": "t06",
       "args": [
         "abc",
         "defg"
       ],
       "category": "argumentos"
-    },
-    {
-      "id": "t05",
-      "args": [],
-      "category": "argumentos"
-    },
-    {
-      "id": "t06",
-      "args": [
-        ""
-      ],
-      "category": "string-vazia"
     },
     {
       "id": "t07",
