@@ -168,8 +168,8 @@ test('grademe mostra onde quebrou e as dicas, uma por vez', async ({ page }) => 
   await grademe(page);
   const log = page.getByTestId('log');
   await expect(log).toContainText('examshell> grademe');
-  await expect(log).toContainText('✗ teste 3/8');
-  await expect(log).toContainText('./first_word "   lorem,ipsum   "');
+  await expect(log).toContainText('✗ teste 5/8');
+  await expect(log).toContainText('./first_word "  lorem,ipsum  "');
   await expect(log).toContainText('esperado:');
   await expect(log).toContainText('recebido:');
 
