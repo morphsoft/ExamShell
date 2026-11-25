@@ -46,10 +46,10 @@ int	main(int argc, char **argv)
 			show(make_list(1, (char *[]){"a"}));
 			break ;
 		case 2: /* t03 */
-			show(make_list(5, (char *[]){"1", "2", "3", "4", "5"}));
+			show(NULL);
 			break ;
 		case 3: /* t04 */
-			show(NULL);
+			show(make_list(5, (char *[]){"1", "2", "3", "4", "5"}));
 			break ;
 		case 4: /* t05 */
 			show(make_list(3, (char *[]){NULL, NULL, NULL}));

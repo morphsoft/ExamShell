@@ -18,7 +18,7 @@
     "basico": [
       "A sua saída tem só os caracteres que aparecem nas duas strings, sem repetir nenhum e na ordem da primeira?",
       "São três regras ao mesmo tempo: o caractere precisa existir na segunda string, não pode ter sido mostrado antes, e a ordem da saída é a da primeira string. No final vem a quebra de linha.",
-      "Percorra a primeira string do começo ao fim. Para cada caractere, verifique se ele aparece em algum lugar da segunda string e se ainda não apareceu antes na própria primeira string. Só escreva o caractere quando as duas condições forem atendidas."
+      "A ideia que resolve: para não repetir, olhe para trás na própria primeira string, e não na saída nem na segunda. Se o caractere já apareceu antes na primeira, ele já teve a vez dele de sair."
     ],
     "argumentos": [
       "O que o seu programa faz quando não recebe exatamente duas strings?",

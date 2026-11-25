@@ -17,7 +17,7 @@
     "basico": [
       "A string devolvida tem todos os dígitos, na ordem certa, e termina com o '\\0'?",
       "Dividir por 10 e pegar o resto separa os dígitos, mas eles saem de trás para frente: primeiro as unidades. E a string alocada precisa de espaço para todos os dígitos e mais o '\\0' do final.",
-      "Primeiro conte quantos dígitos o número tem. Aloque esse tamanho mais um, coloque o '\\0' na última posição e preencha a string do fim para o começo, escrevendo em cada posição o resto da divisão por 10 convertido em caractere."
+      "Os restos da divisão por 10 saem do último dígito para o primeiro. Por isso, descubra o tamanho da string antes de escrever qualquer coisa e preencha de trás para frente."
     ],
     "negativos": [
       "E se o número for negativo?",

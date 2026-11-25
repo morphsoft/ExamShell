@@ -2,8 +2,8 @@
   "tests": [
     { "id": "t01", "args": ["0"], "category": "basico", "display": "ft_list_size([\"a\"] -> [\"b\"] -> [\"c\"] -> NULL)" },
     { "id": "t02", "args": ["1"], "category": "basico", "display": "ft_list_size([\"a\"] -> NULL)" },
-    { "id": "t03", "args": ["2"], "category": "basico", "display": "ft_list_size([\"1\"] -> [\"2\"] -> [\"3\"] -> [\"4\"] -> [\"5\"] -> NULL)" },
-    { "id": "t04", "args": ["3"], "category": "lista-vazia", "display": "ft_list_size(NULL)" },
+    { "id": "t03", "args": ["2"], "category": "lista-vazia", "display": "ft_list_size(NULL)" },
+    { "id": "t04", "args": ["3"], "category": "basico", "display": "ft_list_size([\"1\"] -> [\"2\"] -> [\"3\"] -> [\"4\"] -> [\"5\"] -> NULL)" },
     { "id": "t05", "args": ["4"], "category": "dados-nulos", "display": "ft_list_size([NULL] -> [NULL] -> [NULL] -> NULL)" },
     { "id": "t06", "args": ["5"], "category": "dados-nulos", "display": "ft_list_size([\"a\"] -> [NULL] -> [\"c\"] -> NULL)" },
     { "id": "t07", "args": ["6"], "category": "lista-longa", "display": "ft_list_size([\"x\"] -> [\"x\"] -> … -> [\"x\"] -> NULL) /* 1000 elementos */" }
@@ -12,7 +12,7 @@
     "basico": [
       "A sua função conta todos os elementos da lista, do primeiro ao último?",
       "Uma lista ligada é uma corrente: cada elemento aponta para o próximo pelo campo next, e o último aponta para NULL. O tamanho é quantos elementos existem nessa corrente, contando o primeiro.",
-      "Comece com um contador em zero e um ponteiro no primeiro elemento. Enquanto o ponteiro não for NULL, some um ao contador e passe o ponteiro para o elemento seguinte. Quando ele virar NULL, o contador tem o tamanho."
+      "Quem diz onde a lista acaba é o ponteiro que vira NULL. Conte os elementos por onde você passa, e não as ligações entre eles: uma lista com um único elemento tem tamanho 1."
     ],
     "lista-vazia": [
       "O que a sua função devolve quando recebe NULL?",

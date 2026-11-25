@@ -13,7 +13,7 @@
     "basico": [
       "A sua função conta todos os caracteres da string, nem um a mais, nem um a menos?",
       "Toda string em C termina com o caractere nulo ('\\0'). Ele marca o fim, mas não faz parte do tamanho: \"Hello\" tem 5 caracteres e ocupa 6 posições na memória.",
-      "Comece um contador em zero e avance pela string somando um a cada caractere, parando ao encontrar o '\\0' sem contá-lo. O valor do contador nesse momento é o tamanho que a função deve devolver."
+      "O '\\0' é a parada e fica fora da conta. Se o seu resultado sai um a mais ou um a menos, confira em que valor o contador começa e se ele ainda soma na hora em que encontra o '\\0'."
     ],
     "string-vazia": [
       "Qual é o tamanho de uma string vazia? E o que a sua função devolve para ela?",
