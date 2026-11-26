@@ -443,3 +443,12 @@ test('compilador que não baixa: aviso, detalhe do erro e dica de recarregar; te
   await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
   await expect(loader).toBeHidden();
 });
+
+test('aba que morreu no início do motor: aviso de memória e tentar de novo funciona', async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('examshell:v1:engine-init', '1'));
+  await page.goto('about:blank'); // o beforeEach já abriu o site: só uma navegação nova roda o addInitScript
+  await page.goto('./#/treino/first_word');
+  await expect(page.getByTestId('compiler-loader')).toContainText('Este aparelho pode não ter memória suficiente');
+  await page.getByTestId('compiler-retry').click();
+  await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
+});

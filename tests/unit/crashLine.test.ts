@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { codeSectionStart, locateCrash, parseAddr2line, parseWasmTrapOffset } from '../../src/engine/crashLine';
+import { codeSectionStart, CRASH_LINE_TIMEOUT_MS, locateCrash, parseAddr2line, parseWasmTrapOffset } from '../../src/engine/crashLine';
 import type { Engine } from '../../src/engine/types';
 
 describe('parseWasmTrapOffset', () => {
@@ -124,5 +124,19 @@ describe('locateCrash', () => {
       throw new Error('o compilador foi reiniciado');
     });
     expect(await locateCrash(boom, wasm, STACK, ['main.c'])).toBeNull();
+  });
+});
+
+describe('locateCrash: limite de tempo', () => {
+  it('addr2line que não responde: null depois de 2 s', async () => {
+    vi.useFakeTimers();
+    try {
+      const wasm = new Uint8Array([0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00, 10, 1, 0]);
+      const p = locateCrash({ addr2line: () => new Promise(() => {}) }, wasm, 'at x (wasm://w:wasm-function[1]:0x20)', ['a.c']);
+      await vi.advanceTimersByTimeAsync(CRASH_LINE_TIMEOUT_MS);
+      await expect(p).resolves.toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

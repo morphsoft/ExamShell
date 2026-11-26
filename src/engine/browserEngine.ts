@@ -57,10 +57,12 @@ export function createBrowserEngine(opts: {
   clangBaseUrl: string;
   onProgress?(p: LoadProgress): void;
   onStatus?(s: EngineStatus): void;
+  /** Não inicia o compilador; `status()` é 'error' até o `retry()`. */
+  deferStart?: boolean;
 }): BrowserEngine {
-  let current: EngineStatus = 'loading';
+  let current: EngineStatus = opts.deferStart ? 'error' : 'loading';
   let worker: Worker;
-  let readyPromise: Promise<void>;
+  let readyPromise: Promise<void> = Promise.resolve();
   let stop: (err: Error) => void = () => {};
   let nextId = 1;
   const pending = new Map<number, { resolve(v: unknown): void; reject(e: Error): void }>();
@@ -122,7 +124,10 @@ export function createBrowserEngine(opts: {
     });
   }
 
-  start();
+  if (opts.deferStart) {
+    readyPromise = Promise.reject(new Error('o compilador não foi iniciado'));
+    quiet(readyPromise);
+  } else start();
   return {
     compileObjects: (sources, headers) => call('compileObjects', [sources, headers]),
     undefinedSymbols: (objects) => call('undefinedSymbols', [objects]),

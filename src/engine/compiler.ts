@@ -150,7 +150,7 @@ export function createCompiler(
     const address = '0x' + (moduleOffset - start).toString(16);
     const out = collector();
     try {
-      await clang.runLLVM(['addr2line', '-i', '-e', 'a.out', address], { 'a.out': wasm }, { ...quiet, stdout: out.callback });
+      await clang.runLLVM(['addr2line', '-i', '-e', 'a.out', address], { 'a.out': wasm }, { ...quiet, stdout: out.callback, stderr: collector().callback });
     } catch (e) {
       if (!isExit(e)) throw e;
       return null;

@@ -56,7 +56,7 @@ function Workspace({
   actions,
   notice,
 }: ExerciseScreenProps) {
-  const { engine, status, progress, error: engineError } = useEngine();
+  const { engine, status, progress, error: engineError, lowMemory } = useEngine();
   const isFunction = exercise.kind === 'function';
 
   const tabs = useMemo<EditorTab[]>(
@@ -280,7 +280,7 @@ function Workspace({
             onRun={onRun}
             onGrade={onGrade}
           />
-          <CompilerLoader status={status} progress={progress} error={engineError} onRetry={() => engine.retry()} />
+          <CompilerLoader status={status} progress={progress} error={engineError} lowMemory={lowMemory} onRetry={() => engine.retry()} />
           <LogPane exercise={exercise} entries={entries} onHint={onHint} />
         </section>
       </main>

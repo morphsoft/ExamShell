@@ -5,15 +5,32 @@ export function CompilerLoader({
   status,
   progress,
   error,
+  lowMemory,
   onRetry,
 }: {
   status: EngineStatus;
   progress: LoadProgress | null;
   /** O motivo da falha, quando `status` é 'error'. */
   error?: string | null;
+  /** O aparelho provavelmente não tem memória para o compilador. */
+  lowMemory: boolean;
   onRetry(): void;
 }) {
   if (status === 'ready') return null;
+
+  if (lowMemory) {
+    return (
+      <div className="loader loader-error" data-testid="compiler-loader" role="alert">
+        <span>
+          Este aparelho pode não ter memória suficiente para o compilador. Você pode continuar lendo e escrevendo; para
+          rodar e corrigir, tente num computador.
+        </span>
+        <button type="button" className="btn" data-testid="compiler-retry" onClick={onRetry}>
+          tentar de novo
+        </button>
+      </div>
+    );
+  }
 
   if (status === 'error') {
     return (

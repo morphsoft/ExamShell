@@ -52,6 +52,9 @@ export function parseAddr2line(output: string): SourceLine | null {
   return null;
 }
 
+/** Quanto esperar o addr2line; passado isso, a linha do travamento é só omitida. */
+export const CRASH_LINE_TIMEOUT_MS = 2000;
+
 /**
  * A linha onde o programa travou, se ela estiver num dos arquivos do cadete (nunca no harness nem na libc).
  * É um extra: qualquer problema vira null, e o resultado do teste segue igual.
@@ -65,10 +68,16 @@ export async function locateCrash(
   if (!engine.addr2line || !stack) return null;
   const offset = parseWasmTrapOffset(stack);
   if (offset === null) return null;
+  let timer: ReturnType<typeof setTimeout> | undefined;
   try {
-    const found = await engine.addr2line(wasm, offset);
+    const timeout = new Promise<null>((resolve) => {
+      timer = setTimeout(() => resolve(null), CRASH_LINE_TIMEOUT_MS);
+    });
+    const found = await Promise.race([engine.addr2line(wasm, offset), timeout]);
     return found && files.includes(found.file) ? found : null;
   } catch {
     return null;
+  } finally {
+    clearTimeout(timer);
   }
 }
