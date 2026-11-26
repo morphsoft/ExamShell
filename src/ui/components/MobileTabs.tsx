@@ -20,7 +20,11 @@ export function MobileTabs({ tab, onSelect, dot }: { tab: MobileTab; onSelect(t:
           onClick={() => onSelect(t.id)}
         >
           {t.label}
-          {t.id === 'result' && dot && <span className="badge" data-testid="result-dot" aria-label="novo" />}
+          {t.id === 'result' && dot && (
+            <span className="badge" data-testid="result-dot">
+              <span className="sr-only"> novo</span>
+            </span>
+          )}
         </button>
       ))}
     </div>

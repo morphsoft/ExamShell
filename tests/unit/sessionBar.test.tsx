@@ -81,4 +81,17 @@ describe('SessionBar', () => {
     act(() => summary!.click());
     expect(onExit).toHaveBeenCalledTimes(1);
   });
+
+  it('encerrar: a confirmação recebe o foco em "cancelar"; cancelar devolve o foco ao "Encerrar"', () => {
+    render(passed(0), null);
+    const finish = q('finish')!;
+    finish.focus();
+    act(() => finish.click());
+    const cancel = [...container.querySelectorAll('button')].find((b) => b.textContent === 'cancelar')!;
+    expect(cancel).toBeDefined();
+    expect(document.activeElement).toBe(cancel);
+    act(() => cancel.click());
+    expect(q('finish-confirm')).toBeNull();
+    expect(document.activeElement).toBe(q('finish'));
+  });
 });

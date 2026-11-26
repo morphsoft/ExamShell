@@ -58,10 +58,13 @@ export function Home({ section }: { section?: 'exercicios' }) {
   const idsByLevel = { 1: groups[1].map((e) => e.id), 2: groups[2].map((e) => e.id), 3: groups[3].map((e) => e.id), 4: groups[4].map((e) => e.id) };
   const days = streakDays(activity.streak, localDay(new Date()));
 
+  // #/treino rola até a lista; voltar dela para "início" (a mesma tela continua montada) sobe ao topo
+  const lastSection = useRef(section);
   useEffect(() => {
-    if (section !== 'exercicios') return;
-    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.getElementById('exercicios')?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    if (section === 'exercicios') document.getElementById('exercicios')?.scrollIntoView({ behavior });
+    else if (lastSection.current === 'exercicios') window.scrollTo({ top: 0, behavior });
+    lastSection.current = section;
   }, [section]);
 
   const onClear = () => {

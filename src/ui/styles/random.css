@@ -68,6 +68,8 @@
   .step + .step::before { width: 8px; margin-right: 4px; }
   .steps { gap: 4px; }
   .rand-card { padding: 18px; }
+  /* os últimos botões ficam acima da navegação fixa de baixo, como na home */
+  .rand-page { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* chip "encerrar sessão" da tela de erro do simulado */

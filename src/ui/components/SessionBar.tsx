@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { remainingMs, type RandomSession } from '../../state/randomSession';
 import type { HoldExit } from '../randomHold';
 import { formatClock } from '../sessionText';
@@ -68,6 +68,19 @@ export function SessionBar({
   onExit?(): void;
 }) {
   const [confirming, setConfirming] = useState(false);
+  // a confirmação troca o botão focado: o foco vai para "cancelar" e, ao cancelar, volta ao "Encerrar"
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const finishRef = useRef<HTMLButtonElement>(null);
+  const refocus = useRef(false);
+  useEffect(() => {
+    if (confirming) cancelRef.current?.focus();
+    else if (refocus.current) finishRef.current?.focus();
+    refocus.current = false;
+  }, [confirming]);
+  const cancel = () => {
+    refocus.current = true;
+    setConfirming(false);
+  };
   const held = exit !== null;
   const finished = session.finishedAt !== null;
   return (
@@ -92,7 +105,7 @@ export function SessionBar({
             <button type="button" className="btn primary" data-testid="finish-confirm" onClick={onFinish}>
               Encerrar e ver o resumo
             </button>
-            <button type="button" className="btn quiet" onClick={() => setConfirming(false)}>
+            <button type="button" className="btn quiet" ref={cancelRef} onClick={cancel}>
               cancelar
             </button>
           </>
@@ -119,7 +132,7 @@ export function SessionBar({
               </button>
             )}
             {!finished && (
-              <button type="button" className="btn quiet" data-testid="finish" onClick={() => setConfirming(true)}>
+              <button type="button" className="btn quiet" data-testid="finish" ref={finishRef} onClick={() => setConfirming(true)}>
                 Encerrar
               </button>
             )}

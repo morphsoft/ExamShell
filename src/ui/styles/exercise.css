@@ -149,6 +149,7 @@
 .old { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--muted); border: 1px dashed var(--line-2); border-radius: 10px; padding: 6px 10px; background: transparent; text-align: left; margin-top: 6px; cursor: pointer; }
 .old:hover { color: var(--ink); }
 .next { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 12px 12px; }
+/* aviso de "passou" (o único .toast do app; no celular sobe acima do rodapé, lá embaixo) */
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 50; max-width: min(92vw, 520px); padding: 10px 16px; border-radius: 12px; background: var(--surface); color: var(--ink); border: 1px solid color-mix(in srgb, var(--ok) 45%, var(--line)); box-shadow: var(--shadow); font: 700 14px var(--sans); animation: toast-in .25s ease-out; }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }

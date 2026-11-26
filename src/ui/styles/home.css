@@ -82,6 +82,11 @@
   .bottom-nav a.on { color: var(--accent-ink); }
   .bottom-nav svg { width: 24px; height: 24px; }
 }
+/* 320px: marca, sequência e tema cabem na linha do topo sem rolagem lateral */
+@media (max-width: 360px) {
+  .appbar .in { column-gap: 10px; }
+  .appbar .right { gap: 10px; }
+}
 
 /* ---------- início ---------- */
 .home { flex: 1; padding-block: 26px 120px; }

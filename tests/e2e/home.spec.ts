@@ -104,6 +104,30 @@ test('#/treino rola até os exercícios', async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
 });
 
+test('de #/treino, "início" volta ao topo', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 600 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('./#/treino');
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+  await page.getByRole('navigation', { name: 'Seções' }).getByRole('link', { name: 'início' }).click();
+  await expect(page).toHaveURL(/#\/$/);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+});
+
+test('320px: sem rolagem horizontal no início, na lista e no simulado', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  for (const [hash, ready] of [
+    ['#/', 'continue-card'],
+    ['#/treino', 'ex-first_word'],
+    ['#/aleatorio', 'start-random'],
+  ] as const) {
+    await page.goto(`./${hash}`);
+    await expect(page.getByTestId(ready)).toBeVisible();
+    const sw = await page.evaluate(() => document.scrollingElement!.scrollWidth);
+    expect(sw, hash).toBeLessThanOrEqual(320);
+  }
+});
+
 test('início vazio: preparação "ainda não começou" e convite do nível 1', async ({ page }) => {
   for (const n of [1, 2, 3, 4]) await expect(page.getByTestId(`prep-${n}`)).toContainText('ainda não começou');
   await expect(page.getByTestId('continue-card')).toContainText('Comece pelo nível 1');

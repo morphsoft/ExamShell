@@ -37,6 +37,19 @@ export function EditorTabs({
   const refs = useRef(new Map<string, HTMLButtonElement>());
   const [confirming, setConfirming] = useState(false);
   useEffect(() => setConfirming(false), [active]); // a pergunta é sobre o arquivo da aba ativa
+  // a pergunta troca o botão focado: o foco vai para "cancelar" e, ao responder, volta ao "recomeçar"
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const resetRef = useRef<HTMLButtonElement>(null);
+  const refocus = useRef(false);
+  useEffect(() => {
+    if (confirming) cancelRef.current?.focus();
+    else if (refocus.current) resetRef.current?.focus();
+    refocus.current = false;
+  }, [confirming]);
+  const answer = () => {
+    refocus.current = true;
+    setConfirming(false);
+  };
   const activeTab = tabs.find((t) => t.key === active) ?? tabs[0];
 
   const onKeyDown = (e: KeyboardEvent) => {
@@ -67,7 +80,6 @@ export function EditorTabs({
               aria-selected={selected}
               aria-controls={EDITOR_PANEL_ID}
               tabIndex={selected ? 0 : -1}
-              
               onClick={() => onSelect(t.key)}
             >
               {t.label}
@@ -84,13 +96,13 @@ export function EditorTabs({
               className="danger"
               data-testid="reset-confirm"
               onClick={() => {
-                setConfirming(false);
+                answer();
                 onReset(active);
               }}
             >
               recomeçar
             </button>
-            <button type="button" onClick={() => setConfirming(false)}>
+            <button type="button" ref={cancelRef} onClick={answer}>
               cancelar
             </button>
           </span>
@@ -98,6 +110,7 @@ export function EditorTabs({
           !activeTab.readOnly && (
             <button
               type="button"
+              ref={resetRef}
               data-testid="editor-reset"
               title="Recomeçar o arquivo"
               onClick={() => setConfirming(true)}
