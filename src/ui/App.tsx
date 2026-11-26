@@ -3,7 +3,6 @@ import { getExercise } from '../content/loadExercises';
 import { getProgress, loadDraft, saveDraft, type ExerciseStatus } from '../state/progress';
 import { useRoute } from './router';
 import { Home } from './screens/Home';
-import { PracticeList } from './screens/PracticeList';
 import { ExerciseScreen } from './screens/ExerciseScreen';
 import { RandomScreen } from './screens/RandomScreen';
 import { SummaryScreen } from './screens/SummaryScreen';
@@ -66,9 +65,7 @@ export function App() {
   const route = useRoute();
   switch (route.name) {
     case 'home':
-      return <Home />;
-    case 'practice':
-      return <PracticeList />;
+      return <Home section={route.section} />;
     case 'exercise':
       return <PracticeExercise key={route.id} id={route.id} />;
     case 'random':

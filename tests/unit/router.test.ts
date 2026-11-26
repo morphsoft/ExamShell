@@ -8,7 +8,7 @@ describe('parseHash', () => {
     expect(parseHash('#/xyz')).toEqual({ name: 'home' });
   });
   it('treino', () => {
-    expect(parseHash('#/treino')).toEqual({ name: 'practice' });
+    expect(parseHash('#/treino')).toEqual({ name: 'home', section: 'exercicios' });
     expect(parseHash('#/treino/first_word')).toEqual({ name: 'exercise', id: 'first_word' });
   });
   it('aleatório', () => {

@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RANK02_CATALOG } from '../../content/rank02Catalog';
 import { loadExercises } from '../../content/loadExercises';
 import { clearProgress, getProgress } from '../../state/progress';
 import { loadSession } from '../../state/randomSession';
 import type { Level } from '../../engine/types';
+import { ExerciseList, type DetailRequest } from '../home/ExerciseList';
 import { StatusBar } from '../components/StatusBar';
 import { TopBar } from '../components/TopBar';
 
 const LEVELS: Level[] = [1, 2, 3, 4];
 
-export function Home() {
+export function Home({ section }: { section?: 'exercicios' }) {
   const [version, setVersion] = useState(0);
+  const [detail, setDetail] = useState<DetailRequest | null>(null);
   void version;
   const progress = getProgress();
   const session = loadSession();
   const available = new Set(loadExercises().map((e) => e.id));
   const ongoing = session !== null && session.finishedAt === null;
+
+  useEffect(() => {
+    if (section !== 'exercicios') return;
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('exercicios')?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
+  }, [section]);
 
   const onClear = () => {
     if (window.confirm('Limpar todo o progresso e rascunhos deste navegador? Isso não pode ser desfeito.')) {
@@ -70,6 +78,10 @@ export function Home() {
             );
           })}
         </ul>
+
+        <section id="exercicios" className="exercicios" aria-label="Exercícios">
+          <ExerciseList detail={detail} onDetail={setDetail} />
+        </section>
 
         <button type="button" className="link-btn" data-testid="clear-progress" onClick={onClear}>
           limpar progresso

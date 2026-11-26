@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export type Route =
-  | { name: 'home' }
-  | { name: 'practice' }
+  | { name: 'home'; section?: 'exercicios' }
   | { name: 'exercise'; id: string }
   | { name: 'random'; seed?: number }
   | { name: 'summary' };
@@ -11,7 +10,7 @@ export function parseHash(hash: string): Route {
   const [path, query = ''] = hash.replace(/^#/, '').split('?');
   const parts = path.split('/').filter(Boolean);
   if (parts[0] === 'treino') {
-    if (parts.length === 1) return { name: 'practice' };
+    if (parts.length === 1) return { name: 'home', section: 'exercicios' };
     if (parts.length === 2) return { name: 'exercise', id: decodeURIComponent(parts[1]) };
   }
   if (parts[0] === 'aleatorio') {
