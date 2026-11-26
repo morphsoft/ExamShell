@@ -137,7 +137,7 @@
 .log .result .body p, .log .result .body pre { margin: 0; }
 .result .cmd { color: var(--ink); overflow-wrap: anywhere; white-space: pre-wrap; }
 .result .fail-head { color: var(--bad); font-weight: 700; }
-.result .io { margin-top: 0; padding-left: 0; grid-template-columns: 82px minmax(0, 1fr); column-gap: 8px; }
+.result .io { display: grid; margin-top: 0; padding-left: 0; grid-template-columns: 82px minmax(0, 1fr); column-gap: 8px; }
 .result .io .k { color: var(--muted); font-family: var(--sans); font-weight: 700; font-size: 13px; }
 .result .stderr { color: var(--ink); }
 .result mark, .result .diff { background: var(--bad-soft); color: var(--bad); border-radius: 3px; padding: 0 1px; outline: 1px solid color-mix(in srgb, var(--bad) 40%, transparent); }

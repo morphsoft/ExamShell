@@ -154,6 +154,7 @@ test('grademe mostra onde quebrou e as dicas, uma por vez', async ({ page }) => 
   await expect(dots.locator(':scope[data-state="skip"]')).toHaveCount(3);
   await expect(log).toContainText('./first_word "  lorem,ipsum  "');
   await expect(log).toContainText('esperado:');
+  await expect(page.locator('.result .io').last()).toHaveCSS('display', 'grid');
   await expect(log).toContainText('recebido:');
 
   const hint = page.getByTestId('hint');
