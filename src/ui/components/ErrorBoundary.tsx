@@ -37,7 +37,7 @@ function ErrorFallback({ message }: { message: string }) {
   return (
     <div className="error-fallback" data-testid="error-fallback" role="alert">
       <p>Algo deu errado ao carregar esta parte do site. Recarregue a página para continuar.</p>
-      <button type="button" className="btn btn-primary" onClick={() => location.reload()}>
+      <button type="button" className="btn primary" onClick={() => location.reload()}>
         recarregar
       </button>
       {message && (

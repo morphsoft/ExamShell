@@ -1,6 +1,6 @@
 /* Simulado: tela de início, barra da sessão e resumo. */
 
-/* botões (o .btn antigo ainda existe no legacy.css; aqui valem os do protótipo) */
+/* botões da tela do simulado */
 .session-bar .btn, .rand-page .btn {
   font: inherit; font-weight: 800; font-size: 14px; padding: 8px 14px; cursor: pointer; text-decoration: none;
   border: 1px solid var(--line-2); border-radius: 10px; background: var(--surface); color: var(--ink);
@@ -68,3 +68,7 @@
   .steps { gap: 4px; }
   .rand-card { padding: 18px; }
 }
+
+/* chip "encerrar sessão" da tela de erro do simulado */
+.chip { font: inherit; font-size: 13px; font-weight: 700; padding: 3px 12px; cursor: pointer; background: none; color: var(--muted); border: 1px solid var(--line-2); border-radius: 999px; }
+.chip:hover { color: var(--ink); border-color: var(--muted); }

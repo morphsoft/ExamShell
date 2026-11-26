@@ -76,6 +76,7 @@
 .editor { flex: 1 1 auto; min-height: 0; position: relative; background: var(--code-bg); }
 .editor:focus-within::after { content: ''; position: absolute; inset: 0; z-index: 300; pointer-events: none; border: 1px solid var(--accent); }
 .cm-host, .cm-host .cm-editor { height: 100%; }
+.cm-host .cm-editor { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; } /* "!=" e "->" aparecem como se digitam */
 .editor-loading { margin: 0; padding: 12px 16px; color: var(--muted); font-size: 13px; }
 
 /* barra de rodar */
@@ -91,6 +92,34 @@
 .runbar .btn.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.06); }
 .runbar .btn:disabled { cursor: not-allowed; color: var(--soft); background: var(--raise); border-color: var(--line); filter: none; }
 .runbar .btn kbd { font: 600 11px var(--mono); opacity: .75; }
+
+/* ---- carregador do compilador ---- */
+.loader { display: flex; flex-direction: column; gap: 6px; padding: 8px 14px; border-top: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 13px; font-weight: 600; }
+.loader-bar { display: block; height: 4px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.loader-fill { display: block; height: 100%; background: var(--accent); transition: width .2s; }
+.loader-error { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 14px; color: var(--ink); background: var(--bad-soft); border-left: 3px solid var(--bad); }
+.loader-help, .loader-details { flex-basis: 100%; }
+.loader-details { color: var(--muted); font-size: 13px; max-width: 100%; }
+.loader-details summary { cursor: pointer; }
+.loader-details pre { margin: 6px 0 0; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* ---- terminal ---- */
+.pane-work .log { flex: 0 0 42%; min-height: 0; overflow-y: auto; scrollbar-width: thin; padding: 12px 14px 18px; background: var(--term-bg); border-top: 1px solid var(--line); font: 13.5px/1.55 var(--mono); font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+.log:focus-visible { outline-offset: -2px; }
+.log p, .log pre { margin: 0; }
+.log pre, .cmdline { font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }
+.log code { font: inherit; color: var(--ink); }
+.log .prompt { color: var(--accent-ink); font-weight: 700; }
+.log-intro { color: var(--muted); }
+.log .entry { margin-top: 12px; }
+.run-fail { margin-top: 6px; padding: 8px 12px; background: var(--bad-soft); border-left: 3px solid var(--bad); border-radius: 0 8px 8px 0; }
+.fail-text { color: var(--bad); }
+.fail-cmd { white-space: pre-wrap; overflow-wrap: anywhere; font-weight: 400; margin-left: .6ch; }
+.diff-end { display: inline-block; width: 1ch; }
+.log .stderr { margin-top: 6px; color: var(--muted); font-size: 13px; }
+.log .explain { margin-top: 6px; }
+.log .out { margin-top: 2px; }
+.hint-done { margin: 0; padding: 10px 12px; background: var(--warn-soft); border-top: 1px solid color-mix(in srgb, var(--warn) 30%, var(--line)); font-family: var(--sans); font-weight: 600; }
 
 /* ---- cartões de resultado, dicas e aviso ao passar ---- */
 .log .result { margin-top: 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); overflow: hidden; font-family: var(--sans); }
@@ -147,6 +176,7 @@
   .work[data-mtab="code"] .editor { height: calc(100vh - 380px - var(--kb-inset, 0px)); height: calc(100dvh - 380px - var(--kb-inset, 0px)); min-height: 200px; }
   .work[data-mtab="code"] .pane-work { padding-bottom: 150px; }
   .runbar { border-bottom: 0; }
+  .pane-work .log { flex: none; min-height: 180px; overflow: visible; }
 
   /* rodapé fixo, sobe junto com o teclado */
   .mfoot { position: fixed; left: 0; right: 0; bottom: var(--kb-inset, 0px); z-index: 6; background: var(--surface); }

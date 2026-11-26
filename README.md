@@ -4,6 +4,8 @@ Simulador do exame **Rank 02** de C da 42SP, feito para cadetes treinarem no nav
 
 > Projeto não oficial, sem qualquer afiliação com a 42 ou com a 42SP.
 
+O início mostra os exercícios por nível (1 a 4), com busca, filtro por estado, um botão para sortear um exercício do nível e a sequência de dias treinando. O simulado (`#/aleatorio`) sorteia um exercício por nível, com relógio, e termina num resumo. O tema segue o do sistema e pode ser trocado para claro ou escuro no botão do topo. Tudo funciona no celular (abas Enunciado, Código e Resultado, barra de símbolos para `{ } ( ) ;` e botões de rodar fixos no rodapé), mas o compilador baixa cerca de 27 MB e pode não caber em celulares com pouca memória; nesse caso dá para ler e escrever, e é melhor rodar e corrigir num computador.
+
 ## Como rodar
 
 Requer Node 22 ou superior.

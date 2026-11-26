@@ -3,9 +3,9 @@
   --bg: #f4f6f9; --surface: #ffffff; --raise: #f8fafc; --line: #e1e7ef; --line-2: #cfd8e3;
   --ink: #152230; --muted: #5c6e82; --soft: #8c9bad;
   --accent: #00999b; --accent-ink: #006f71; --accent-soft: #dff5f5; --on-accent: #ffffff;
-  --ok: #0e9f6e; --ok-soft: #e3f6ee; --bad: #d6336c; --bad-soft: #fdebf1; --warn: #b9770e; --warn-soft: #fdf3df;
+  --ok: #0e9f6e; --ok-soft: #e3f6ee; --bad: #c92a63; --bad-soft: #fdebf1; --warn: #b9770e; --warn-soft: #fdf3df;
   --l1: #00999b; --l1s: #dff5f5; --l2: #5b5bd6; --l2s: #e9e9fb; --l3: #d97706; --l3s: #fdf0dc; --l4: #d6336c; --l4s: #fde6ee;
-  --code-bg: #fbfcfe; --code-ln: #a7b4c3; --kw: #5b5bd6; --str: #b9770e; --num: #d6336c; --com: #8c9bad;
+  --code-bg: #fbfcfe; --code-ln: #64768a; --kw: #5b5bd6; --str: #9a6409; --num: #cc2d66; --com: #5f7186;
   --term-bg: #f1f4f8; --shadow: 0 1px 2px rgba(21, 34, 48, .06), 0 6px 18px rgba(21, 34, 48, .06);
   --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
@@ -18,7 +18,7 @@
     --accent: #1cc4c6; --accent-ink: #5fdcdd; --accent-soft: #123a40; --on-accent: #08262a;
     --ok: #34c793; --ok-soft: #12322a; --bad: #f06595; --bad-soft: #3a1a29; --warn: #f0a43a; --warn-soft: #3a2c14;
     --l1: #1cc4c6; --l1s: #123a40; --l2: #8b8cf0; --l2s: #262a52; --l3: #f0a43a; --l3s: #3a2c14; --l4: #f06595; --l4s: #3d1c2b;
-    --code-bg: #121c29; --code-ln: #4a5d73; --kw: #8b8cf0; --str: #f0a43a; --num: #f06595; --com: #6f8298;
+    --code-bg: #121c29; --code-ln: #7388a0; --kw: #8b8cf0; --str: #f0a43a; --num: #f06595; --com: #7a8da3;
     --term-bg: #0d151f; --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .25);
     color-scheme: dark;
   }
@@ -29,7 +29,7 @@
   --accent: #1cc4c6; --accent-ink: #5fdcdd; --accent-soft: #123a40; --on-accent: #08262a;
   --ok: #34c793; --ok-soft: #12322a; --bad: #f06595; --bad-soft: #3a1a29; --warn: #f0a43a; --warn-soft: #3a2c14;
   --l1: #1cc4c6; --l1s: #123a40; --l2: #8b8cf0; --l2s: #262a52; --l3: #f0a43a; --l3s: #3a2c14; --l4: #f06595; --l4s: #3d1c2b;
-  --code-bg: #121c29; --code-ln: #4a5d73; --kw: #8b8cf0; --str: #f0a43a; --num: #f06595; --com: #6f8298;
+  --code-bg: #121c29; --code-ln: #7388a0; --kw: #8b8cf0; --str: #f0a43a; --num: #f06595; --com: #7a8da3;
   --term-bg: #0d151f; --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .25);
   color-scheme: dark;
 }

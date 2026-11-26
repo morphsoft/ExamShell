@@ -8,12 +8,18 @@
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { background: var(--bg); color: var(--ink); }
+html, body { margin: 0; background: var(--bg); color: var(--ink); }
+#root { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
 body { font-family: var(--sans); font-size: 15px; line-height: 1.5; }
 code, pre, kbd, .mono { font-family: var(--mono); font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+a { color: var(--accent-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
 button { font: inherit; color: inherit; cursor: pointer; }
 :focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 60%, transparent); outline-offset: 2px; }
 .gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+.muted { color: var(--muted); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* botões */
 .btn { border: 1px solid var(--line-2); background: var(--surface); border-radius: 10px; padding: 8px 14px; font-weight: 800; font-size: 14px; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; }
@@ -30,6 +36,21 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* cartão */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 18px; }
+
+/* telas simples (aviso de "tela a caminho", erro ao renderizar, simulado sem exercício) */
+.topbar { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 8px 16px; background: var(--accent); color: var(--on-accent); font-weight: 800; font-size: 13px; }
+.topbar a { color: var(--on-accent); text-decoration: underline; }
+.topbar :focus-visible { outline-color: var(--on-accent); }
+.statusbar { display: flex; gap: 2px 20px; flex-wrap: wrap; padding: 8px 16px; background: var(--surface); border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; font-weight: 600; }
+.statusbar b { color: var(--ink); font-weight: 700; }
+.page { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 28px 16px 40px; }
+.page h1 { font-size: 26px; font-weight: 800; margin: 0 0 8px; letter-spacing: -.01em; }
+.error-fallback { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin: 12px 16px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--warn); border-radius: 10px; }
+.page .error-fallback { margin: 0; }
+.error-fallback p { margin: 0; }
+.error-fallback details { color: var(--muted); font-size: 13px; max-width: 100%; }
+.error-fallback summary { cursor: pointer; }
+.error-fallback pre { margin: 6px 0 0; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }
 
 /* aviso rápido */
 .toast { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 40; background: var(--ink); color: var(--bg); border-radius: 14px; padding: 12px 18px; font-weight: 800; display: flex; gap: 10px; align-items: center; box-shadow: 0 12px 30px rgba(0, 0, 0, .25); max-width: calc(100vw - 32px); }
