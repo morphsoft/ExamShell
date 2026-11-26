@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getExercise } from '../content/loadExercises';
+import { byLevel, getExercise, loadExercises } from '../content/loadExercises';
 import { getActivity, recordOpened } from '../state/activity';
 import { getProgress, loadDraft, saveDraft } from '../state/progress';
 import { useRoute } from './router';
@@ -9,7 +9,9 @@ import { RandomScreen } from './screens/RandomScreen';
 import { SummaryScreen } from './screens/SummaryScreen';
 import { TopBar } from './components/TopBar';
 import { StatusBar } from './components/StatusBar';
-import { statusView } from './prepText';
+import { passPhrase, statusView } from './prepText';
+import { drawFromLevel, levelCounts } from './home/homeModel';
+import type { PassView } from './components/ResultCard';
 
 function Placeholder({ title, text = 'Esta tela ainda está a caminho.' }: { title: string; text?: string }) {
   return (
@@ -43,6 +45,21 @@ function PracticeExercise({ id }: { id: string }) {
   // Progresso salvo antes de existir a contagem de tentativas: "tentado" vale pelo menos 1 tentativa.
   const passed = getProgress()[exercise.id] === 'passed';
   const attempts = Math.max(getActivity().lastAttempt[exercise.id]?.count ?? 0, getProgress()[exercise.id] === 'tried' ? 1 : 0);
+  const afterPass = (): PassView => {
+    const level = exercise.level;
+    const ids = byLevel(loadExercises())[level].map((e) => e.id);
+    const progress = getProgress();
+    const { passed: done, total } = levelCounts(ids, progress);
+    const n = getActivity().lastAttempt[exercise.id]?.count ?? 0;
+    const next = drawFromLevel(ids, progress, Math.random, exercise.id) ?? exercise.id;
+    return {
+      message: `${passPhrase(n)} Nível ${level} agora está em ${done} de ${total}.`,
+      actions: [
+        { label: `Sortear outro do nível ${level}`, testId: 'pass-draw', primary: true, href: `#/treino/${next}` },
+        { label: 'Voltar ao início', testId: 'pass-home', href: '#/' },
+      ],
+    };
+  };
   return (
     <ExerciseScreen
       exercise={exercise}
@@ -50,7 +67,7 @@ function PracticeExercise({ id }: { id: string }) {
       initialFiles={initialFiles}
       onFilesChange={(files) => saveDraft(exercise.id, files)}
       onGraded={() => setGraded((n) => n + 1)}
-      onHintUsed={() => {}}
+      afterPass={afterPass}
       backHref="#/treino"
       levelLabel={`nível ${exercise.level}`}
       status={statusView(passed, attempts)}

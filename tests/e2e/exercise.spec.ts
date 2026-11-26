@@ -154,11 +154,12 @@ async function open(page: Page, id: string) {
 
 /** Clica em grademe e devolve o bloco do resultado, já terminado. */
 async function grademe(page: Page) {
-  const results = page.getByTestId('grade-result');
-  const before = await results.count();
+  // os grademes antigos ficam recolhidos: contam-se as entradas do log, não os cartões abertos
+  const entries = page.locator('.entry').filter({ hasText: 'examshell> grademe' });
+  const before = await entries.count();
   await page.getByTestId('grademe').click();
-  await expect(results).toHaveCount(before + 1);
-  const last = results.last();
+  await expect(entries).toHaveCount(before + 1);
+  const last = page.getByTestId('grade-result').last();
   await expect(last).toHaveAttribute('data-state', 'done', { timeout: 60000 });
   return last;
 }
@@ -186,26 +187,74 @@ test('grademe mostra onde quebrou e as dicas, uma por vez', async ({ page }) => 
   await grademe(page);
   const log = page.getByTestId('log');
   await expect(log).toContainText('examshell> grademe');
-  await expect(log).toContainText('✗ teste 5/8');
+  const card = page.getByTestId('grade-result');
+  await expect(card).toContainText('✗ Falhou no teste 5 de 8');
+  const dots = page.getByTestId('test-dots').locator('i');
+  await expect(dots).toHaveCount(8);
+  await expect(dots.locator(':scope[data-state="ok"]')).toHaveCount(4);
+  await expect(dots.locator(':scope[data-state="bad"]')).toHaveCount(1);
+  await expect(dots.locator(':scope[data-state="skip"]')).toHaveCount(3);
   await expect(log).toContainText('./first_word "  lorem,ipsum  "');
   await expect(log).toContainText('esperado:');
   await expect(log).toContainText('recebido:');
 
   const hint = page.getByTestId('hint');
+  await expect(hint).toHaveText('Pedir dica');
   await hint.click();
-  await expect(log).toContainText('dica 1/3 · E se a string já começar com espaços?');
-  await expect(log).not.toContainText('dica 2/3');
+  await expect(log).toContainText('Dica 1 de 3 · E se a string já começar com espaços?');
+  await expect(log).not.toContainText('Dica 2 de 3');
+  await expect(hint).toHaveText('Próxima dica (2/3)');
   await hint.click();
+  await expect(hint).toHaveText('Próxima dica (3/3)');
   await hint.click();
-  await expect(log).toContainText('dica 3/3');
-  await expect(hint).toBeDisabled();
+  await expect(log).toContainText('Dica 3 de 3');
+  await expect(hint).toHaveCount(0);
+});
+
+test('compilação que falha: título e pontos todos apagados', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, 'int main(void) { return x; }');
+  const result = await grademe(page);
+  await expect(result).toContainText('✗ Não compilou');
+  const dots = page.getByTestId('test-dots').locator('i');
+  await expect(dots).toHaveCount(8);
+  await expect(dots.locator(':scope[data-state="skip"]')).toHaveCount(8);
+});
+
+test('passar: cartão com o progresso do nível, ações e aviso', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, FIRST_WORD_OK);
+  const result = await grademe(page);
+  await expect(result).toContainText('✓ Passou nos 8 testes');
+  await expect(result).toContainText('Nível 1 agora está em 1 de 12');
+  await expect(page.getByTestId('pass-draw')).toContainText('Sortear outro do nível 1');
+  await expect(page.getByTestId('pass-home')).toContainText('Voltar ao início');
+  await expect(page.getByTestId('pass-toast')).toBeVisible();
+  await expect(page.getByTestId('pass-toast')).toContainText('Nível 1 agora está em 1 de 12');
+  await expect(page.getByTestId('pass-toast')).toBeHidden({ timeout: 8000 });
+  await page.getByTestId('pass-draw').click();
+  await expect(page).toHaveURL(/#\/treino\/(?!first_word$)\w+/);
+});
+
+test('grademe anterior fica recolhido e abre ao clicar', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, FIRST_WORD_BUG);
+  await grademe(page);
+  await expect(page.getByTestId('older-grade')).toHaveCount(0);
+  await grademe(page);
+  const older = page.getByTestId('older-grade');
+  await expect(older).toHaveCount(1);
+  await expect(older).toContainText('▸ grademe anterior: ✗ Falhou no teste 5 de 8');
+  await expect(page.getByTestId('grade-result')).toHaveCount(1);
+  await older.click();
+  await expect(page.getByTestId('grade-result')).toHaveCount(2);
 });
 
 test('código corrigido passa, e a lista marca o exercício como passou', async ({ page }) => {
   await open(page, 'first_word');
   await setCode(page, FIRST_WORD_OK);
   const result = await grademe(page);
-  await expect(result).toContainText('✓ passou nos 8 testes');
+  await expect(result).toContainText('✓ Passou nos 8 testes');
   await expect(page.getByTestId('hint')).toHaveCount(0);
 
   await page.getByTestId('back').click();
@@ -273,20 +322,20 @@ test('ft_strlen: main no arquivo reprova; a aba de rascunho roda o main do cadet
   await expect(out).toContainText('3$');
 
   // o grademe ignora o rascunho e usa o main de teste do site
-  await expect(await grademe(page)).toContainText('✓ passou nos 8 testes');
+  await expect(await grademe(page)).toContainText('✓ Passou nos 8 testes');
 });
 
 test('ft_itoa resolvido com long passa no INT_MIN', async ({ page }) => {
   await open(page, 'ft_itoa');
   await setCode(page, FT_ITOA_LONG);
-  await expect(await grademe(page)).toContainText('✓ passou');
+  await expect(await grademe(page)).toContainText('✓ Passou');
 });
 
 test('laço infinito dá tempo esgotado', async ({ page }) => {
   await open(page, 'first_word');
   await setCode(page, FIRST_WORD_LOOP);
   const result = await grademe(page);
-  await expect(result).toContainText('✗ teste 1/8');
+  await expect(result).toContainText('✗ Falhou no teste 1 de 8');
   await expect(result).toContainText('tempo esgotado');
 });
 
@@ -294,7 +343,7 @@ test('travamento mostra a linha do código, no grademe e no rodar', async ({ pag
   await open(page, 'first_word');
   await setCode(page, FIRST_WORD_NULL);
   const result = await grademe(page);
-  await expect(result).toContainText('✗ teste 1/8');
+  await expect(result).toContainText('✗ Falhou no teste 1 de 8');
   await expect(result).toContainText('o programa travou (segfault) na linha 10 de first_word.c');
 
   await page.getByTestId('run-args').fill('abc');
@@ -413,7 +462,7 @@ test('sem rolagem horizontal em 375px, com falha e dica no log', async ({ page }
   await setCode(page, FIRST_WORD_BUG);
   await grademe(page);
   await page.getByTestId('hint').click();
-  await expect(page.getByTestId('log')).toContainText('dica 1/3');
+  await expect(page.getByTestId('log')).toContainText('Dica 1 de 3');
   const sw = await page.evaluate(() => document.scrollingElement!.scrollWidth);
   expect(sw).toBeLessThanOrEqual(375);
 });
@@ -461,7 +510,7 @@ test('header fornecido aparece como aba somente leitura e entra na compilação'
   expect(await content.innerText()).toBe(before);
   await page.getByRole('tab', { name: 'sort_list.c' }).click();
   await setCode(page, SORT_LIST_OK);
-  await expect(await grademe(page)).toContainText('✓ passou');
+  await expect(await grademe(page)).toContainText('✓ Passou');
 });
 
 test('se o editor não carregar, aparece um aviso com "recarregar" em vez de tela em branco', async ({ page }) => {

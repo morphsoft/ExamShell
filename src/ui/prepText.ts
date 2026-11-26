@@ -1,3 +1,5 @@
+import type { GradeResult } from '../engine/types';
+
 export type Dot = 'ok' | 'bad' | 'skip';
 
 export function readiness(passed: number, total: number): string {
@@ -24,4 +26,24 @@ export function statusView(passed: boolean, attempts: number): { tone: 'new' | '
   if (passed) return { tone: 'passed', text: 'passou ✓' };
   if (attempts > 0) return { tone: 'tried', text: `ainda não passou · tentativa ${attempts}` };
   return { tone: 'new', text: 'novo' };
+}
+
+/** Um ponto por teste: passou tudo, ou os que passaram, o que falhou e os que nem rodaram. */
+export function testDots(r: GradeResult): Dot[] {
+  const f = r.failure;
+  if (f === null) return Array.from({ length: Math.max(0, r.total) }, (): Dot => 'ok');
+  if ('index' in f) return attemptBars(f.index, r.total);
+  return Array.from({ length: Math.max(0, r.total) }, (): Dot => 'skip');
+}
+
+export const PASS_PHRASES: readonly string[] = [
+  'Mandou bem!',
+  'Isso aí, um a mais no bolso.',
+  'Boa, o treino está rendendo.',
+  'Passou! Dá para sentir o jeito vindo.',
+  'Muito bem, continue assim.',
+];
+
+export function passPhrase(n: number): string {
+  return PASS_PHRASES[Math.abs(Math.trunc(n)) % PASS_PHRASES.length];
 }

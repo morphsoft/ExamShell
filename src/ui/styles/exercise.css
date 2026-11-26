@@ -92,3 +92,35 @@
 .runbar .btn.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.06); }
 .runbar .btn:disabled { cursor: not-allowed; color: var(--soft); background: var(--raise); border-color: var(--line); filter: none; }
 .runbar .btn kbd { font: 600 11px var(--mono); opacity: .75; }
+
+/* ---- cartões de resultado, dicas e aviso ao passar ---- */
+.log .result { margin-top: 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); overflow: hidden; font-family: var(--sans); }
+.result .head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 12px; }
+.result .title { font-weight: 800; font-size: 15px; }
+.result.fail { border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
+.result.fail .title { color: var(--bad); }
+.result.pass { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); background: var(--ok-soft); }
+.result.pass .title { color: var(--ok); }
+.dots { display: flex; gap: 4px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-2); }
+.dots i.ok { background: var(--ok); }
+.dots i.bad { background: var(--bad); }
+.result .body { padding: 0 12px 12px; display: grid; gap: 6px; font: 13.5px/1.55 var(--mono); font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+.log .result .body p, .log .result .body pre { margin: 0; }
+.result .cmd { color: var(--ink); overflow-wrap: anywhere; white-space: pre-wrap; }
+.result .fail-head { color: var(--bad); font-weight: 700; }
+.result .io { margin-top: 0; padding-left: 0; grid-template-columns: 82px minmax(0, 1fr); column-gap: 8px; }
+.result .io .k { color: var(--muted); font-family: var(--sans); font-weight: 700; font-size: 13px; }
+.result .stderr { color: var(--ink); }
+.result mark, .result .diff { background: var(--bad-soft); color: var(--bad); border-radius: 3px; padding: 0 1px; outline: 1px solid color-mix(in srgb, var(--bad) 40%, transparent); }
+.hint { display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; padding: 10px 12px; background: var(--warn-soft); border-top: 1px solid color-mix(in srgb, var(--warn) 30%, var(--line)); font-family: var(--sans); }
+.log .hint p { margin: 0; flex: 1 1 240px; font-weight: 600; }
+.hint p b { color: var(--warn); }
+.hint .btn { padding: 6px 12px; font-size: 13px; }
+.log .pass-msg { margin: 0; padding: 0 12px 10px; font-weight: 600; }
+.old { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--muted); border: 1px dashed var(--line-2); border-radius: 10px; padding: 6px 10px; background: transparent; text-align: left; margin-top: 6px; cursor: pointer; }
+.old:hover { color: var(--ink); }
+.next { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 12px 12px; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 50; max-width: min(92vw, 520px); padding: 10px 16px; border-radius: 12px; background: var(--surface); color: var(--ink); border: 1px solid color-mix(in srgb, var(--ok) 45%, var(--line)); box-shadow: var(--shadow); font: 700 14px var(--sans); animation: toast-in .25s ease-out; }
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }

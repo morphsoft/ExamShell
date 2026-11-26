@@ -14,7 +14,7 @@ import { StatusBar } from '../components/StatusBar';
 import { Timer } from '../components/Timer';
 import { TopBar } from '../components/TopBar';
 import { navigate } from '../router';
-import { statusView } from '../prepText';
+import { passPhrase, statusView } from '../prepText';
 import { plural } from '../sessionText';
 import { ExerciseScreen } from './ExerciseScreen';
 
@@ -128,6 +128,7 @@ export function RandomScreen({ seed }: { seed?: number }) {
         dispatch({ type: 'attempt', passed, now: Date.now() });
       }}
       onHintUsed={() => act({ type: 'hint' })}
+      afterPass={() => ({ message: passPhrase(run.attempts), actions: [] })}
       backHref="#/"
       levelLabel={`nível ${session.currentLevel} de 4`}
       status={statusView(run.outcome === 'passed', run.attempts)}

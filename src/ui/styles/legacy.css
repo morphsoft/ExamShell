@@ -143,12 +143,7 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
 .log code { font: inherit; color: var(--text); }
 .log-intro { color: var(--label); }
 .entry { margin-top: 12px; }
-.grade-result, .run-fail, .hint-block { margin-top: 6px; padding: 8px 12px; }
-.grade-result:not(.grade-ok):not(.grade-fail) { padding: 2px 0; }
-.grade-ok { background: #0f2629; border-left: 3px solid var(--cyan); }
-.ok-line { color: var(--cyan); font-weight: 600; }
-.ok-line .muted { font-weight: 400; }
-.grade-fail, .run-fail { background: #2a1620; border-left: 3px solid var(--red); }
+.run-fail { margin-top: 6px; padding: 8px 12px; background: #2a1620; border-left: 3px solid var(--red); }
 .fail-head { color: var(--red); font-weight: 600; }
 .fail-cmd { color: var(--text); font-weight: 400; margin-left: 0.6ch; }
 .fail-text { color: var(--red); }
@@ -158,12 +153,6 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
 .log .stderr { margin-top: 6px; color: #e9c9c9; font-size: 12px; }
 .log .explain { margin-top: 6px; }
 .log .out { margin-top: 2px; }
-.hint-block {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
-  background: #2a2412; border-left: 3px solid var(--amber); color: #f5dfa8;
-}
-.hint-step, .hint-done { color: var(--amber); }
-.hint-step { font-weight: 600; }
 
 @media (max-width: 860px) {
   .editor { flex: none; height: 55vh; min-height: 260px; }

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { attemptBars, readiness, statusView, streakText } from '../../src/ui/prepText';
+import type { Failure } from '../../src/engine/types';
+import { looksLikeCode } from '../../src/hints/looksLikeCode';
+import { attemptBars, PASS_PHRASES, passPhrase, readiness, statusView, streakText, testDots } from '../../src/ui/prepText';
 
 describe('prepText', () => {
   it('readiness nos limites', () => {
@@ -19,4 +21,14 @@ describe('prepText', () => {
     expect(statusView(true, 3)).toEqual({ tone: 'passed', text: 'passou ✓' });
   });
   it('streakText', () => expect([0, 1, 4].map(streakText)).toEqual(['comece hoje', '1 dia', '4 dias']));
+  it('testDots', () => {
+    expect(testDots({ passed: 2, total: 4, failure: { kind: 'wrong-output', index: 2 } as Failure })).toEqual(['ok', 'ok', 'bad', 'skip']);
+    expect(testDots({ passed: 0, total: 3, failure: { kind: 'compile', stderr: '' } })).toEqual(['skip', 'skip', 'skip']);
+    expect(testDots({ passed: 3, total: 3, failure: null })).toEqual(['ok', 'ok', 'ok']);
+  });
+  it('PASS_PHRASES: 5 frases sem código', () => {
+    expect(PASS_PHRASES).toHaveLength(5);
+    for (const p of PASS_PHRASES) expect(looksLikeCode(p)).toBe(false);
+    expect(passPhrase(7)).toBe(PASS_PHRASES[2]);
+  });
 });

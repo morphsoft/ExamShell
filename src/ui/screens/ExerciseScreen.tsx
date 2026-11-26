@@ -9,10 +9,13 @@ import { CompilerLoader } from '../components/CompilerLoader';
 import { EDITOR_PANEL_ID, EditorTabs, providedTab, SCRATCH_TAB, tabId, type EditorTab } from '../components/EditorTabs';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { LogPane, type LogEntry } from '../components/LogPane';
+import type { PassView } from '../components/ResultCard';
 import { RunBar, shortcutLabels } from '../components/RunBar';
 import { SubjectPane } from '../components/SubjectPane';
 import { ExerciseTopBar, type ExerciseStatus } from '../components/ExerciseTopBar';
 import { useEngine } from '../engineContext';
+
+export type { PassAction, PassView } from '../components/ResultCard';
 
 export interface ExerciseScreenProps {
   exercise: LoadedExercise;
@@ -26,7 +29,10 @@ export interface ExerciseScreenProps {
   onFilesChange(files: SourceFiles): void;
   /** Só é chamada se a tela ainda estiver montada quando o grademe termina. */
   onGraded(r: GradeResult): void;
-  onHintUsed(): void;
+  /** Chamada a cada dica pedida (o simulado conta as dicas). */
+  onHintUsed?(): void;
+  /** Chamada ao montar o cartão de "passou", depois de `onGraded`: já vê o progresso novo. */
+  afterPass(): PassView;
   /** Para onde o "voltar" do topo leva. */
   backHref: string;
   /** 'nível 1' no treino, 'nível 1 de 4' no simulado. */
@@ -56,6 +62,7 @@ function Workspace({
   onFilesChange,
   onGraded,
   onHintUsed,
+  afterPass,
   backHref,
   levelLabel,
   status: exerciseStatus,
@@ -231,7 +238,7 @@ function Workspace({
     if (n >= 3) return;
     hintsShown.current.set(entryId, n + 1);
     patch(entryId, { hintsShown: n + 1 });
-    parent.current.onHintUsed();
+    parent.current.onHintUsed?.();
   };
 
   // --- settings
@@ -317,7 +324,7 @@ function Workspace({
             onGrade={onGrade}
           />
           <CompilerLoader status={status} progress={progress} error={engineError} lowMemory={lowMemory} onRetry={() => engine.retry()} />
-          <LogPane exercise={exercise} entries={entries} onHint={onHint} />
+          <LogPane exercise={exercise} entries={entries} onHint={onHint} afterPass={afterPass} />
         </section>
       </main>
     </div>
