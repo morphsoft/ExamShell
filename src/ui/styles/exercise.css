@@ -123,3 +123,42 @@
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 50; max-width: min(92vw, 520px); padding: 10px 16px; border-radius: 12px; background: var(--surface); color: var(--ink); border: 1px solid color-mix(in srgb, var(--ok) 45%, var(--line)); box-shadow: var(--shadow); font: 700 14px var(--sans); animation: toast-in .25s ease-out; }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
+
+/* ---- celular: abas, barra de símbolos e rodapé fixo (≤820px) ---- */
+@media (max-width: 820px) {
+  .mtabs { display: flex; position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .mtabs button { flex: 1; border: 0; background: transparent; padding: 11px 0 9px; font: 800 14px var(--sans); color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; }
+  .mtabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .mtabs .badge { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--bad); margin-left: 6px; vertical-align: 2px; }
+
+  /* uma aba por vez */
+  .work[data-mtab="subject"] .pane-work,
+  .work[data-mtab="code"] .pane-subject,
+  .work[data-mtab="code"] .log,
+  .work[data-mtab="result"] .pane-subject,
+  .work[data-mtab="result"] .tabs-ed,
+  .work[data-mtab="result"] .editor,
+  .work[data-mtab="result"] .runbar { display: none; }
+  .work[data-mtab] { padding-bottom: 84px; }
+  .work[data-mtab="code"] { padding-bottom: 0; }
+  .work[data-mtab="subject"] .pane-subject { border-bottom: 0; }
+
+  /* o editor ocupa a altura útil da aba: tela menos topo, abas, barra de rodar e rodapé (teclado aberto também) */
+  .work[data-mtab="code"] .editor { height: calc(100vh - 380px - var(--kb-inset, 0px)); height: calc(100dvh - 380px - var(--kb-inset, 0px)); min-height: 200px; }
+  .work[data-mtab="code"] .pane-work { padding-bottom: 150px; }
+  .runbar { border-bottom: 0; }
+
+  /* rodapé fixo, sobe junto com o teclado */
+  .mfoot { position: fixed; left: 0; right: 0; bottom: var(--kb-inset, 0px); z-index: 6; background: var(--surface); }
+  .mkeys { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; padding: 7px 8px; background: var(--raise); border-top: 1px solid var(--line); }
+  .mkeys button { border: 1px solid var(--line-2); background: var(--surface); border-radius: 8px; padding: 8px 0; font: 700 15px var(--mono); color: var(--ink); cursor: pointer; }
+  .mkeys button.w2 { grid-column: span 2; font: 800 12.5px var(--sans); color: var(--muted); }
+  .mbar { display: flex; gap: 8px; background: var(--surface); border-top: 1px solid var(--line); padding: 8px max(12px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+  .mbar .btn { flex: 1; justify-content: center; padding: 11px 0; border: 1px solid var(--line-2); border-radius: 10px; background: var(--surface); color: var(--ink); font-weight: 800; font-size: 15px; cursor: pointer; }
+  .mbar .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .mbar .btn:disabled { cursor: not-allowed; color: var(--soft); background: var(--raise); border-color: var(--line); }
+  .mfoot[data-mtab="subject"] .run-m { display: none; }
+
+  /* o aviso de "passou" fica acima do rodapé */
+  .toast { bottom: calc(var(--kb-inset, 0px) + 150px); }
+}

@@ -163,7 +163,13 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(function
     insertText(text) {
       const v = view.current;
       if (!v || v.state.readOnly) return;
-      v.dispatch(v.state.replaceSelection(text), { scrollIntoView: true, userEvent: 'input' });
+      const { from, to } = v.state.selection.main; // só a seleção principal: as outras ficam como estão
+      v.dispatch({
+        changes: { from, to, insert: text },
+        selection: { anchor: from + text.length },
+        scrollIntoView: true,
+        userEvent: 'input',
+      });
     },
     setDoc(key, text) {
       const v = view.current;

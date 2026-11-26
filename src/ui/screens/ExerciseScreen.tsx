@@ -8,12 +8,16 @@ import type { CodeEditorHandle } from '../components/CodeEditor';
 import { CompilerLoader } from '../components/CompilerLoader';
 import { EDITOR_PANEL_ID, EditorTabs, providedTab, SCRATCH_TAB, tabId, type EditorTab } from '../components/EditorTabs';
 import { ErrorBoundary } from '../components/ErrorBoundary';
+import { MobileTabs, type MobileTab } from '../components/MobileTabs';
 import { LogPane, type LogEntry } from '../components/LogPane';
 import type { PassView } from '../components/ResultCard';
 import { RunBar, shortcutLabels } from '../components/RunBar';
 import { SubjectPane } from '../components/SubjectPane';
+import { SymbolBar } from '../components/SymbolBar';
 import { ExerciseTopBar, type ExerciseStatus } from '../components/ExerciseTopBar';
 import { useEngine } from '../engineContext';
+import { useIsMobile } from '../useIsMobile';
+import { useKeyboardInset } from '../useKeyboardInset';
 
 export type { PassAction, PassView } from '../components/ResultCard';
 
@@ -93,6 +97,21 @@ function Workspace({
   const [busy, setBusy] = useState(false);
   const [line, setLine] = useState('');
   const editor = useRef<CodeEditorHandle>(null);
+  const isMobile = useIsMobile();
+  useKeyboardInset();
+  const [mtab, setMtab] = useState<MobileTab>('subject');
+  const [resultDot, setResultDot] = useState(false);
+  const mtabRef = useRef(mtab);
+  mtabRef.current = mtab;
+  const selectMtab = (t: MobileTab) => {
+    setMtab(t);
+    if (t === 'result') setResultDot(false);
+  };
+  // rodar e grademe levam ao Resultado; se o cadete sair de lá antes de terminar, o ponto avisa quando chegar
+  const showResult = () => selectMtab('result');
+  const resultArrived = () => {
+    if (mtabRef.current !== 'result') setResultDot(true);
+  };
   const busyRef = useRef(false); // trava síncrona: um duplo clique não dispara duas execuções
   const nextId = useRef(1);
 
@@ -155,6 +174,7 @@ function Workspace({
 
   const onGrade = async () => {
     if (!begin()) return;
+    showResult();
     const id = nextId.current++;
     append({ kind: 'grade', id, state: 'running', done: 0, total: exercise.tests.length, hintsShown: 0 });
     try {
@@ -169,7 +189,10 @@ function Workspace({
     } catch (e) {
       if (alive.current) patch(id, { state: 'done', error: errorMessage(e) });
     } finally {
-      if (alive.current) end();
+      if (alive.current) {
+        end();
+        resultArrived();
+      }
     }
   };
 
@@ -183,6 +206,7 @@ function Workspace({
       args = parseArgs(line);
     } catch (e) {
       if (!(e instanceof ParseArgsError)) throw e;
+      showResult();
       append({
         kind: 'run',
         id: nextId.current++,
@@ -193,6 +217,7 @@ function Workspace({
       return;
     }
     if (!begin()) return;
+    showResult();
     const id = nextId.current++;
     append({ kind: 'run', id, command, state: 'running' });
     try {
@@ -203,7 +228,10 @@ function Workspace({
       if (alive.current)
         patch(id, { state: 'done', error: `algo deu errado ao rodar (${errorMessage(e)}). Tente de novo.` });
     } finally {
-      if (alive.current) end();
+      if (alive.current) {
+        end();
+        resultArrived();
+      }
     }
   };
 
@@ -271,7 +299,8 @@ function Workspace({
           <div className="in">{sessionBar}</div>
         </div>
       )}
-      <main className="work">
+      <main className="work" data-mtab={isMobile ? mtab : undefined}>
+        {isMobile && <MobileTabs tab={mtab} onSelect={selectMtab} dot={resultDot} />}
         <section className="pane pane-subject" aria-label="enunciado">
           <SubjectPane exercise={exercise} lang={settings.subjectLang} onSetLang={(l) => updateSettings({ subjectLang: l })} />
         </section>
@@ -317,6 +346,7 @@ function Workspace({
             shortcutLabel={SHORTCUTS}
             showHelp={isFunction && scratchEmpty}
             onSampleMain={exercise.sampleMain ? generateMain : undefined}
+            hideActions={isMobile}
             canRun={canRun}
             canGrade={status === 'ready' && !busy}
             runHint={runHint}
@@ -327,6 +357,26 @@ function Workspace({
           <LogPane exercise={exercise} entries={entries} onHint={onHint} afterPass={afterPass} />
         </section>
       </main>
+      {isMobile && (
+        <div className="mfoot" data-testid="mobile-footer" data-mtab={mtab}>
+          {mtab === 'code' && <SymbolBar onInsert={(text) => editor.current?.insertText(text)} />}
+          <div className="mbar">
+            <button
+              type="button"
+              className="btn run-m"
+              data-testid="run"
+              disabled={!canRun}
+              title={canRun ? undefined : runHint}
+              onClick={() => void onRun(line)}
+            >
+              Rodar
+            </button>
+            <button type="button" className="btn primary" data-testid="grademe" disabled={status !== 'ready' || busy} onClick={() => void onGrade()}>
+              Grademe
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

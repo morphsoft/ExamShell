@@ -21,6 +21,7 @@ export function RunBar({
   onSampleMain,
   onRun,
   onGrade,
+  hideActions = false,
 }: {
   program: string;
   placeholder: string;
@@ -36,6 +37,8 @@ export function RunBar({
   onSampleMain?: () => void;
   onRun(line: string): void;
   onGrade(): void;
+  /** celular: rodar e grademe ficam no rodapé fixo */
+  hideActions?: boolean;
 }) {
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -57,14 +60,16 @@ export function RunBar({
         autoCapitalize="off"
         spellCheck={false}
       />
-      <span className="run-desk">
-        <button type="submit" className="btn" data-testid="run" disabled={!canRun} title={canRun ? undefined : runHint}>
-          Rodar <kbd>{shortcutLabel.run}</kbd>
-        </button>
-        <button type="button" className="btn primary" data-testid="grademe" disabled={!canGrade} onClick={onGrade}>
-          Grademe <kbd>{shortcutLabel.grade}</kbd>
-        </button>
-      </span>
+      {!hideActions && (
+        <span className="run-desk">
+          <button type="submit" className="btn" data-testid="run" disabled={!canRun} title={canRun ? undefined : runHint}>
+            Rodar <kbd>{shortcutLabel.run}</kbd>
+          </button>
+          <button type="button" className="btn primary" data-testid="grademe" disabled={!canGrade} onClick={onGrade}>
+            Grademe <kbd>{shortcutLabel.grade}</kbd>
+          </button>
+        </span>
+      )}
       {showHelp && (
         <p className="help" data-testid="run-help">
           para rodar, escreva um main na aba main.c (rascunho)

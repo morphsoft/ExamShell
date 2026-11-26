@@ -58,6 +58,9 @@
   .step span:first-child { width: 26px; height: 26px; font-size: 12px; }
   .clock { font-size: 18px; }
   .session-bar .btn { padding: 6px 10px; font-size: 13px; }
-  .session-bar .acts { gap: 4px 6px; }
+  .session-bar .acts { gap: 4px 6px; flex: 1 1 100%; margin-left: 0; flex-wrap: nowrap; }
+  .session-bar .acts .btn { flex: 1 1 auto; justify-content: center; text-align: center; padding-inline: 6px; white-space: nowrap; }
+  .session-bar .long-label { display: none; }
+  .session-bar .clock small { display: none; }
   .rand-card { padding: 18px; }
 }

@@ -1,23 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const LOAD = 110000; // 1ª carga do compilador num contexto novo (sem Cache API)
+import { FIRST_WORD_BUG, grademe, LOAD, open, setCode } from './helpers';
 
-/** Esquece de pular os espaços do início: passa em t01 e t02, falha em t03. */
-const FIRST_WORD_BUG = String.raw`#include <unistd.h>
-
-int	main(int argc, char **argv)
-{
-    int i = 0;
-
-    if (argc == 2)
-    {
-        while (argv[1][i] && argv[1][i] != ' ')
-            write(1, &argv[1][i++], 1);
-    }
-    write(1, "\n", 1);
-    return (0);
-}
-`;
 
 const FIRST_WORD_OK = String.raw`#include <unistd.h>
 
@@ -137,32 +121,6 @@ char	*ft_itoa(int nbr)
     return (str);
 }
 `;
-
-async function setCode(page: Page, text: string) {
-  await page.locator('.cm-content').click();
-  await page.keyboard.press('Control+A');
-  // o Firefox lança NS_ERROR_FAILURE em insertText('')
-  if (text === '') await page.keyboard.press('Backspace');
-  else await page.keyboard.insertText(text);
-}
-
-/** Abre o exercício no treino e espera o compilador ficar pronto. */
-async function open(page: Page, id: string) {
-  await page.goto(`./#/treino/${id}`);
-  await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
-}
-
-/** Clica em grademe e devolve o bloco do resultado, já terminado. */
-async function grademe(page: Page) {
-  // os grademes antigos ficam recolhidos: contam-se as entradas do log, não os cartões abertos
-  const entries = page.locator('.entry').filter({ hasText: 'examshell> grademe' });
-  const before = await entries.count();
-  await page.getByTestId('grademe').click();
-  await expect(entries).toHaveCount(before + 1);
-  const last = page.getByTestId('grade-result').last();
-  await expect(last).toHaveAttribute('data-state', 'done', { timeout: 60000 });
-  return last;
-}
 
 test.beforeEach(async ({ page }) => {
   await page.goto('./');
@@ -454,17 +412,6 @@ test('duplo clique no grademe gera um só resultado', async ({ page }) => {
   await expect(results.first()).toHaveAttribute('data-state', 'done', { timeout: 60000 });
   await expect(page.getByTestId('grademe')).toBeEnabled();
   await expect(results).toHaveCount(1);
-});
-
-test('sem rolagem horizontal em 375px, com falha e dica no log', async ({ page }) => {
-  await page.setViewportSize({ width: 375, height: 800 });
-  await open(page, 'first_word');
-  await setCode(page, FIRST_WORD_BUG);
-  await grademe(page);
-  await page.getByTestId('hint').click();
-  await expect(page.getByTestId('log')).toContainText('Dica 1 de 3');
-  const sw = await page.evaluate(() => document.scrollingElement!.scrollWidth);
-  expect(sw).toBeLessThanOrEqual(375);
 });
 
 const SORT_LIST_OK = String.raw`#include "list.h"
