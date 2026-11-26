@@ -104,8 +104,8 @@ export function SessionBar({
             <button type="button" className="btn quiet" data-testid="finish" onClick={() => setConfirming(true)}>
               Encerrar
             </button>
-            <a className="btn quiet" data-testid="exit-session" href="#/" title="A sessão continua salva">
-              Sair<span className="long-label"> (a sessão continua)</span>
+            <a className="btn quiet" data-testid="exit-session" href="#/">
+              Sair (a sessão continua)
             </a>
           </>
         )}

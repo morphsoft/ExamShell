@@ -54,13 +54,17 @@
 
 @media (max-width: 820px) {
   .session .in { padding-block: 6px; }
-  .session-bar { gap: 6px 12px; }
-  .step span:first-child { width: 26px; height: 26px; font-size: 12px; }
-  .clock { font-size: 18px; }
+  .session-bar { gap: 6px 6px; }
+  .step span:first-child { width: 22px; height: 22px; font-size: 11px; }
+  .clock { font-size: 16px; }
   .session-bar .btn { padding: 6px 10px; font-size: 13px; }
-  .session-bar .acts { gap: 4px 6px; flex: 1 1 100%; margin-left: 0; flex-wrap: nowrap; }
-  .session-bar .acts .btn { flex: 1 1 auto; justify-content: center; text-align: center; padding-inline: 6px; white-space: nowrap; }
-  .session-bar .long-label { display: none; }
+  /* 2 linhas: níveis, relógio e "Encerrar" em cima; "Sortear outro", "Pular nível" e "Sair (a sessão continua)" embaixo */
+  .session-bar .acts { display: contents; }
+  .session-bar .acts .btn { order: 1; flex: 1 1 auto; justify-content: center; text-align: center; padding: 5px 4px; font-size: 11px; white-space: nowrap; }
+  .session-bar .acts [data-testid="finish"], .session-bar .acts [data-testid="finish-confirm"] { order: 0; flex: 0 0 auto; margin-left: auto; }
+  .session-bar .acts a.btn { font-size: 11px; padding-inline: 3px; }
   .session-bar .clock small { display: none; }
+  .step + .step::before { width: 8px; margin-right: 4px; }
+  .steps { gap: 4px; }
   .rand-card { padding: 18px; }
 }

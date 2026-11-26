@@ -74,7 +74,35 @@ test('simulado: a barra da sessão cabe em 2 linhas', async ({ page }) => {
   await page.getByTestId('start-random').click();
   await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
   const box = await page.getByTestId('session-bar').boundingBox();
+  await expect(page.getByTestId('exit-session')).toHaveText('Sair (a sessão continua)');
+  await expect(page.getByTestId('exit-session')).toBeVisible();
   expect(box!.height).toBeLessThanOrEqual(96);
   const sw = await page.evaluate(() => document.scrollingElement!.scrollWidth);
   expect(sw).toBeLessThanOrEqual(390);
+});
+
+test('aviso de memória e "tentar de novo" aparecem na aba Enunciado', async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('examshell:v1:engine-init', '1'));
+  await page.goto('about:blank'); // o beforeEach já abriu o site: só uma navegação nova roda o addInitScript
+  await page.goto('./#/treino/first_word');
+  await expect(page.getByTestId('mtab-subject')).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByTestId('compiler-loader')).toBeVisible();
+  await expect(page.getByTestId('compiler-loader')).toContainText('Este aparelho pode não ter memória suficiente');
+  await expect(page.getByTestId('compiler-retry')).toBeVisible();
+});
+
+test('simulado depois de uma falha (com "Sortear outro"): a barra continua em 2 linhas', async ({ page }) => {
+  await page.goto('./#/aleatorio?seed=7');
+  await page.getByTestId('start-random').click();
+  await page.evaluate(() => {
+    const k = 'examshell:v1:session';
+    const s = JSON.parse(localStorage.getItem(k)!);
+    s.levels[0].lastAttemptFailed = true;
+    localStorage.setItem(k, JSON.stringify(s));
+  });
+  await page.reload();
+  await expect(page.getByTestId('swap')).toBeVisible();
+  await expect(page.getByTestId('exit-session')).toHaveText('Sair (a sessão continua)');
+  const box = await page.getByTestId('session-bar').boundingBox();
+  expect(box!.height).toBeLessThanOrEqual(96);
 });

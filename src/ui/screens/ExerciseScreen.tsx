@@ -276,6 +276,9 @@ function Workspace({
     saveSettings(next);
     setSettings(next);
   };
+  const loader = (
+    <CompilerLoader status={status} progress={progress} error={engineError} lowMemory={lowMemory} onRetry={() => engine.retry()} />
+  );
   const activeTab = tabs.find((t) => t.key === active) ?? tabs[0];
   const runHint =
     status !== 'ready'
@@ -301,6 +304,8 @@ function Workspace({
       )}
       <main className="work" data-mtab={isMobile ? mtab : undefined}>
         {isMobile && <MobileTabs tab={mtab} onSelect={selectMtab} dot={resultDot} />}
+        {/* no celular o aviso fica fora do painel do editor: aparece em todas as abas, inclusive Enunciado */}
+        {isMobile && loader}
         <section className="pane pane-subject" aria-label="enunciado">
           <SubjectPane exercise={exercise} lang={settings.subjectLang} onSetLang={(l) => updateSettings({ subjectLang: l })} />
         </section>
@@ -353,7 +358,7 @@ function Workspace({
             onRun={onRun}
             onGrade={onGrade}
           />
-          <CompilerLoader status={status} progress={progress} error={engineError} lowMemory={lowMemory} onRetry={() => engine.retry()} />
+          {!isMobile && loader}
           <LogPane exercise={exercise} entries={entries} onHint={onHint} afterPass={afterPass} />
         </section>
       </main>
