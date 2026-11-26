@@ -10,7 +10,8 @@ const SHOWN = 6;
 const STATUS_TEXT: Record<ExerciseStatus, string> = { passed: 'passou', tried: 'em andamento', untried: 'ainda não fez' };
 
 export function levelStyle(level: Level): CSSProperties {
-  return { '--c': `var(--l${level})`, '--cs': `var(--l${level}s)` } as CSSProperties;
+  // --c pinta barra e borda; --ci é a tinta do texto (mais escura no tema claro, para o contraste)
+  return { '--c': `var(--l${level})`, '--cs': `var(--l${level}s)`, '--ci': `var(--l${level}-ink)` } as CSSProperties;
 }
 
 export function LevelSection(props: {

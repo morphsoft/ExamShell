@@ -1,10 +1,14 @@
 /* Tokens do redesenho. Claro no :root; escuro pelo sistema (se o tema não for forçado a claro) ou forçado por data-theme="dark". */
 :root {
   --bg: #f4f6f9; --surface: #ffffff; --raise: #f8fafc; --line: #e1e7ef; --line-2: #cfd8e3;
-  --ink: #152230; --muted: #5c6e82; --soft: #8c9bad;
-  --accent: #00999b; --accent-ink: #006f71; --accent-soft: #dff5f5; --on-accent: #ffffff;
+  /* --soft e --accent um pouco mais escuros que no protótipo (#8c9bad, #00999b): texto com 4,5:1 (WCAG AA) */
+  --ink: #152230; --muted: #5c6e82; --soft: #63758b;
+  --accent: #008486; --accent-ink: #006f71; --accent-soft: #dff5f5; --on-accent: #ffffff;
   --ok: #0e9f6e; --ok-soft: #e3f6ee; --bad: #c92a63; --bad-soft: #fdebf1; --warn: #b9770e; --warn-soft: #fdf3df;
   --l1: #00999b; --l1s: #dff5f5; --l2: #5b5bd6; --l2s: #e9e9fb; --l3: #d97706; --l3s: #fdf0dc; --l4: #d6336c; --l4s: #fde6ee;
+  /* tinta: o mesmo matiz, escurecido só para texto (4,5:1 sobre o fundo em que aparece); preenchimentos e barras usam a cor base */
+  --ok-ink: #0b7e57; --warn-ink: #9b640c;
+  --l1-ink: #007a7c; --l2-ink: #5a5ad6; --l3-ink: #a65b05; --l4-ink: #c82860;
   --code-bg: #fbfcfe; --code-ln: #64768a; --kw: #5b5bd6; --str: #9a6409; --num: #cc2d66; --com: #5f7186;
   --term-bg: #f1f4f8; --shadow: 0 1px 2px rgba(21, 34, 48, .06), 0 6px 18px rgba(21, 34, 48, .06);
   --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -32,4 +36,15 @@
   --code-bg: #121c29; --code-ln: #7388a0; --kw: #8b8cf0; --str: #f0a43a; --num: #f06595; --com: #7a8da3;
   --term-bg: #0d151f; --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .25);
   color-scheme: dark;
+}
+/* No escuro a tinta é a própria cor (já passa de 4,5:1); os blocos escuros acima ficam como estão. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ok-ink: var(--ok); --warn-ink: var(--warn);
+    --l1-ink: var(--l1); --l2-ink: var(--l2); --l3-ink: var(--l3); --l4-ink: var(--l4);
+  }
+}
+:root[data-theme="dark"] {
+  --ok-ink: var(--ok); --warn-ink: var(--warn);
+  --l1-ink: var(--l1); --l2-ink: var(--l2); --l3-ink: var(--l3); --l4-ink: var(--l4);
 }
