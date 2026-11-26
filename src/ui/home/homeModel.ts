@@ -50,16 +50,6 @@ export function levelCounts(
   };
 }
 
-/** Frase curta do quanto o cadete já avançou no nível. */
-export function readiness(c: { passed: number; total: number }): string {
-  const r = c.total === 0 ? 0 : c.passed / c.total;
-  if (r === 0) return 'ainda não começou';
-  if (r < 0.34) return 'começando';
-  if (r < 0.67) return 'pegando o jeito';
-  if (r < 1) return 'quase pronto';
-  return 'pronto para a prova';
-}
-
 /** O exercício do cartão "continuar": o último aberto, se ele ainda existir no catálogo. */
 export function continueTarget(lastOpened: { id: string } | null, existingIds: ReadonlySet<string>): string | null {
   return lastOpened !== null && existingIds.has(lastOpened.id) ? lastOpened.id : null;

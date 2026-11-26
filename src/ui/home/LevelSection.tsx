@@ -2,7 +2,8 @@ import type { CSSProperties } from 'react';
 import type { LoadedExercise, Level } from '../../engine/types';
 import { LEVEL_INFO } from '../../content/levels';
 import type { ExerciseStatus } from '../../state/progress';
-import { levelCounts, readiness, type Filter } from './homeModel';
+import { readiness } from '../prepText';
+import { levelCounts, type Filter } from './homeModel';
 import { CheckIcon, DiceIcon } from './icons';
 
 const SHOWN = 6;
@@ -66,7 +67,7 @@ export function LevelSection(props: {
         </div>
         <div className="lvl-prog">
           <span>
-            <b>{counts.passed} de {counts.total}</b> já passaram · {readiness(counts)}
+            <b>{counts.passed} de {counts.total}</b> já passaram · {readiness(counts.passed, counts.total)}
           </span>
           <span className="bar" aria-hidden="true">
             <i className="p" style={{ width: `${pct(counts.passed)}%` }} />
