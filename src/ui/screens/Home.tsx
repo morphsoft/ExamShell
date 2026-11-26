@@ -48,7 +48,7 @@ function ClearConfirm({ onCancel, onConfirm }: { onCancel(): void; onConfirm(): 
 }
 
 export function Home({ section }: { section?: 'exercicios' }) {
-  const [, setVersion] = useState(0);
+  const [version, setVersion] = useState(0);
   const [detail, setDetail] = useState<DetailRequest | null>(null);
   const [confirming, setConfirming] = useState(false);
   const progress = getProgress();
@@ -74,7 +74,7 @@ export function Home({ section }: { section?: 'exercicios' }) {
 
   return (
     <>
-      <AppTopBar active={section === 'exercicios' ? 'exercicios' : 'inicio'} />
+      <AppTopBar key={version} active={section === 'exercicios' ? 'exercicios' : 'inicio'} />
       <main className="home gut" id="inicio">
         <div className="in">
           <div>

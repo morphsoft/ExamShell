@@ -245,3 +245,19 @@ test('1280px: navegação no topo, sem a de baixo', async ({ page }) => {
   await expect(page.locator('nav.bottom-nav')).toBeHidden();
   await expect(page.getByRole('navigation', { name: 'Seções' })).toBeVisible();
 });
+
+test('limpar progresso devolve o botão de tema ao sistema, sem recarregar', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  const toggle = page.getByTestId('theme-toggle');
+  await expect(toggle).toHaveAttribute('aria-label', 'usar tema escuro');
+  await toggle.click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(toggle).toHaveAttribute('aria-label', 'usar tema claro');
+  await page.getByTestId('clear-progress').click();
+  await page.getByTestId('clear-confirm').click();
+  await expect(page.getByTestId('clear-confirm')).toHaveCount(0);
+  await expect(page.locator('html')).not.toHaveAttribute('data-theme', /.+/);
+  await expect(page.getByTestId('theme-toggle')).toHaveAttribute('aria-label', 'usar tema escuro');
+  await page.getByTestId('theme-toggle').click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+});
