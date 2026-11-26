@@ -4,11 +4,12 @@ import { parseArgs, ParseArgsError } from '../../engine/parseArgs';
 import type { GradeResult, LoadedExercise, SourceFiles } from '../../engine/types';
 import { recordGrade } from '../../state/activity';
 import { getSettings, markAttempt, saveSettings, type Settings } from '../../state/progress';
+import type { CodeEditorHandle } from '../components/CodeEditor';
 import { CompilerLoader } from '../components/CompilerLoader';
 import { EDITOR_PANEL_ID, EditorTabs, providedTab, SCRATCH_TAB, tabId, type EditorTab } from '../components/EditorTabs';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { LogPane, type LogEntry } from '../components/LogPane';
-import { RunBar } from '../components/RunBar';
+import { RunBar, shortcutLabels } from '../components/RunBar';
 import { SubjectPane } from '../components/SubjectPane';
 import { ExerciseTopBar, type ExerciseStatus } from '../components/ExerciseTopBar';
 import { useEngine } from '../engineContext';
@@ -37,6 +38,7 @@ export interface ExerciseScreenProps {
 
 // O CodeMirror vem num pedaço à parte: a home e a lista não precisam dele.
 const CodeEditor = lazy(() => import('../components/CodeEditor').then((m) => ({ default: m.CodeEditor })));
+const SHORTCUTS = shortcutLabels();
 
 const SAVE_DEBOUNCE_MS = 500;
 
@@ -82,6 +84,8 @@ function Workspace({
   const [settings, setSettings] = useState<Settings>(getSettings);
   const [entries, setEntries] = useState<LogEntry[]>([]);
   const [busy, setBusy] = useState(false);
+  const [line, setLine] = useState('');
+  const editor = useRef<CodeEditorHandle>(null);
   const busyRef = useRef(false); // trava síncrona: um duplo clique não dispara duas execuções
   const nextId = useRef(1);
 
@@ -196,6 +200,31 @@ function Workspace({
     }
   };
 
+  // Ctrl/Cmd+Enter corrige e Ctrl/Cmd+Shift+Enter roda, de qualquer lugar da tela. Na captura, na window:
+  // o CodeMirror liga Mod-Enter a "inserir linha em branco" e não pode ver essa tecla. Os mesmos
+  // portões dos botões valem (compilador pronto, sem execução em andamento, rascunho não vazio).
+  const shortcut = useRef({ onRun, onGrade, line });
+  shortcut.current = { onRun, onGrade, line };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey) || e.key !== 'Enter') return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.repeat) return;
+      if (e.shiftKey) void shortcut.current.onRun(shortcut.current.line);
+      else void shortcut.current.onGrade();
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, []);
+
+  const resetFile = (key: string) => editor.current?.setDoc(key, exercise.starter?.[key] ?? '');
+  const generateMain = () => {
+    if (!exercise.sampleMain) return;
+    editor.current?.setDoc(SCRATCH_TAB.key, exercise.sampleMain);
+    setActive(SCRATCH_TAB.key);
+  };
+
   const hintsShown = useRef(new Map<number, number>()); // síncrono, como o busyRef
   const onHint = (entryId: number) => {
     const n = hintsShown.current.get(entryId) ?? 0;
@@ -212,22 +241,6 @@ function Workspace({
     saveSettings(next);
     setSettings(next);
   };
-  const vimToggle = (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={settings.vim}
-      className="chip"
-      data-testid="vim-toggle"
-      onClick={() => updateSettings({ vim: !settings.vim })}
-    >
-      vim{' '}
-      <span className={settings.vim ? 'switch-on' : 'switch-off'} aria-hidden="true">
-        {settings.vim ? 'on' : 'off'}
-      </span>
-    </button>
-  );
-
   const activeTab = tabs.find((t) => t.key === active) ?? tabs[0];
   const runHint =
     status !== 'ready'
@@ -256,12 +269,20 @@ function Workspace({
           <SubjectPane exercise={exercise} lang={settings.subjectLang} onSetLang={(l) => updateSettings({ subjectLang: l })} />
         </section>
         <section className="pane pane-work" aria-label="editor e terminal">
-          <EditorTabs tabs={tabs} active={active} onSelect={setActive} extra={vimToggle} />
+          <EditorTabs
+            tabs={tabs}
+            active={active}
+            onSelect={setActive}
+            onReset={resetFile}
+            vim={settings.vim}
+            onToggleVim={() => updateSettings({ vim: !settings.vim })}
+          />
           <div className="editor" role="tabpanel" id={EDITOR_PANEL_ID} aria-labelledby={tabId(activeTab.key)}>
             {/* se o pedaço do editor não baixar, o aviso fica só aqui: o enunciado e o log seguem de pé */}
             <ErrorBoundary variant="inline">
               <Suspense fallback={<p className="editor-loading">carregando o editor…</p>}>
                 <CodeEditor
+                  ref={editor}
                   docKey={activeTab.key}
                   doc={
                     activeTab.readOnly
@@ -284,6 +305,11 @@ function Workspace({
           <RunBar
             program={`./${exercise.id}`}
             placeholder={isFunction ? 'argumentos (opcional)' : 'ex.: "  lorem ipsum"'}
+            line={line}
+            onLineChange={setLine}
+            shortcutLabel={SHORTCUTS}
+            showHelp={isFunction && scratchEmpty}
+            onSampleMain={exercise.sampleMain ? generateMain : undefined}
             canRun={canRun}
             canGrade={status === 'ready' && !busy}
             runHint={runHint}

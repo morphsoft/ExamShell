@@ -509,3 +509,52 @@ test('aba que morreu no início do motor: aviso de memória e tentar de novo fun
   await page.getByTestId('compiler-retry').click();
   await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
 });
+
+test('Ctrl+Enter dentro do editor corrige, sem quebrar linha', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, 'int main(void){return 0;}');
+  const before = await page.locator('.cm-content').innerText();
+  await page.locator('.cm-content').press('Control+Enter');
+  await expect(page.getByTestId('grade-result').last()).toHaveAttribute('data-state', 'done', { timeout: 60000 });
+  expect(await page.locator('.cm-content').innerText()).toBe(before);
+});
+
+test('Ctrl+Shift+Enter roda com os argumentos do campo', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, FIRST_WORD_OK);
+  await page.getByTestId('run-args').fill('a b');
+  await page.locator('.cm-content').press('Control+Shift+Enter');
+  const result = page.getByTestId('run-result').last();
+  await expect(result).toBeVisible({ timeout: 60000 });
+  await expect(result).toContainText('./first_word a b');
+  await expect(page.getByTestId('grade-result')).toHaveCount(0);
+});
+
+test('recomeçar pede confirmação na página e volta o arquivo ao início', async ({ page }) => {
+  await open(page, 'first_word');
+  await setCode(page, FIRST_WORD_OK);
+  await expect(page.locator('.cm-content')).toContainText('argv');
+  await page.getByTestId('editor-reset').click();
+  await expect(page.getByTestId('reset-confirm')).toBeVisible();
+  await page.getByRole('button', { name: 'cancelar' }).click();
+  await expect(page.getByTestId('reset-confirm')).toBeHidden();
+  await expect(page.locator('.cm-content')).toContainText('argv');
+  await page.getByTestId('editor-reset').click();
+  await page.getByTestId('reset-confirm').click();
+  await expect(page.getByTestId('reset-confirm')).toBeHidden();
+  await expect(page.locator('.cm-content')).not.toContainText('argv');
+});
+
+test('gerar main de exemplo preenche o rascunho e rodar funciona', async ({ page }) => {
+  await open(page, 'ft_strlen');
+  await expect(page.getByTestId('run-help')).toBeVisible();
+  await setCode(page, FT_STRLEN);
+  await page.getByTestId('sample-main').click();
+  await expect(page.getByRole('tab', { name: 'main.c (rascunho)' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('.cm-content')).toContainText('main');
+  await expect(page.getByTestId('run-help')).toBeHidden();
+  await page.getByRole('tab', { name: 'ft_strlen.c' }).click();
+  await expect(page.locator('.cm-content')).toContainText('ft_strlen(char');
+  await page.getByTestId('run').click();
+  await expect(page.getByTestId('run-result').last()).toBeVisible({ timeout: 60000 });
+});

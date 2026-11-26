@@ -99,21 +99,6 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
 .switch-on { color: var(--cyan); font-weight: 600; }
 
 .pane-work { display: flex; flex-direction: column; }
-.editor-head {
-  display: flex; justify-content: space-between; align-items: center; gap: 8px;
-  background: var(--panel); border-bottom: 1px solid var(--border);
-}
-.editor-head .chip { margin-right: 10px; white-space: nowrap; }
-.tabs { display: flex; min-width: 0; overflow-x: auto; scrollbar-width: none; }
-.tab {
-  font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer;
-  padding: 6px 14px 7px; background: none; color: var(--label);
-  border: 0; border-top: 2px solid transparent; border-right: 1px solid var(--border);
-}
-.tab:hover { color: var(--text); }
-.tab[aria-selected='true'] { color: var(--text); background: var(--bg); border-top-color: var(--cyan); }
-.tab:focus-visible { outline-offset: -2px; }
-
 .editor { flex: 1 1 auto; min-height: 0; position: relative; }
 /* o painel ativo ganha borda ciano, como no tmux; por cima das calhas do CodeMirror (z-index 200) */
 .editor:focus-within::after {
@@ -122,20 +107,6 @@ h2 { font-size: 15px; font-weight: 600; margin: 32px 0 10px; }
 }
 .cm-host, .cm-host .cm-editor { height: 100%; }
 .editor-loading { margin: 0; padding: 12px 16px; color: var(--label); font-size: 13px; }
-
-.runbar {
-  display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap;
-  padding: 8px 12px; background: var(--panel); border-top: 1px solid var(--border);
-  font-size: 13px;
-}
-.runbar-cmd { white-space: nowrap; }
-.runbar-args {
-  flex: 1 1 160px; min-width: 0; padding: 4px 8px;
-  font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--border);
-}
-.runbar-args::placeholder { color: var(--label); }
-.runbar-args:focus-visible { outline-offset: -1px; }
-.runbar-buttons { display: flex; gap: 8px; }
 
 .btn {
   font: inherit; font-size: 13px; font-weight: 600; padding: 4px 14px; cursor: pointer;

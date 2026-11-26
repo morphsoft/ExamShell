@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 
 export type EditorTab = { key: string; label: string; readOnly?: boolean };
 
@@ -15,19 +15,29 @@ export const SCRATCH_TAB: EditorTab = { key: 'main.c', label: 'main.c (rascunho)
 export const tabId = (key: string) => `tab-${key.replace(/[^a-zA-Z0-9_-]/g, '_')}`;
 export const EDITOR_PANEL_ID = 'editor-panel';
 
-/** Uma aba por arquivo; setas esquerda/direita trocam de aba. `extra` fica à direita, fora da lista. */
+/**
+ * Uma aba por arquivo; setas esquerda/direita trocam de aba. À direita ficam "recomeçar" (com a
+ * confirmação aqui mesmo, sem modal) e o vim.
+ */
 export function EditorTabs({
   tabs,
   active,
   onSelect,
-  extra,
+  onReset,
+  vim,
+  onToggleVim,
 }: {
   tabs: EditorTab[];
   active: string;
   onSelect(key: string): void;
-  extra?: ReactNode;
+  onReset(key: string): void;
+  vim: boolean;
+  onToggleVim(): void;
 }) {
   const refs = useRef(new Map<string, HTMLButtonElement>());
+  const [confirming, setConfirming] = useState(false);
+  useEffect(() => setConfirming(false), [active]); // a pergunta é sobre o arquivo da aba ativa
+  const activeTab = tabs.find((t) => t.key === active) ?? tabs[0];
 
   const onKeyDown = (e: KeyboardEvent) => {
     const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
@@ -40,8 +50,8 @@ export function EditorTabs({
   };
 
   return (
-    <div className="editor-head">
-      <div className="tabs" role="tablist" aria-label="arquivos" onKeyDown={onKeyDown}>
+    <div className="tabs-ed">
+      <div className="tabs-list" role="tablist" aria-label="arquivos" onKeyDown={onKeyDown}>
         {tabs.map((t) => {
           const selected = t.key === active;
           return (
@@ -57,7 +67,7 @@ export function EditorTabs({
               aria-selected={selected}
               aria-controls={EDITOR_PANEL_ID}
               tabIndex={selected ? 0 : -1}
-              className="tab"
+              
               onClick={() => onSelect(t.key)}
             >
               {t.label}
@@ -65,7 +75,51 @@ export function EditorTabs({
           );
         })}
       </div>
-      {extra}
+      <span className="sp">
+        {confirming ? (
+          <span className="reset-ask" role="group" aria-label="recomeçar o arquivo">
+            <span>Recomeçar {activeTab.label.split(' ')[0]}? O código volta ao início.</span>
+            <button
+              type="button"
+              className="danger"
+              data-testid="reset-confirm"
+              onClick={() => {
+                setConfirming(false);
+                onReset(active);
+              }}
+            >
+              recomeçar
+            </button>
+            <button type="button" onClick={() => setConfirming(false)}>
+              cancelar
+            </button>
+          </span>
+        ) : (
+          !activeTab.readOnly && (
+            <button
+              type="button"
+              data-testid="editor-reset"
+              title="Recomeçar o arquivo"
+              onClick={() => setConfirming(true)}
+            >
+              recomeçar
+            </button>
+          )
+        )}
+        <button
+          type="button"
+          role="switch"
+          aria-checked={vim}
+          data-testid="vim-toggle"
+          title="Ativar modo vim"
+          onClick={onToggleVim}
+        >
+          vim{' '}
+          <span className={vim ? 'switch-on' : 'switch-off'} aria-hidden="true">
+            {vim ? 'on' : 'off'}
+          </span>
+        </button>
+      </span>
     </div>
   );
 }
