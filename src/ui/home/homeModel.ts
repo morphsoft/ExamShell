@@ -59,3 +59,8 @@ export function readiness(c: { passed: number; total: number }): string {
   if (r < 1) return 'quase pronto';
   return 'pronto para a prova';
 }
+
+/** O exercício do cartão "continuar": o último aberto, se ele ainda existir no catálogo. */
+export function continueTarget(lastOpened: { id: string } | null, existingIds: ReadonlySet<string>): string | null {
+  return lastOpened !== null && existingIds.has(lastOpened.id) ? lastOpened.id : null;
+}

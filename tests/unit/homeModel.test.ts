@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { drawFromLevel, levelCounts, matchesFilter, matchesQuery, normalize } from '../../src/ui/home/homeModel';
+import { continueTarget, drawFromLevel, levelCounts, matchesFilter, matchesQuery, normalize } from '../../src/ui/home/homeModel';
 
 const strlen = { id: 'ft_strlen', summary: 'Devolve o tamanho de uma string.' };
 
@@ -36,5 +36,16 @@ describe('homeModel', () => {
       tried: 1,
       total: 4,
     });
+  });
+});
+
+describe('continueTarget', () => {
+  const ids = new Set(['inter', 'ft_strlen']);
+  it('usa o último aberto se existir', () => {
+    expect(continueTarget({ id: 'inter' }, ids)).toBe('inter');
+  });
+  it('id que sumiu ou sem atividade vira null', () => {
+    expect(continueTarget({ id: 'velho' }, ids)).toBeNull();
+    expect(continueTarget(null, ids)).toBeNull();
   });
 });

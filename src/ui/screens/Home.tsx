@@ -1,23 +1,62 @@
-import { useEffect, useState } from 'react';
-import { RANK02_CATALOG } from '../../content/rank02Catalog';
-import { loadExercises } from '../../content/loadExercises';
+import { useEffect, useRef, useState } from 'react';
+import { byLevel, loadExercises } from '../../content/loadExercises';
+import { getActivity, localDay, streakDays } from '../../state/activity';
 import { clearProgress, getProgress } from '../../state/progress';
 import { loadSession } from '../../state/randomSession';
-import type { Level } from '../../engine/types';
+import { AppTopBar } from '../components/AppTopBar';
+import { ContinueCard, SimulateCard } from '../home/HomeCards';
 import { ExerciseList, type DetailRequest } from '../home/ExerciseList';
-import { StatusBar } from '../components/StatusBar';
-import { TopBar } from '../components/TopBar';
+import { PrepList } from '../home/PrepList';
+import { applyTheme } from '../theme';
 
-const LEVELS: Level[] = [1, 2, 3, 4];
+function ClearConfirm({ onCancel, onConfirm }: { onCancel(): void; onConfirm(): void }) {
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const [opener] = useState(() => (document.activeElement instanceof HTMLElement ? document.activeElement : null));
+  const onCancelRef = useRef(onCancel);
+  onCancelRef.current = onCancel;
+
+  useEffect(() => {
+    cancelRef.current?.focus();
+    const onKey = (ev: KeyboardEvent) => {
+      if (ev.key === 'Escape') onCancelRef.current();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      if (opener && document.body.contains(opener)) opener.focus();
+    };
+  }, [opener]);
+
+  return (
+    <>
+      <div className="scrim" onClick={onCancel} />
+      <div className="sheet" role="dialog" aria-modal="true" aria-labelledby="clear-q" data-testid="clear-dialog">
+        <span className="grab" aria-hidden="true" />
+        <h3 id="clear-q" className="clear-q">Apagar todo o progresso, rascunhos e configurações?</h3>
+        <p className="muted">Isso vale só para este navegador e não dá para desfazer.</p>
+        <div className="btnrow">
+          <button type="button" className="btn" ref={cancelRef} onClick={onCancel}>
+            cancelar
+          </button>
+          <button type="button" className="btn danger" data-testid="clear-confirm" onClick={onConfirm}>
+            Apagar tudo
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
 
 export function Home({ section }: { section?: 'exercicios' }) {
-  const [version, setVersion] = useState(0);
+  const [, setVersion] = useState(0);
   const [detail, setDetail] = useState<DetailRequest | null>(null);
-  void version;
+  const [confirming, setConfirming] = useState(false);
   const progress = getProgress();
-  const session = loadSession();
-  const available = new Set(loadExercises().map((e) => e.id));
-  const ongoing = session !== null && session.finishedAt === null;
+  const activity = getActivity();
+  const exercises = loadExercises();
+  const groups = byLevel(exercises);
+  const idsByLevel = { 1: groups[1].map((e) => e.id), 2: groups[2].map((e) => e.id), 3: groups[3].map((e) => e.id), 4: groups[4].map((e) => e.id) };
+  const days = streakDays(activity.streak, localDay(new Date()));
 
   useEffect(() => {
     if (section !== 'exercicios') return;
@@ -26,68 +65,48 @@ export function Home({ section }: { section?: 'exercicios' }) {
   }, [section]);
 
   const onClear = () => {
-    if (window.confirm('Limpar todo o progresso e rascunhos deste navegador? Isso não pode ser desfeito.')) {
-      clearProgress();
-      setVersion((v) => v + 1);
-    }
+    clearProgress();
+    applyTheme('system');
+    setConfirming(false);
+    setDetail(null);
+    setVersion((v) => v + 1);
   };
 
   return (
     <>
-      <TopBar left="examshell · rank 02" right="simulador de prática" />
-      <main className="page">
-        <h1>
-          <span className="prompt">$</span> examshell
-        </h1>
-        <p className="lead">Treine para o Rank 02 no mesmo ambiente da prova, sem a pressão. Escolha por onde começar.</p>
+      <AppTopBar active={section === 'exercicios' ? 'exercicios' : 'inicio'} />
+      <main className="home gut" id="inicio">
+        <div className="in">
+          <div>
+            <h1>Bora treinar para o Rank 02</h1>
+            <p className="sub">Na prova cai um exercício sorteado de cada nível. Aqui você vê o quanto está pronto para cada um.</p>
+          </div>
 
-        <div className="modes">
-          <a className="mode" href="#/treino" data-testid="mode-practice">
-            <span className="mode-title">Treino livre</span>
-            <span className="muted">Escolha qualquer exercício, no seu ritmo, com dicas.</span>
-          </a>
-          <a
-            className="mode"
-            href={`#/aleatorio?seed=${Math.floor(Math.random() * 1e9)}`}
-            data-testid="mode-random"
-          >
-            <span className="mode-title">Modo aleatório</span>
-            <span className="muted">Um exercício por nível, sorteado, com tempo de prova.</span>
-          </a>
+          <div className="actions">
+            <ContinueCard
+              activity={activity}
+              streak={days}
+              exercises={exercises}
+              progress={progress}
+              onDetail={setDetail}
+            />
+            <SimulateCard session={loadSession()} now={Date.now()} />
+          </div>
+
+          <PrepList idsByLevel={idsByLevel} progress={progress} />
+
+          <section id="exercicios" className="exercicios" aria-label="Exercícios">
+            <ExerciseList detail={detail} onDetail={setDetail} />
+          </section>
+
+          <footer className="home-foot">
+            <button type="button" className="link-btn" data-testid="clear-progress" onClick={() => setConfirming(true)}>
+              limpar progresso
+            </button>
+          </footer>
         </div>
-
-        {ongoing && (
-          <p className="resume">
-            Você tem uma sessão em andamento.{' '}
-            <a href="#/aleatorio" data-testid="continue-random">
-              continuar sessão
-            </a>
-          </p>
-        )}
-
-        <h2>Seu progresso</h2>
-        <ul className="levels">
-          {LEVELS.map((level) => {
-            const entries = RANK02_CATALOG.filter((e) => e.level === level);
-            const passed = entries.filter((e) => available.has(e.id) && progress[e.id] === 'passed').length;
-            return (
-              <li key={level}>
-                <span className="k">nível {level}</span> · <b>{passed}/{entries.length}</b>{' '}
-                {passed === entries.length && <span className="ok">✓</span>}
-              </li>
-            );
-          })}
-        </ul>
-
-        <section id="exercicios" className="exercicios" aria-label="Exercícios">
-          <ExerciseList detail={detail} onDetail={setDetail} />
-        </section>
-
-        <button type="button" className="link-btn" data-testid="clear-progress" onClick={onClear}>
-          limpar progresso
-        </button>
       </main>
-      <StatusBar items={[{ label: 'rank', value: '02' }, { label: 'exercícios', value: String(available.size) }]} />
+      {confirming && <ClearConfirm onCancel={() => setConfirming(false)} onConfirm={onClear} />}
     </>
   );
 }
