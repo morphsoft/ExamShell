@@ -14,6 +14,7 @@ import { StatusBar } from '../components/StatusBar';
 import { Timer } from '../components/Timer';
 import { TopBar } from '../components/TopBar';
 import { navigate } from '../router';
+import { statusView } from '../prepText';
 import { plural } from '../sessionText';
 import { ExerciseScreen } from './ExerciseScreen';
 
@@ -127,24 +128,20 @@ export function RandomScreen({ seed }: { seed?: number }) {
         dispatch({ type: 'attempt', passed, now: Date.now() });
       }}
       onHintUsed={() => act({ type: 'hint' })}
-      notice={
-        passedId !== null && (
-          <LevelPassedNotice
-            key={passedId}
-            exerciseId={passedId}
-            level={session.currentLevel}
-            onClose={() => setPassedId(null)}
-          />
-        )
-      }
-      statusItems={[
-        { label: 'tempo', value: <Timer session={session} /> },
-        { label: 'tentativas', value: String(run.attempts) },
-        { label: 'modo', value: 'aleatório' },
-        { label: 'nível', value: `${session.currentLevel}/4` },
-      ]}
-      actions={
+      backHref="#/"
+      levelLabel={`nível ${session.currentLevel} de 4`}
+      status={statusView(run.outcome === 'passed', run.attempts)}
+      sessionBar={
         <>
+          {passedId !== null && (
+            <LevelPassedNotice
+              key={passedId}
+              exerciseId={passedId}
+              level={session.currentLevel}
+              onClose={() => setPassedId(null)}
+            />
+          )}
+          <Timer session={session} />
           {canSwap(session, pool) && (
             <button type="button" className="chip" data-testid="swap" onClick={() => act({ type: 'swap' })}>
               sortear outro deste nível

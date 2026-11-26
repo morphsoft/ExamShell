@@ -2,15 +2,15 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type
 import { grade, runOnce } from '../../engine/grade';
 import { parseArgs, ParseArgsError } from '../../engine/parseArgs';
 import type { GradeResult, LoadedExercise, SourceFiles } from '../../engine/types';
+import { recordGrade } from '../../state/activity';
 import { getSettings, markAttempt, saveSettings, type Settings } from '../../state/progress';
 import { CompilerLoader } from '../components/CompilerLoader';
 import { EDITOR_PANEL_ID, EditorTabs, providedTab, SCRATCH_TAB, tabId, type EditorTab } from '../components/EditorTabs';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { LogPane, type LogEntry } from '../components/LogPane';
 import { RunBar } from '../components/RunBar';
-import { StatusBar } from '../components/StatusBar';
 import { SubjectPane } from '../components/SubjectPane';
-import { TopBar } from '../components/TopBar';
+import { ExerciseTopBar, type ExerciseStatus } from '../components/ExerciseTopBar';
 import { useEngine } from '../engineContext';
 
 export interface ExerciseScreenProps {
@@ -26,17 +26,19 @@ export interface ExerciseScreenProps {
   /** Só é chamada se a tela ainda estiver montada quando o grademe termina. */
   onGraded(r: GradeResult): void;
   onHintUsed(): void;
-  statusItems: { label: string; value: ReactNode }[];
-  actions?: ReactNode;
-  /** Aviso logo abaixo da barra superior (ex.: o nível anterior passou). */
-  notice?: ReactNode;
+  /** Para onde o "voltar" do topo leva. */
+  backHref: string;
+  /** 'nível 1' no treino, 'nível 1 de 4' no simulado. */
+  levelLabel: string;
+  status: ExerciseStatus;
+  /** Barra do simulado, logo abaixo do topo (relógio, trocar, pular, encerrar, aviso de "passou"). */
+  sessionBar?: ReactNode;
 }
 
 // O CodeMirror vem num pedaço à parte: a home e a lista não precisam dele.
 const CodeEditor = lazy(() => import('../components/CodeEditor').then((m) => ({ default: m.CodeEditor })));
 
 const SAVE_DEBOUNCE_MS = 500;
-const ENGINE_LABEL = { loading: 'carregando', ready: 'pronto', error: 'com erro' } as const;
 
 const errorMessage = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
@@ -52,9 +54,10 @@ function Workspace({
   onFilesChange,
   onGraded,
   onHintUsed,
-  statusItems,
-  actions,
-  notice,
+  backHref,
+  levelLabel,
+  status: exerciseStatus,
+  sessionBar,
 }: ExerciseScreenProps) {
   const { engine, status, progress, error: engineError, lowMemory } = useEngine();
   const isFunction = exercise.kind === 'function';
@@ -149,7 +152,8 @@ function Workspace({
       });
       if (!alive.current) return; // a tela fechou: sem tentativa, sem onGraded
       patch(id, { state: 'done', result });
-      if (mode === 'practice') markAttempt(exercise.id, result.failure === null);
+      markAttempt(exercise.id, result.failure === null);
+      recordGrade(exercise.id, result, new Date());
       parent.current.onGraded(result);
     } catch (e) {
       if (alive.current) patch(id, { state: 'done', error: errorMessage(e) });
@@ -202,7 +206,9 @@ function Workspace({
   };
 
   // --- settings
-  const updateSettings = (next: Settings) => {
+  // Sempre sobre as configurações salvas agora: o tema pode ter mudado no botão do topo desde a montagem.
+  const updateSettings = (change: Partial<Settings>) => {
+    const next = { ...getSettings(), ...change };
     saveSettings(next);
     setSettings(next);
   };
@@ -213,7 +219,7 @@ function Workspace({
       aria-checked={settings.vim}
       className="chip"
       data-testid="vim-toggle"
-      onClick={() => updateSettings({ ...settings, vim: !settings.vim })}
+      onClick={() => updateSettings({ vim: !settings.vim })}
     >
       vim{' '}
       <span className={settings.vim ? 'switch-on' : 'switch-off'} aria-hidden="true">
@@ -232,18 +238,22 @@ function Workspace({
 
   return (
     <div className="exercise-screen">
-      <TopBar left="examshell · rank 02" right={`nível ${exercise.level}/4 · ${exercise.id}`} />
-      {notice}
-      <main className="exercise">
+      <ExerciseTopBar
+        backHref={backHref}
+        level={exercise.level}
+        levelLabel={levelLabel}
+        id={exercise.id}
+        kind={exercise.kind}
+        status={exerciseStatus}
+      />
+      {sessionBar && (
+        <div className="session gut">
+          <div className="in">{sessionBar}</div>
+        </div>
+      )}
+      <main className="work">
         <section className="pane pane-subject" aria-label="enunciado">
-          <SubjectPane
-            subject={exercise.subject}
-            lang={settings.subjectLang}
-            onToggleLang={() =>
-              updateSettings({ ...settings, subjectLang: settings.subjectLang === 'en' ? 'pt' : 'en' })
-            }
-            actions={actions}
-          />
+          <SubjectPane exercise={exercise} lang={settings.subjectLang} onSetLang={(l) => updateSettings({ subjectLang: l })} />
         </section>
         <section className="pane pane-work" aria-label="editor e terminal">
           <EditorTabs tabs={tabs} active={active} onSelect={setActive} extra={vimToggle} />
@@ -284,7 +294,6 @@ function Workspace({
           <LogPane exercise={exercise} entries={entries} onHint={onHint} />
         </section>
       </main>
-      <StatusBar items={[...statusItems, { label: 'compilador', value: ENGINE_LABEL[status] }]} />
     </div>
   );
 }

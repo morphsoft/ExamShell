@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getExercise } from '../content/loadExercises';
-import { getProgress, loadDraft, saveDraft, type ExerciseStatus } from '../state/progress';
+import { getActivity, recordOpened } from '../state/activity';
+import { getProgress, loadDraft, saveDraft } from '../state/progress';
 import { useRoute } from './router';
 import { Home } from './screens/Home';
 import { ExerciseScreen } from './screens/ExerciseScreen';
@@ -8,6 +9,7 @@ import { RandomScreen } from './screens/RandomScreen';
 import { SummaryScreen } from './screens/SummaryScreen';
 import { TopBar } from './components/TopBar';
 import { StatusBar } from './components/StatusBar';
+import { statusView } from './prepText';
 
 function Placeholder({ title, text = 'Esta tela ainda está a caminho.' }: { title: string; text?: string }) {
   return (
@@ -22,14 +24,14 @@ function Placeholder({ title, text = 'Esta tela ainda está a caminho.' }: { tit
   );
 }
 
-const STATUS_LABEL: Record<ExerciseStatus, string> = { untried: 'não tentado', tried: 'tentado', passed: 'passou' };
-
 /** Treino livre: rascunho e progresso no localStorage. */
 function PracticeExercise({ id }: { id: string }) {
   const [initialFiles] = useState(() => loadDraft(id) ?? {});
-  const [hints, setHints] = useState(0);
   const [, setGraded] = useState(0); // re-renderiza para mostrar o estado novo depois do grademe
   const exercise = getExercise(id);
+  useEffect(() => {
+    if (exercise) recordOpened(exercise.id, Date.now());
+  }, [exercise]);
   if (!exercise) {
     return (
       <Placeholder
@@ -38,7 +40,9 @@ function PracticeExercise({ id }: { id: string }) {
       />
     );
   }
-  const status = getProgress()[exercise.id] ?? 'untried';
+  // Progresso salvo antes de existir a contagem de tentativas: "tentado" vale pelo menos 1 tentativa.
+  const passed = getProgress()[exercise.id] === 'passed';
+  const attempts = Math.max(getActivity().lastAttempt[exercise.id]?.count ?? 0, getProgress()[exercise.id] === 'tried' ? 1 : 0);
   return (
     <ExerciseScreen
       exercise={exercise}
@@ -46,17 +50,10 @@ function PracticeExercise({ id }: { id: string }) {
       initialFiles={initialFiles}
       onFilesChange={(files) => saveDraft(exercise.id, files)}
       onGraded={() => setGraded((n) => n + 1)}
-      onHintUsed={() => setHints((n) => n + 1)}
-      statusItems={[
-        { label: 'modo', value: 'treino' },
-        { label: 'estado', value: STATUS_LABEL[status] },
-        { label: 'dicas', value: String(hints) },
-      ]}
-      actions={
-        <a href="#/treino">
-          <span aria-hidden="true">← </span>voltar à lista
-        </a>
-      }
+      onHintUsed={() => {}}
+      backHref="#/treino"
+      levelLabel={`nível ${exercise.level}`}
+      status={statusView(passed, attempts)}
     />
   );
 }

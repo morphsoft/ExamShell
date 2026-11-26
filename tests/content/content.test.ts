@@ -6,6 +6,7 @@ import { exerciseContentSchema } from '../../src/content/schema';
 import { grade, runOnce } from '../../src/engine/grade';
 import type { Engine, LoadedExercise, SourceFiles } from '../../src/engine/types';
 import { looksLikeCode } from '../../src/hints/looksLikeCode';
+import { formatSubject, type SubjectBlock } from '../../src/ui/subjectFormat';
 import { createNodeEngine } from '../support/nodeEngine';
 
 const SENTINEL = '/* EXAMSHELL-REFERENCE: nunca publicar */';
@@ -279,5 +280,42 @@ describe('main de exemplo', () => {
       expect(main, ex.id).not.toContain('EXAMSHELL-REFERENCE');
       expect(main.trimEnd().split('\n').length, ex.id).toBeLessThanOrEqual(40);
     }
+  });
+});
+
+describe('formatSubject nos enunciados', () => {
+  const words = (t: string) => t.split(/\s+/).filter(Boolean);
+  /** As palavras do corpo: o `\` que fecha uma linha de comando é o que a junção tira. */
+  const bodyWords = (text: string) => {
+    const body = text.split('\n').slice(text.split('\n').findIndex((l) => /^-{10,}\s*$/.test(l)) + 1).join('\n');
+    return words(
+      body.replace(/\$>/g, '$> ')
+        .split(/\n\s*\n/)
+        .map((blk) => (blk.trimStart().startsWith('$>') ? blk.replace(/ \\$/gm, '') : blk))
+        .join('\n\n'),
+    );
+  };
+  const blockWords = (b: SubjectBlock): string[] => {
+    switch (b.kind) {
+      case 'heading':
+        return words(b.text + ':');
+      case 'terminal':
+        return b.lines.flatMap((l) => words(l.kind === 'cmd' ? `$> ${l.text}` : l.text));
+      default:
+        return words(b.text);
+    }
+  };
+
+  it('não perde nenhuma palavra em nenhum dos 114 enunciados', () => {
+    let count = 0;
+    for (const ex of loadExercises()) {
+      for (const lang of ['en', 'pt'] as const) {
+        const blocks = formatSubject(ex.subject[lang]);
+        expect(blocks.flatMap(blockWords), `${ex.id}.${lang}`).toEqual(bodyWords(ex.subject[lang]));
+        for (const b of blocks) if (b.kind === 'prose') expect(b.text, `${ex.id}.${lang}`).not.toContain('$>');
+        count++;
+      }
+    }
+    expect(count).toBe(114);
   });
 });

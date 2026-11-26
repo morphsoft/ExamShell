@@ -1,62 +1,79 @@
-import type { ReactNode } from 'react';
+import type { LoadedExercise } from '../../engine/types';
 import type { Settings } from '../../state/progress';
+import { formatSubject, type SubjectBlock } from '../subjectFormat';
 
 type Lang = Settings['subjectLang'];
 
-const SWITCH: Record<Lang, { label: string; lang: string }> = {
-  en: { label: 'ver em português', lang: 'pt-BR' },
-  pt: { label: 'view in English', lang: 'en' },
-};
-
-/** O enunciado no formato da prova: cabeçalho `rótulo : valor`, a régua de traços e o texto. */
-function renderSubject(text: string): ReactNode[] {
-  const lines = text.replace(/\s+$/, '').split('\n');
-  const rule = lines.findIndex((l) => /^-{10,}\s*$/.test(l));
-  return lines.map((line, i) => {
-    if (i === rule) {
+function Block({ block }: { block: SubjectBlock }) {
+  switch (block.kind) {
+    case 'prose':
+      return <p>{block.text}</p>;
+    case 'heading':
+      return <h2>{block.text}</h2>;
+    case 'code':
+      return <pre className="code">{block.text}</pre>;
+    case 'terminal':
       return (
-        <span key={i} className="subject-rule" aria-hidden="true">
-          {line}
-        </span>
+        <pre className="examples">
+          {block.lines.map((l, i) =>
+            l.kind === 'cmd' ? (
+              <span key={i} className="line">
+                <span className="pr">$&gt;</span>
+                {l.text ? ' ' : ''}
+                <span className="cmd">{l.text}</span>
+                {'\n'}
+              </span>
+            ) : (
+              <span key={i} className="out">
+                {l.text}
+                {'\n'}
+              </span>
+            ),
+          )}
+        </pre>
       );
-    }
-    const field = i < rule ? /^([^:]*:)(.*)$/.exec(line) : null;
-    if (field) {
-      return (
-        <span key={i}>
-          <span className="k">{field[1]}</span>
-          {i === 0 ? <span className="subject-name">{field[2]}</span> : field[2]}
-          {'\n'}
-        </span>
-      );
-    }
-    return line + '\n';
-  });
+  }
 }
 
+/** O enunciado: fatos do exercício, escolha de idioma e o texto em parágrafos e blocos de terminal. */
 export function SubjectPane({
-  subject,
+  exercise,
   lang,
-  onToggleLang,
-  actions,
+  onSetLang,
 }: {
-  subject: { en: string; pt: string };
+  exercise: LoadedExercise;
   lang: Lang;
-  onToggleLang(): void;
-  actions?: ReactNode;
+  onSetLang(lang: Lang): void;
 }) {
-  const other = SWITCH[lang];
+  const text = exercise.subject[lang] || exercise.subject.en;
+  const allowed = exercise.allowedFunctions.join(', ') || 'nenhuma';
   return (
     <>
-      <div className="subject-head">
-        <div className="subject-actions">{actions}</div>
-        <button type="button" className="chip" data-testid="subject-lang" lang={other.lang} onClick={onToggleLang}>
-          {other.label}
-        </button>
+      <div className="subject-top">
+        <div className="facts">
+          <span>
+            arquivo <b>{exercise.expectedFiles.join(', ')}</b>
+          </span>
+          <span>
+            permitidas <b>{allowed}</b>
+          </span>
+          <span>
+            {exercise.tests.length} {exercise.tests.length === 1 ? 'teste' : 'testes'}
+          </span>
+        </div>
+        <span className="langs" role="group" aria-label="Idioma do enunciado" data-testid="subject-lang">
+          {(['en', 'pt'] as const).map((l) => (
+            <button key={l} type="button" aria-pressed={lang === l} data-testid={`lang-${l}`} onClick={() => onSetLang(l)}>
+              {l.toUpperCase()}
+            </button>
+          ))}
+        </span>
       </div>
-      <pre className="subject" data-testid="subject" lang={lang === 'pt' ? 'pt-BR' : 'en'}>
-        {renderSubject(subject[lang] || subject.en)}
-      </pre>
+      <div className="subject-body" data-testid="subject" lang={lang === 'pt' ? 'pt-BR' : 'en'}>
+        {formatSubject(text).map((b, i) => (
+          <Block key={i} block={b} />
+        ))}
+      </div>
     </>
   );
 }

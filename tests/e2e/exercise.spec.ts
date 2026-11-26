@@ -208,7 +208,7 @@ test('código corrigido passa, e a lista marca o exercício como passou', async 
   await expect(result).toContainText('✓ passou nos 8 testes');
   await expect(page.getByTestId('hint')).toHaveCount(0);
 
-  await page.getByRole('link', { name: 'voltar à lista' }).click();
+  await page.getByTestId('back').click();
   await expect(page.getByTestId('ex-first_word')).toHaveAttribute('data-status', 'passed');
 });
 
@@ -309,12 +309,14 @@ test('grademe que termina depois de sair da tela não conta tentativa', async ({
   await setCode(page, FIRST_WORD_LOOP);
   await page.getByTestId('grademe').click();
   await expect(page.getByTestId('grade-result')).toHaveAttribute('data-state', 'running');
-  await page.getByRole('link', { name: 'voltar à lista' }).click();
+  await page.getByTestId('back').click();
   await expect(page.getByTestId('ex-first_word')).toBeVisible();
   // compilar + 2 s de tempo esgotado: depois disso o grademe abandonado já terminou
   await page.waitForTimeout(4000);
   const progress = await page.evaluate(() => localStorage.getItem('examshell:v1:progress'));
   expect(progress ?? '').not.toContain('first_word');
+  const activity = await page.evaluate(() => localStorage.getItem('examshell:v1:activity'));
+  expect(JSON.parse(activity ?? '{}').lastAttempt?.first_word).toBeUndefined(); // abandonado: nem tentativa, nem sequência
   await page.reload(); // a lista só lê o progresso ao renderizar
   await expect(page.getByTestId('ex-first_word')).toHaveAttribute('data-status', 'untried');
 });
@@ -322,15 +324,18 @@ test('grademe que termina depois de sair da tela não conta tentativa', async ({
 test('idioma do enunciado alterna, e o vim fica ligado depois do reload', async ({ page }) => {
   await page.goto('./#/treino/first_word');
   const subject = page.getByTestId('subject');
-  const lang = page.getByTestId('subject-lang');
-  await expect(subject).toContainText('Assignment name');
-  await expect(lang).toHaveText('ver em português');
-  await lang.click();
-  await expect(subject).toContainText('Nome do exercício');
-  await expect(subject).not.toContainText('Assignment name');
-  await expect(lang).toHaveText('view in English');
-  await lang.click();
-  await expect(subject).toContainText('Assignment name');
+  const en = page.getByTestId('lang-en');
+  const pt = page.getByTestId('lang-pt');
+  await expect(page.getByTestId('subject-lang')).toBeVisible();
+  await expect(subject).toContainText('Write a program that takes a string');
+  await expect(en).toHaveAttribute('aria-pressed', 'true');
+  await expect(pt).toHaveAttribute('aria-pressed', 'false');
+  await pt.click();
+  await expect(subject).toContainText('Escreva um programa');
+  await expect(subject).not.toContainText('Write a program');
+  await expect(pt).toHaveAttribute('aria-pressed', 'true');
+  await en.click();
+  await expect(subject).toContainText('Write a program that takes a string');
 
   const vim = page.getByTestId('vim-toggle');
   await expect(vim).not.toBeChecked();
@@ -338,6 +343,56 @@ test('idioma do enunciado alterna, e o vim fica ligado depois do reload', async 
   await expect(vim).toBeChecked();
   await page.reload();
   await expect(page.getByTestId('vim-toggle')).toBeChecked();
+});
+
+test('topo mostra nível e status; o status muda depois do grademe', async ({ page }) => {
+  await page.goto('./#/treino/first_word');
+  await expect(page.getByTestId('exercise-name')).toHaveText('first_word');
+  await expect(page.getByTestId('ex-status')).toHaveText('novo');
+  await expect(page.locator('.crumb .lv')).toHaveText('nível 1');
+  await expect(page.getByTestId('grademe')).toBeEnabled({ timeout: LOAD });
+  await setCode(page, FIRST_WORD_BUG);
+  await grademe(page);
+  await expect(page.getByTestId('ex-status')).toHaveText('ainda não passou · tentativa 1');
+  await grademe(page);
+  await expect(page.getByTestId('ex-status')).toHaveText('ainda não passou · tentativa 2');
+  await setCode(page, FIRST_WORD_OK);
+  await grademe(page);
+  await expect(page.getByTestId('ex-status')).toHaveText('passou ✓');
+});
+
+test('progresso salvo antes das tentativas contadas aparece como tentativa 1, não como novo', async ({ page }) => {
+  await page.evaluate(() => localStorage.setItem('examshell:v1:progress', JSON.stringify({ first_word: 'tried' })));
+  await page.goto('./#/treino/first_word');
+  await expect(page.getByTestId('ex-status')).toHaveText('ainda não passou · tentativa 1');
+});
+
+test('enunciado em parágrafos e bloco de terminal, com os fatos do exercício', async ({ page }) => {
+  await page.goto('./#/treino/first_word');
+  const subject = page.getByTestId('subject');
+  await expect(subject.locator('p').first()).toHaveText(
+    'Write a program that takes a string and displays its first word, followed by a newline.',
+  );
+  await expect(subject.locator('pre.examples .cmd').first()).toHaveText('./first_word "FOR PONY" | cat -e');
+  await expect(subject.locator('pre.examples .out').first()).toHaveText('FOR$');
+  await expect(page.locator('.facts')).toContainText('first_word.c');
+  await expect(page.locator('.facts')).toContainText('write');
+  await expect(page.locator('.facts')).toContainText('8 testes');
+});
+
+test('mudar vim ou idioma depois de trocar o tema não desfaz o tema', async ({ page }) => {
+  await page.goto('./#/treino/first_word');
+  await page.getByTestId('theme-toggle').click();
+  const theme = await page.evaluate(() => document.documentElement.dataset.theme);
+  expect(['light', 'dark']).toContain(theme);
+  await page.getByTestId('vim-toggle').click();
+  await page.getByTestId('lang-pt').click();
+  await page.reload();
+  await expect(page.getByTestId('vim-toggle')).toBeChecked();
+  await expect(page.getByTestId('lang-pt')).toHaveAttribute('aria-pressed', 'true');
+  expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(theme);
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('examshell:v1:settings') ?? '{}'));
+  expect(saved.theme).toBe(theme);
 });
 
 test('duplo clique no grademe gera um só resultado', async ({ page }) => {
@@ -418,7 +473,7 @@ test('se o editor não carregar, aparece um aviso com "recarregar" em vez de tel
   await expect(fallback).toContainText(
     'Algo deu errado ao carregar esta parte do site. Recarregue a página para continuar.',
   );
-  await expect(page.getByTestId('subject')).toContainText('Assignment name'); // o resto da tela segue de pé
+  await expect(page.getByTestId('subject')).toContainText('Write a program'); // o resto da tela segue de pé
 
   await page.unroute(editorChunk);
   await page.getByRole('button', { name: 'recarregar' }).click();
