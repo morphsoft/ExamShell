@@ -319,3 +319,108 @@ describe('formatSubject nos enunciados', () => {
     expect(count).toBe(114);
   });
 });
+
+describe('formatSubject: exemplos ficam em linhas, instruções ficam prosa', () => {
+  const LANGS = ['en', 'pt'] as const;
+  const subject = (id: string, lang: 'en' | 'pt') => getExercise(id)!.subject[lang].replace(/\r\n?/g, '\n');
+  const blocksOf = (id: string, lang: 'en' | 'pt') => formatSubject(subject(id, lang));
+  const texts = (bs: SubjectBlock[], kind: 'prose' | 'code' | 'heading') =>
+    bs.flatMap((b) => (b.kind === kind ? [b.text] : []));
+  /** As linhas de todos os blocos de código, como estão. */
+  const codeLines = (bs: SubjectBlock[]) => texts(bs, 'code').flatMap((t) => t.split('\n'));
+
+  /** Os grupos de linhas do corpo (separados por linha em branco), fora os de terminal. */
+  function bodyGroups(text: string): string[][] {
+    const all = text.replace(/\r\n?/g, '\n').replace(/\s+$/, '').split('\n');
+    const body = all.slice(all.findIndex((l) => /^-{10,}\s*$/.test(l)) + 1);
+    const groups: string[][] = [];
+    let cur: string[] = [];
+    for (const line of body) {
+      if (line.trim() === '') {
+        if (cur.length) groups.push(cur);
+        cur = [];
+      } else cur.push(line);
+    }
+    if (cur.length) groups.push(cur);
+    return groups.filter((g) => !g.some((l) => /^\$>/.test(l)));
+  }
+
+  const CALL_LINE = /^[A-Za-z_]\w*\(/;
+  const isToken = (l: string) => /^\S+$/.test(l.trim());
+
+  it.each(LANGS)('flood_fill (%s): as grades de antes e depois são código, linha por linha', (lang) => {
+    const bs = blocksOf('flood_fill', lang);
+    const before = ['11111111', '10001001', '10010001', '10110001', '11100001'].join('\n');
+    const after = ['FFFFFFFF', 'F000F00F', 'F00F000F', 'F0FF000F', 'FFF0000F'].join('\n');
+    expect(texts(bs, 'code')).toContain(before);
+    expect(texts(bs, 'code')).toContain(after);
+    for (const p of texts(bs, 'prose')) expect(p).not.toMatch(/\b[01F]{8}\b/);
+  });
+
+  it.each(
+    ['ft_list_foreach', 'ft_list_remove_if', 'sort_list', 'ft_strpbrk'].flatMap((id) => LANGS.map((lang) => [id, lang] as const)),
+  )('%s (%s): os exemplos de chamada não viram prosa', (id, lang) => {
+    const bs = blocksOf(id, lang);
+    const calls = subject(id, lang).split('\n').filter((l) => l.startsWith(`${id}(`));
+    expect(calls.length).toBeGreaterThan(0);
+    for (const call of calls) expect(codeLines(bs), call).toContain(call);
+    for (const p of texts(bs, 'prose')) expect(p).not.toContain(`${id}(`);
+  });
+
+  it.each(LANGS)('alpha_mirror (%s): as linhas da troca de letras não se juntam', (lang) => {
+    const bs = blocksOf('alpha_mirror', lang);
+    const lines = subject('alpha_mirror', lang).split('\n').filter((l) => l.startsWith("'"));
+    expect(lines).toHaveLength(2);
+    for (const l of lines) expect(codeLines(bs)).toContain(l);
+    for (const p of texts(bs, 'prose')) expect(p).not.toContain(lines[0]);
+  });
+
+  it('instruções como "Write the following function:" ficam prosa, com os dois-pontos', () => {
+    const cases: [string, 'en' | 'pt', string][] = [
+      ['ft_range', 'en', 'Write the following function:'],
+      ['max', 'en', 'Write the following function:'],
+      ['sort_list', 'en', 'Write the following functions:'],
+      ['ft_range', 'pt', 'Escreva a seguinte função:'],
+      ['sort_int_tab', 'pt', 'Escreva a seguinte função:'],
+      ['ft_list_size', 'pt', 'Ela deve ser declarada assim:'],
+      ['ft_list_remove_if', 'pt', 'Ela será declarada assim:'],
+    ];
+    for (const [id, lang, line] of cases) {
+      const bs = blocksOf(id, lang);
+      expect(texts(bs, 'prose'), `${id}.${lang}`).toContain(line);
+      expect(texts(bs, 'heading'), `${id}.${lang}`).not.toContain(line.slice(0, -1));
+    }
+  });
+
+  it('nos 114 enunciados, título só para rótulos curtos ("Examples:", "Exemplos:")', () => {
+    for (const ex of loadExercises()) {
+      for (const lang of LANGS) {
+        for (const h of texts(formatSubject(ex.subject[lang]), 'heading')) {
+          expect(h, `${ex.id}.${lang}`).toMatch(/^\p{Lu}\p{Ll}*( \p{Ll}+)?$/u);
+        }
+      }
+    }
+  });
+
+  it('nos 114 enunciados, linhas de chamada e grades nunca entram num parágrafo', () => {
+    let checked = 0;
+    for (const ex of loadExercises()) {
+      for (const lang of LANGS) {
+        const bs = formatSubject(ex.subject[lang]);
+        const lines = codeLines(bs);
+        for (const group of bodyGroups(ex.subject[lang])) {
+          const structured = group.filter(
+            (l) => CALL_LINE.test(l) || (group.length >= 2 && group.every(isToken)),
+          );
+          for (const l of structured) {
+            expect(lines, `${ex.id}.${lang}: ${l}`).toContain(l);
+            checked++;
+          }
+        }
+        // e nenhum parágrafo carrega uma chamada no começo de uma das suas linhas de origem
+        for (const p of texts(bs, 'prose')) expect(p, `${ex.id}.${lang}`).not.toMatch(/(^|[.,] )[a-z_]\w*\(\[/);
+      }
+    }
+    expect(checked).toBeGreaterThan(20);
+  });
+});

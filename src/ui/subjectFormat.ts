@@ -31,12 +31,29 @@ function terminal(lines: string[]): SubjectBlock {
   return { kind: 'terminal', lines: out };
 }
 
+const CALL = /^[A-Za-z_]\w*\(/; // ft_strpbrk("Hello", "o") devolve…
+const CALL_ANYWHERE = /\b[A-Za-z_]\w*\(/;
+const TOKEN = /^\S+$/; // uma linha de grade: 11111111
+const CHAR_LITERAL = /^'(\\.|[^'])'/; // 'a' vira 'z', 'Z' vira 'A'
+
+/**
+ * Conteúdo feito de linhas, que não pode virar parágrafo: código (recuo, `;`, `{`, `#`, `typedef`), exemplos de
+ * chamada (uma linha que começa com `nome(`, ou todas as linhas com uma chamada), grades (toda linha é um token
+ * só) e tabelas de troca (toda linha começa com um caractere entre aspas simples).
+ */
 function looksLikeCodeBlock(lines: string[]): boolean {
+  const many = lines.length >= 2;
   return (
     lines.some((l) => /^(\t| {2,})/.test(l) || /[;{}]$/.test(l.trimEnd()) || /^(typedef|struct|#)/.test(l)) ||
-    lines.every((l) => /^[A-Za-z_]\w*\(/.test(l))
+    lines.some((l) => CALL.test(l)) ||
+    (many && lines.every((l) => CALL_ANYWHERE.test(l))) ||
+    (many && lines.every((l) => TOKEN.test(l.trim()))) ||
+    (many && lines.every((l) => CHAR_LITERAL.test(l)))
   );
 }
+
+/** Um rótulo como "Examples:" ou "Exemplos:" (uma ou duas palavras); uma frase como "Write the following function:" fica prosa. */
+const LABEL = /^\p{Lu}\p{Ll}*( \p{Ll}+)?\s?:$/u;
 
 const BULLET = /^[-*] /;
 
@@ -54,8 +71,8 @@ function textBlocks(lines: string[]): SubjectBlock[] {
         : textBlocks(seg),
     );
   }
-  if (lines.length === 1 && lines[0].endsWith(':') && lines[0].length <= 30) {
-    return [{ kind: 'heading', text: lines[0].slice(0, -1) }];
+  if (lines.length === 1 && LABEL.test(lines[0].trim())) {
+    return [{ kind: 'heading', text: lines[0].trim().slice(0, -1).trimEnd() }];
   }
   if (looksLikeCodeBlock(lines)) return [{ kind: 'code', text: lines.join('\n') }];
   return [{ kind: 'prose', text: lines.map((l) => l.trim()).join(' ') }];
