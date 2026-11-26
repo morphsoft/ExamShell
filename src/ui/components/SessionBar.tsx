@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { remainingMs, type RandomSession } from '../../state/randomSession';
+import type { HoldExit } from '../randomHold';
 import { formatClock } from '../sessionText';
 
 const WARN_MS = 30 * 60 * 1000;
@@ -44,8 +45,10 @@ function Clock({ session }: { session: RandomSession }) {
 }
 
 /**
- * Barra do simulado: níveis, relógio e ações. `held` (o cartão de "passou" ainda na tela) desliga trocar e
- * pular, que valeriam para o próximo nível, ainda não aberto.
+ * Barra do simulado: níveis, relógio e ações. Com um exercício segurado (`exit`, o cartão de "passou"), trocar e
+ * pular somem, porque valeriam para o próximo nível, ainda não aberto; no lugar fica a saída do exercício
+ * segurado ("Ir para o nível N" ou "Ver resumo"), que continua aqui mesmo se o cartão sumir com outra correção.
+ * Com a sessão já encerrada, só sobra "Ver resumo".
  */
 export function SessionBar({
   session,
@@ -53,16 +56,20 @@ export function SessionBar({
   onSwap,
   onSkip,
   onFinish,
-  held = false,
+  exit = null,
+  onExit,
 }: {
   session: RandomSession;
   canSwap: boolean;
   onSwap(): void;
   onSkip(): void;
   onFinish(): void;
-  held?: boolean;
+  exit?: HoldExit | null;
+  onExit?(): void;
 }) {
   const [confirming, setConfirming] = useState(false);
+  const held = exit !== null;
+  const finished = session.finishedAt !== null;
   return (
     <div className="session-bar" data-testid="session-bar">
       <ol className="steps" aria-label="Níveis da prova">
@@ -101,12 +108,26 @@ export function SessionBar({
                 Pular nível
               </button>
             )}
-            <button type="button" className="btn quiet" data-testid="finish" onClick={() => setConfirming(true)}>
-              Encerrar
-            </button>
-            <a className="btn quiet" data-testid="exit-session" href="#/">
-              Sair (a sessão continua)
-            </a>
+            {exit !== null && (
+              <button
+                type="button"
+                className="btn primary"
+                data-testid={exit.kind === 'summary' ? 'bar-summary' : 'bar-next-level'}
+                onClick={onExit}
+              >
+                {exit.label}
+              </button>
+            )}
+            {!finished && (
+              <button type="button" className="btn quiet" data-testid="finish" onClick={() => setConfirming(true)}>
+                Encerrar
+              </button>
+            )}
+            {!finished && (
+              <a className="btn quiet" data-testid="exit-session" href="#/">
+                Sair (a sessão continua)
+              </a>
+            )}
           </>
         )}
       </span>

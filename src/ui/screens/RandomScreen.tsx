@@ -15,13 +15,11 @@ import { StatusBar } from '../components/StatusBar';
 import { TopBar } from '../components/TopBar';
 import { navigate } from '../router';
 import { passPhrase, statusView } from '../prepText';
+import { holdExit, type Hold } from '../randomHold';
 import { ExerciseScreen } from './ExerciseScreen';
 import { RandomStart } from './RandomStart';
 
 type Pool = Record<Level, string[]>;
-
-/** O exercício que acabou de passar: a tela o segura até o cadete pedir o próximo nível (o reducer já avançou). */
-type Hold = { exerciseId: string; level: Level };
 
 function buildPool(): Pool {
   const groups = byLevel(loadExercises());
@@ -124,21 +122,15 @@ export function RandomScreen({ seed }: { seed?: number }) {
       afterPass={() => {
         const h = holdRef.current;
         const cur = ref.current;
-        if (h === null || cur === null) return { message: passPhrase(run.attempts), actions: [] };
+        const exit = cur === null ? null : holdExit(cur, h);
+        if (h === null || cur === null || exit === null) return { message: passPhrase(run.attempts), actions: [] };
         const attempts = cur.levels[h.level - 1].attempts;
-        const message = `Nível ${h.level} de 4 concluído. ${passPhrase(attempts)}`;
-        if (cur.finishedAt !== null) {
-          return {
-            message,
-            actions: [{ label: 'Ver resumo', testId: 'pass-summary', primary: true, onClick: () => setHold(null) }],
-          };
-        }
         return {
-          message,
+          message: `Nível ${h.level} de 4 concluído. ${passPhrase(attempts)}`,
           actions: [
             {
-              label: `Ir para o nível ${cur.currentLevel}`,
-              testId: 'pass-next-level',
+              label: exit.label,
+              testId: exit.kind === 'summary' ? 'pass-summary' : 'pass-next-level',
               primary: true,
               onClick: () => setHold(null),
             },
@@ -151,7 +143,8 @@ export function RandomScreen({ seed }: { seed?: number }) {
       sessionBar={
         <SessionBar
           session={session}
-          held={hold !== null}
+          exit={holdExit(session, hold)}
+          onExit={() => setHold(null)}
           canSwap={canSwap(session, pool)}
           onSwap={() => act({ type: 'swap' })}
           onSkip={() => act({ type: 'skip', now: Date.now() })}
