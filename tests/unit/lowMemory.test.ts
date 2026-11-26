@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createLowMemoryWatch, ENGINE_INIT_MARK, LOW_MEMORY_TIMEOUT_MS } from '../../src/ui/lowMemory';
+import { createLowMemoryWatch, isDownloadComplete, ENGINE_INIT_MARK, LOW_MEMORY_TIMEOUT_MS } from '../../src/ui/lowMemory';
 
 function setup(initial?: string) {
   const data = new Map<string, string>(initial ? [[ENGINE_INIT_MARK, initial]] : []);
@@ -58,5 +58,14 @@ describe('createLowMemoryWatch', () => {
       w.onDownloaded();
       w.onSettled();
     }).not.toThrow();
+  });
+});
+
+describe('isDownloadComplete', () => {
+  it('do cache mas ainda faltando bytes: não terminou', () => {
+    expect(isDownloadComplete({ loadedBytes: 10, totalBytes: 100 })).toBe(false);
+  });
+  it('todos os bytes: terminou', () => {
+    expect(isDownloadComplete({ loadedBytes: 100, totalBytes: 100 })).toBe(true);
   });
 });

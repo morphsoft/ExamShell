@@ -141,7 +141,9 @@ char	*ft_itoa(int nbr)
 async function setCode(page: Page, text: string) {
   await page.locator('.cm-content').click();
   await page.keyboard.press('Control+A');
-  await page.keyboard.insertText(text);
+  // o Firefox lança NS_ERROR_FAILURE em insertText('')
+  if (text === '') await page.keyboard.press('Backspace');
+  else await page.keyboard.insertText(text);
 }
 
 /** Abre o exercício no treino e espera o compilador ficar pronto. */

@@ -37,3 +37,11 @@ export function createLowMemoryWatch(o: {
     },
   };
 }
+
+/**
+ * O download terminou quando todos os bytes chegaram (do cache também: cada arquivo informa o tamanho).
+ * `fromCache` sozinho não serve: ele fica `true` até o primeiro arquivo não guardado, com a carga ainda no meio.
+ */
+export function isDownloadComplete(p: { loadedBytes: number; totalBytes: number }): boolean {
+  return p.loadedBytes >= p.totalBytes;
+}

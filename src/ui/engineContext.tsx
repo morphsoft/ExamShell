@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { createLowMemoryWatch } from './lowMemory';
+import { createLowMemoryWatch, isDownloadComplete } from './lowMemory';
 import { createBrowserEngine, type BrowserEngine, type EngineStatus, type LoadProgress } from '../engine/browserEngine';
 
 /** `error`: a mensagem do motivo, quando `status` é 'error'. */
@@ -58,7 +58,7 @@ function getEngine(): BrowserEngine {
       });
     },
     onProgress(progress) {
-      if (progress.fromCache || progress.loadedBytes >= progress.totalBytes) watch.onDownloaded();
+      if (isDownloadComplete(progress)) watch.onDownloaded();
       // só re-renderiza quando a porcentagem inteira (ou a origem) muda
       const prev = snapshot.progress;
       if (prev && prev.fromCache === progress.fromCache && loadPercent(prev) === loadPercent(progress)) return;
