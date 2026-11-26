@@ -1,29 +1,46 @@
 import { useEffect } from 'react';
-import { loadSession, saveSession, type LevelRun } from '../../state/randomSession';
-import { StatusBar } from '../components/StatusBar';
-import { TopBar } from '../components/TopBar';
+import { loadSession, saveSession, type LevelRun, type RandomSession } from '../../state/randomSession';
+import { AppTopBar } from '../components/AppTopBar';
 import { navigate } from '../router';
 import { encouragement, formatClock, levelLabel, plural } from '../sessionText';
 
-const newSeed = () => Math.floor(Math.random() * 1e9);
+/** Exercícios que valem treino: os trocados e o do nível pulado ou parado (sem repetir). */
+function toTrain(run: LevelRun, label: ReturnType<typeof levelLabel>): string[] {
+  const ids = [...run.swappedFrom];
+  if ((label.kind === 'skipped' || label.kind === 'stopped') && run.exerciseId) ids.push(run.exerciseId);
+  return [...new Set(ids)];
+}
 
-function LevelRow({ run, label }: { run: LevelRun; label: ReturnType<typeof levelLabel> }) {
+function LevelRow({ session, run }: { session: RandomSession; run: LevelRun }) {
+  const label = levelLabel(session, run);
+  const train = toTrain(run, label);
   return (
-    <li className="sum-level">
+    <li className="sum-level" data-testid={`sum-level-${run.level}`}>
       <span className="k">nível {run.level}</span>
-      {label.kind === 'passed' && (
-        <span>
-          <span className="ok" aria-hidden="true">✓ </span>
-          <b>{label.exerciseId}</b> <span className="muted">passou</span>
-        </span>
-      )}
-      {label.kind === 'skipped' && <span className="mark-tried">pulado</span>}
-      {label.kind === 'stopped' && <span className="mark-tried">parou aqui</span>}
-      {label.kind === 'unreached' && <span className="muted">não chegou</span>}
+      <span className="what">
+        {label.kind === 'passed' && (
+          <>
+            <span className="ok" aria-hidden="true">✓ </span>
+            <b>{label.exerciseId}</b> <span className="muted">passou</span>
+          </>
+        )}
+        {label.kind === 'skipped' && <span className="tried">pulado</span>}
+        {label.kind === 'stopped' && <span className="tried">parou aqui</span>}
+        {label.kind === 'unreached' && <span className="muted">não chegou</span>}
+      </span>
       {label.kind !== 'unreached' && (
         <span className="muted sum-stats">
-          {plural(run.attempts, 'tentativa', 'tentativas')} · {plural(run.swappedFrom.length, 'troca', 'trocas')} ·{' '}
-          {plural(run.hintsUsed, 'dica', 'dicas')}
+          {run.swappedFrom.length > 0 && <>trocou: {run.swappedFrom.join(', ')} · </>}
+          {plural(run.attempts, 'tentativa', 'tentativas')} · {plural(run.hintsUsed, 'dica', 'dicas')}
+        </span>
+      )}
+      {train.length > 0 && (
+        <span className="sum-train">
+          {train.map((id) => (
+            <a key={id} className="btn" data-testid={`train-${id}`} href={`#/treino/${encodeURIComponent(id)}`}>
+              Treinar {id}
+            </a>
+          ))}
         </span>
       )}
     </li>
@@ -47,28 +64,27 @@ export function SummaryScreen() {
 
   return (
     <>
-      <TopBar left="examshell · rank 02" right="resumo da sessão" />
-      <main className="page" data-testid="summary">
-        <h1>Resumo da sessão</h1>
+      <AppTopBar active="simulado" />
+      <main className="rand-page gut" data-testid="summary">
+        <h1>Resumo do simulado</h1>
         <p className="lead">
-          {passed} de 4 níveis · tempo total <b>{formatClock(session.finishedAt - session.startedAt)}</b>
+          passou em {passed} de 4 níveis · tempo total <b data-testid="summary-time">{formatClock(session.finishedAt - session.startedAt)}</b>
         </p>
         <ul className="sum-levels">
           {session.levels.map((run) => (
-            <LevelRow key={run.level} run={run} label={levelLabel(session, run)} />
+            <LevelRow key={run.level} session={session} run={run} />
           ))}
         </ul>
         <p className="cheer">{encouragement(passed)}</p>
         <div className="sum-actions">
-          <button type="button" className="btn btn-primary" onClick={() => leave(`#/aleatorio?seed=${newSeed()}`)}>
-            nova sessão
+          <button type="button" className="btn primary" data-testid="new-simulado" onClick={() => leave('#/aleatorio')}>
+            Novo simulado
           </button>
-          <button type="button" className="btn" onClick={() => leave('#/')}>
-            voltar ao início
+          <button type="button" className="btn" data-testid="summary-home" onClick={() => leave('#/')}>
+            Voltar ao início
           </button>
         </div>
       </main>
-      <StatusBar items={[{ label: 'modo', value: 'aleatório' }, { label: 'níveis', value: `${passed}/4` }]} />
     </>
   );
 }

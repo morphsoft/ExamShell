@@ -1,0 +1,63 @@
+/* Simulado: tela de início, barra da sessão e resumo. */
+
+/* botões (o .btn antigo ainda existe no legacy.css; aqui valem os do protótipo) */
+.session-bar .btn, .rand-page .btn {
+  font: inherit; font-weight: 800; font-size: 14px; padding: 8px 14px; cursor: pointer; text-decoration: none;
+  border: 1px solid var(--line-2); border-radius: 10px; background: var(--surface); color: var(--ink);
+  display: inline-flex; align-items: center; gap: 8px; transition: none;
+}
+.session-bar .btn:hover:not(:disabled), .rand-page .btn:hover:not(:disabled) { background: var(--raise); }
+.session-bar .btn.primary, .rand-page .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.session-bar .btn.primary:hover, .rand-page .btn.primary:hover { background: var(--accent); filter: brightness(1.06); }
+.session-bar .btn.quiet { border-color: transparent; background: transparent; color: var(--muted); }
+.session-bar .btn.quiet:hover { background: var(--surface); color: var(--ink); }
+
+/* barra da sessão */
+.session-bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; width: 100%; }
+.steps { display: flex; gap: 6px; align-items: center; list-style: none; margin: 0; padding: 0; }
+.step span:first-child {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 13px;
+  border: 2px solid var(--line-2); color: var(--muted);
+}
+.step + .step::before { content: ''; display: inline-block; width: 14px; height: 2px; background: var(--line-2); vertical-align: middle; margin-right: 6px; }
+.step { display: inline-flex; align-items: center; }
+.step[data-state="current"] span:first-child { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.step[data-state="passed"] span:first-child { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.step[data-state="skipped"] span:first-child { border-style: dashed; color: var(--soft); }
+.clock { font: 700 22px var(--mono); letter-spacing: .02em; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+.clock small { font: 700 12px var(--sans); color: var(--muted); margin-left: 6px; letter-spacing: 0; }
+.clock.warn { color: var(--warn); }
+.clock.over { font: 700 14px var(--sans); color: var(--warn); }
+.session-bar .acts { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+/* início e resumo */
+.rand-page { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding-block: 28px 40px; display: grid; gap: 16px; align-content: start; }
+.rand-page h1 { margin: 0; font-size: 26px; font-weight: 800; }
+.rand-page p { margin: 0; font-weight: 500; }
+.rand-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: grid; gap: 14px; box-shadow: var(--shadow); }
+.rand-card .facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.rand-card .facts span { border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-weight: 700; font-size: 13px; color: var(--muted); }
+.rand-card .btn.big { justify-self: start; padding: 12px 20px; font-size: 15px; }
+.rand-page .lead { color: var(--muted); }
+.rand-page .lead b { color: var(--ink); font-family: var(--mono); font-variant-ligatures: none; }
+.sum-levels { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.sum-level { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 16px; }
+.sum-level + .sum-level { border-top: 1px solid var(--line); }
+.sum-level .k { min-width: 6ch; font-weight: 800; color: var(--muted); }
+.sum-level .ok { color: var(--ok); }
+.sum-level .tried { color: var(--warn); font-weight: 700; }
+.sum-stats { font-size: 13px; flex-basis: 100%; }
+.sum-train { display: flex; flex-wrap: wrap; gap: 8px; flex-basis: 100%; }
+.sum-train .btn { padding: 5px 12px; font-size: 13px; }
+.cheer { padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; }
+.sum-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 820px) {
+  .session .in { padding-block: 6px; }
+  .session-bar { gap: 6px 12px; }
+  .step span:first-child { width: 26px; height: 26px; font-size: 12px; }
+  .clock { font-size: 18px; }
+  .session-bar .btn { padding: 6px 10px; font-size: 13px; }
+  .session-bar .acts { gap: 4px 6px; }
+  .rand-card { padding: 18px; }
+}

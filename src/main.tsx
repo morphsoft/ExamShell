@@ -4,6 +4,7 @@ import './ui/styles/base.css';
 import './ui/styles/legacy.css';
 import './ui/styles/exercise.css';
 import './ui/styles/home.css';
+import './ui/styles/random.css';
 import { App } from './ui/App';
 import { ErrorBoundary } from './ui/components/ErrorBoundary';
 import { getSettings } from './state/progress';

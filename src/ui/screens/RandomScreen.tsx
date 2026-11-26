@@ -10,15 +10,18 @@ import {
   type RandomAction,
   type RandomSession,
 } from '../../state/randomSession';
+import { SessionBar } from '../components/SessionBar';
 import { StatusBar } from '../components/StatusBar';
-import { Timer } from '../components/Timer';
 import { TopBar } from '../components/TopBar';
 import { navigate } from '../router';
 import { passPhrase, statusView } from '../prepText';
-import { plural } from '../sessionText';
 import { ExerciseScreen } from './ExerciseScreen';
+import { RandomStart } from './RandomStart';
 
 type Pool = Record<Level, string[]>;
+
+/** O exercício que acabou de passar: a tela o segura até o cadete pedir o próximo nível (o reducer já avançou). */
+type Hold = { exerciseId: string; level: Level };
 
 function buildPool(): Pool {
   const groups = byLevel(loadExercises());
@@ -26,51 +29,38 @@ function buildPool(): Pool {
   return { 1: ids(1), 2: ids(2), 3: ids(3), 4: ids(4) };
 }
 
-/** Retoma a sessão salva (se não terminou); senão começa uma, com a semente da rota. */
-function initSession(pool: Pool, seed: number | undefined): RandomSession {
+/** A sessão salva, se ainda não terminou; sessão terminada conta como nenhuma. */
+function runningSession(): RandomSession | null {
   const stored = loadSession();
-  if (stored !== null && stored.finishedAt === null) return stored;
-  return startSession(pool, seed ?? Date.now(), Date.now());
-}
-
-/**
- * "Passou" do nível anterior, no topo do novo. Ganha o foco ao aparecer: o grademe que tinha o foco sumiu
- * com a tela antiga, e no celular (onde a página rola) é isso que traz o aviso para a vista.
- */
-function LevelPassedNotice({ exerciseId, level, onClose }: { exerciseId: string; level: Level; onClose(): void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => ref.current?.focus(), []);
-  return (
-    <div ref={ref} tabIndex={-1} className="level-passed" data-testid="level-passed" role="status">
-      <span>
-        <span aria-hidden="true">✓ </span>
-        <b>{exerciseId}</b> passou — agora o nível {level}. Mandou bem!
-      </span>
-      <button type="button" className="chip" aria-label="fechar aviso" onClick={onClose}>
-        ×
-      </button>
-    </div>
-  );
+  return stored !== null && stored.finishedAt === null ? stored : null;
 }
 
 export function RandomScreen({ seed }: { seed?: number }) {
   const [pool] = useState(buildPool);
-  const [session, setSession] = useState(() => initSession(pool, seed));
+  const [session, setSession] = useState<RandomSession | null>(runningSession);
   const ref = useRef(session);
-  // Exercício que acabou de passar: a tela do próximo nível abre com um aviso (a anterior já desmontou).
-  const [passedId, setPassedId] = useState<string | null>(null);
+  const [hold, setHoldState] = useState<Hold | null>(null);
+  const holdRef = useRef<Hold | null>(null);
+  const setHold = (h: Hold | null) => {
+    holdRef.current = h;
+    setHoldState(h);
+  };
 
-  // Grava a sessão recém-criada (ou a retomada, sem mudança).
+  const finished = session !== null && session.finishedAt !== null;
   useEffect(() => {
-    saveSession(ref.current);
-  }, []);
+    if (finished && hold === null) navigate('#/aleatorio/resumo');
+  }, [finished, hold]);
 
-  useEffect(() => {
-    if (session.finishedAt !== null) navigate('#/aleatorio/resumo');
-  }, [session.finishedAt]);
+  const start = () => {
+    const next = startSession(pool, seed ?? Date.now(), Date.now());
+    ref.current = next;
+    setSession(next);
+    saveSession(next);
+  };
 
   // Usa o ref, não o estado: a descarga do rascunho ao desmontar chega com closures antigas.
   const dispatch = (action: RandomAction) => {
+    if (ref.current === null) return;
     const next = reduceSession(ref.current, action, pool);
     if (next === ref.current) return;
     ref.current = next;
@@ -78,39 +68,37 @@ export function RandomScreen({ seed }: { seed?: number }) {
     saveSession(next);
   };
 
-  // Uma ação do cadete (dica, troca, pulo, encerrar) apaga o aviso de "passou".
+  // Uma ação do cadete (dica, troca, pulo, encerrar) solta o cartão de "passou".
   const act = (action: RandomAction) => {
-    setPassedId(null);
+    setHold(null);
     dispatch(action);
   };
 
-  const finish = () => {
-    if (window.confirm('Encerrar a sessão agora? Você vê o resumo do que fez até aqui.')) {
-      act({ type: 'finish', now: Date.now() });
-    }
-  };
+  if (session === null) return <RandomStart onStart={start} />;
 
-  const run = session.levels[session.currentLevel - 1];
-  const exercise = run.exerciseId ? getExercise(run.exerciseId) : undefined;
+  const heldLevel = hold?.level ?? session.currentLevel;
+  const run = session.levels[heldLevel - 1];
+  const exerciseId = hold?.exerciseId ?? run.exerciseId;
+  const exercise = exerciseId ? getExercise(exerciseId) : undefined;
 
-  if (!exercise || session.finishedAt !== null) {
+  if (!exercise || (session.finishedAt !== null && hold === null)) {
     return (
       <>
-        <TopBar left="examshell · rank 02" right="modo aleatório" />
+        <TopBar left="examshell · rank 02" right="simulado" />
         <main className="page">
-          <h1>Modo aleatório</h1>
+          <h1>Simulado</h1>
           <p className="muted">
             {session.finishedAt !== null
               ? 'Sessão encerrada, abrindo o resumo…'
               : 'Não achei o exercício desta sessão. Encerre para ver o resumo e começar outra.'}
           </p>
           {session.finishedAt === null && (
-            <button type="button" className="chip" data-testid="finish" onClick={finish}>
+            <button type="button" className="chip" data-testid="finish" onClick={() => act({ type: 'finish', now: Date.now() })}>
               encerrar sessão
             </button>
           )}
         </main>
-        <StatusBar items={[{ label: 'modo', value: 'aleatório' }]} />
+        <StatusBar items={[{ label: 'modo', value: 'simulado' }]} />
       </>
     );
   }
@@ -123,46 +111,52 @@ export function RandomScreen({ seed }: { seed?: number }) {
       initialFiles={session.drafts[id] ?? {}}
       onFilesChange={(files) => dispatch({ type: 'saveDraft', exerciseId: id, files })}
       onGraded={(r) => {
+        if (holdRef.current !== null) return; // nova correção do exercício segurado: o nível já fechou
+        const cur = ref.current;
+        if (cur === null) return;
         const passed = r.failure === null;
-        setPassedId(passed ? id : null);
+        if (passed) setHold({ exerciseId: id, level: cur.currentLevel });
         dispatch({ type: 'attempt', passed, now: Date.now() });
       }}
-      onHintUsed={() => act({ type: 'hint' })}
-      afterPass={() => ({ message: passPhrase(run.attempts), actions: [] })}
+      onHintUsed={() => {
+        if (holdRef.current === null) dispatch({ type: 'hint' });
+      }}
+      afterPass={() => {
+        const h = holdRef.current;
+        const cur = ref.current;
+        if (h === null || cur === null) return { message: passPhrase(run.attempts), actions: [] };
+        const attempts = cur.levels[h.level - 1].attempts;
+        const message = `Nível ${h.level} de 4 concluído. ${passPhrase(attempts)}`;
+        if (cur.finishedAt !== null) {
+          return {
+            message,
+            actions: [{ label: 'Ver resumo', testId: 'pass-summary', primary: true, onClick: () => setHold(null) }],
+          };
+        }
+        return {
+          message,
+          actions: [
+            {
+              label: `Ir para o nível ${cur.currentLevel}`,
+              testId: 'pass-next-level',
+              primary: true,
+              onClick: () => setHold(null),
+            },
+          ],
+        };
+      }}
       backHref="#/"
-      levelLabel={`nível ${session.currentLevel} de 4`}
+      levelLabel={`nível ${heldLevel} de 4`}
       status={statusView(run.outcome === 'passed', run.attempts)}
       sessionBar={
-        <>
-          {passedId !== null && (
-            <LevelPassedNotice
-              key={passedId}
-              exerciseId={passedId}
-              level={session.currentLevel}
-              onClose={() => setPassedId(null)}
-            />
-          )}
-          <Timer session={session} />
-          {canSwap(session, pool) && (
-            <button type="button" className="chip" data-testid="swap" onClick={() => act({ type: 'swap' })}>
-              sortear outro deste nível
-            </button>
-          )}
-          <button
-            type="button"
-            className="chip"
-            data-testid="skip"
-            onClick={() => act({ type: 'skip', now: Date.now() })}
-          >
-            pular para o próximo nível
-          </button>
-          <button type="button" className="chip" data-testid="finish" onClick={finish}>
-            encerrar sessão
-          </button>
-          {run.swappedFrom.length > 0 && (
-            <span className="muted">{plural(run.swappedFrom.length, 'troca', 'trocas')} neste nível</span>
-          )}
-        </>
+        <SessionBar
+          session={session}
+          held={hold !== null}
+          canSwap={canSwap(session, pool)}
+          onSwap={() => act({ type: 'swap' })}
+          onSkip={() => act({ type: 'skip', now: Date.now() })}
+          onFinish={() => act({ type: 'finish', now: Date.now() })}
+        />
       }
     />
   );

@@ -23,7 +23,6 @@
 /* barra do simulado */
 .session { background: var(--raise); border-bottom: 1px solid var(--line); }
 .session .in { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding-block: 8px; }
-.session .level-passed { flex: 1 1 100%; }
 
 /* duas colunas */
 .work { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.25fr); }
